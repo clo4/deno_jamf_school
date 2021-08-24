@@ -1,0 +1,12 @@
+root = true
+
+[*]
+# Note that the indent width isn't specified. People can choose their
+# own preferred width - this project tries to never go over 4 indents.
+indent_style = tab
+trim_trailing_whitespace = true
+end_of_line = lf
+insert_final_newline = true
+
+[*.yml]
+indent_style = space

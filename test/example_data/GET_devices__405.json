@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": 405,
+    "message": "Requested method (GET) not allowed using this API key"
+  }
+}

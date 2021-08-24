@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+    paths:
+      - "**/*.ts"
+      - "**/*.js"
+      - "**/*.tpl.md"
+      - "test_data/*.json"
+      - ".github/workflows/*.yml"
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Print version
+        run: deno --version
+
+      - name: Check markdown files are up-to-date
+        run: |
+          deno run --no-check --quiet tpl.ts > tpl.json
+          deno run --no-check --quiet --allow-read=. --allow-run=deno ./scripts/check_markdown.ts < tpl.json
+
+      # Not shuffling here - CI should be deterministic. You should --shuffle
+      # when testing locally so you can potentially catch more bugs.
+      - name: Run tests
+        run: deno test --allow-read=./test/example_data --no-check --quiet

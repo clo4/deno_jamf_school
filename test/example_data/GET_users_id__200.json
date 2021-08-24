@@ -1,0 +1,22 @@
+{
+  "code": 200,
+  "user": {
+    "id": 0,
+    "locationId": 0,
+    "status": "Active",
+    "deviceCount": 0,
+    "email": "[redacted]",
+    "username": "[redacted]",
+    "domain": "[redacted]",
+    "firstName": "[redacted]",
+    "lastName": "[redacted]",
+    "name": "[redacted]",
+    "groupIds": [0, 0],
+    "groups": ["[redacted]", "[redacted]"],
+    "teacherGroups": [0],
+    "children": [],
+    "notes": "[redacted]",
+    "exclude": false,
+    "modified": "[redacted]"
+  }
+}

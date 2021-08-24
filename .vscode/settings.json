@@ -1,0 +1,46 @@
+{
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": false,
+  // mostly for src/models.ts to quickly move to the implementation class
+  "deno.codeLens.implementations": true,
+  "deno.codeLens.references": false,
+  // this makes the code move around as the lenses enable/disable when you
+  // write invalid code. it's so goddamn annoying.
+  "deno.codeLens.test": false,
+  "deno.suggest.autoImports": true,
+  "deno.suggest.imports.autoDiscover": true,
+  "deno.suggest.imports.hosts": {
+    "https://deno.land": true,
+    "https://cdn.skypack.dev": false,
+    "https://esm.sh": false,
+    "https://crux.land": false
+  },
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false,
+  "editor.formatOnSave": true,
+  // reading file names in src/schemas is easier since lower case comes first
+  "explorer.sortOrderLexicographicOptions": "lower",
+  "explorer.sortOrder": "type",
+  "[javascript]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[rust]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "files.associations": {
+    "dprint.json": "jsonc"
+  }
+}
