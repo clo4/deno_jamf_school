@@ -1,4 +1,4 @@
-import type { JTDParser } from "./_ajv_jtd.ts";
+import type { ErrorObject, ValidateFunction as Validator } from "./_ajv_jtd.ts";
 
 // GET
 import parseGetDevices from "./GET_devices.ts";
@@ -21,7 +21,7 @@ import parsePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
 // do try to follow the same conventions.
 
 // dprint-ignore
-export const parsers = {
+export const validators = {
 	"GET /devices": parseGetDevices,
 	"GET /devices/:udid": parseGetDevicesUdid,
 	"GET /devices/groups": parseGetDevicesGroups,
@@ -34,121 +34,46 @@ export const parsers = {
 	"POST /devices/:udid/wipe": parsePostDevicesUdidWipe,
 } as const;
 
-type Parsers = typeof parsers;
-type Endpoint = keyof Parsers;
+type Validators = typeof validators;
+type Endpoint = keyof Validators;
 // dprint-ignore
 export type RouteData<E extends Endpoint> =
-	Parsers[E] extends JTDParser<infer T>
+	Validators[E] extends Validator<infer T>
 		? T
 		: never;
 
-export function mustParse<P extends Endpoint>(
-	route: P,
-	text: string,
-): RouteData<P> {
-	const parser = parsers[route];
-	const parsed = parser(text);
-	if (parsed === undefined) {
-		throw new ParseError({
-			text,
-			route,
-			message: parser.message!,
-			position: parser.position!,
-		});
-	}
-	return parsed as RouteData<P>;
+export function validate<E extends Endpoint>(
+	key: E,
+	data: unknown,
+): data is RouteData<E> {
+	return validators[key](data);
 }
 
-type ParseErrorConstructorInit = {
-	message: string;
-	position: number;
-	text: string;
-	route: string;
-};
+export function assertValid<E extends Endpoint>(
+	key: E,
+	data: unknown,
+): asserts data is RouteData<E> {
+	const validator = validators[key];
+	if (validator(data)) {
+		return;
+	}
+	const errors = validator.errors!;
+	throw new ValidationError(errors);
+}
 
-/**
- * An error with a very readable message that tells you exactly where
- * parsing failed. It's slow to construct, because it has to do a lot of
- * work to create a useful message.
- */
-class ParseError extends Error {
-	route: string;
-	error: string;
-	position: number;
-	text: string;
-
-	// This error does as much as is reasonable to give you context of for the
-	// parsing error on the same line.
-	constructor(init: ParseErrorConstructorInit) {
-		const {
-			text,
-			route,
-			position: idx,
-			message: error,
-		} = init;
-
-		let lineCountBeforeError = 1;
-		for (let i = 0; i < idx; i++) {
-			if (text[i] === "\n") {
-				lineCountBeforeError++;
-			}
+export class ValidationError extends Error {
+	errors: ErrorObject[];
+	constructor(errors: ErrorObject[]) {
+		if (errors.length === 0) {
+			throw new Error("ValidationError constructor called with no error objects");
 		}
 
-		// 35 characters leading up to, but not including, the error.
-		const charsBeforeError = text.slice(idx - 35, idx);
-
-		// The immediate context. At most 35 characters. If there are any line
-		// breaks, it's the last line with no leading whitespace.
-		const leadingChars = charsBeforeError
-			.slice(charsBeforeError.lastIndexOf("\n") + 1) // Start *after* \n
-			.trimStart(); // TODO: this failed here in the REPL but works in testing?
-
-		// Literally point at the location of the error.
-		const errorLocationPointer = `${" ".repeat(leadingChars.length)}^--- ${error}`;
-
-		// The following 10 characters after (and including) the error, also ending
-		// at the first line break.
-		const trailingChars = text.slice(idx, idx + 10);
-		const nextNewline = trailingChars.indexOf("\n");
-		const stopIndex = nextNewline !== -1 ? nextNewline : undefined;
-		const trailingContext = trailingChars.slice(0, stopIndex);
-
-		const parserFile = route
-			.replaceAll(" ", "")
-			.replaceAll(":", "")
-			.replaceAll("/", "_") + ".ts";
-
-		const errorPosition = lineCountBeforeError > 1
-			? `${idx} (line ${lineCountBeforeError})`
-			: `${idx}`;
-
-		// dprint-ignore
-		let message = `
-Failed at index ${errorPosition}
-
-Parser: ${parserFile}
-
-    ${leadingChars}${trailingContext}
-    ${errorLocationPointer}
-
-This is likely due to unexpected data being returned from the API.
-Please raise an issue on GitHub with the link below so this can be fixed,
-and include as much of this error as you can (without violating privacy).
-https://github.com/SeparateRecords/deno_jamf_school/issues/new
-`;
-
-		message = message
-			.trimStart()
-			.replaceAll("\r", ""); // in case a carriage return snuck in
-
-		super(message);
-
+		const moreErrors = errors.length > 1
+			? ` (and ${errors.length - 1} more errors)`
+			: "";
+		super((errors[0].message ?? "[no error message]") + moreErrors);
 		this.name = this.constructor.name;
 		Error.captureStackTrace?.(this, this.constructor);
-
-		this.position = idx;
-		this.error = error;
-		this.text = text;
-		this.route = route;
+		this.errors = errors;
 	}
 }

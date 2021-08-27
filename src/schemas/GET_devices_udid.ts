@@ -116,4 +116,4 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 	},
 };
 
-export default ajv.compileParser(responseSchema);
+export default ajv.compile(responseSchema);
