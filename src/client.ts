@@ -11,9 +11,11 @@ import { APIError } from "./errors.ts";
  * The 'create' methods on the client can be used to upgrade data from the API
  * to an object.
  */
-export function createClient(init: api.Credentials | models.API): models.Client {
+export function createClient(
+	init: api.Credentials | { api: models.API },
+): models.Client {
 	return new Client({
-		api: "type" in init ? init : api.createAPI(init),
+		api: "api" in init ? init.api : api.createAPI(init),
 	});
 }
 
