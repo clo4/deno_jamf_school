@@ -11,9 +11,11 @@ import { APIError } from "./errors.ts";
  * `API` and `Client` can interoperate. The 'create*' methods on the client
  * take data returned from an `API` and upgrade it to an object with methods.
  */
-export function createClient(init: api.Credentials | models.API): models.Client {
+export function createClient(
+	init: api.Credentials | { api: models.API },
+): models.Client {
 	return new Client({
-		api: "type" in init ? init : api.createAPI(init),
+		api: "api" in init ? init.api : api.createAPI(init),
 	});
 }
 
