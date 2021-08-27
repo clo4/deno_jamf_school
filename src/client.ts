@@ -3,13 +3,13 @@ import * as api from "./api.ts";
 import { APIError } from "./errors.ts";
 
 /**
- * Create a API client. Clients are a higher level way to use the API than
- * JamfSchoolAPI. Clients do not perform any operations. Methods will return
- * other objects that represent a snapshot of data, and these objects can
- * perform actions on themselves (or create other objects).
+ * Create an API client. Clients are a high level bridge to the API that can
+ * query for data and return its representation as an object. Clients don't
+ * perform actions on any data as all actions are methods on the returned
+ * objects.
  *
- * The 'create' methods on the client can be used to upgrade data from the API
- * to an object.
+ * `API` and `Client` can interoperate. The 'create*' methods on the client
+ * take data returned from an `API` and upgrade it to an object with methods.
  */
 export function createClient(init: api.Credentials | models.API): models.Client {
 	return new Client({

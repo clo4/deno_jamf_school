@@ -27,9 +27,12 @@ export type { Credentials } from "./api.ts";
 
 export { createClient } from "./client.ts";
 
-// dprint-ignore
 export type {
 	API,
+	APIGetDeviceOptions,
+	APIGetDevicesOptions,
+	APIRestartDeviceOptions,
+	APIWipeDeviceOptions,
 	Client,
 	Device,
 	DeviceGroup,

@@ -291,8 +291,8 @@ export type APIGetDevicesOptions = {
 	 * Management relates to whether a device has checked in with Jamf School
 	 * in the past 7 days, regardless of if it is supervised.
 	 *
-	 * NOTE: Due to buggy API behaviour, it is instead recommended to filter
-	 * the returned array, instead of using this.
+	 * NOTE: Due to buggy API behaviour, it is better to filter the returned
+	 * array instead of using this option.
 	 * ```
 	 * const devices = await api.getDevices();
 	 * const managed = devices.filter((device) => device.isManaged);
@@ -564,7 +564,9 @@ export interface Client {
 	getDeviceGroups(): Promise<DeviceGroup[]>;
 }
 
-/** Device represents a single device. */
+/**
+ * Device represents a single device.
+ */
 export interface Device {
 	/** Discriminator for type checks. */
 	readonly type: "Device";
@@ -681,7 +683,9 @@ export interface Device {
 	wipe(): Promise<this>;
 }
 
-/** DeviceGroup represents a named collection of devices. */
+/**
+ * DeviceGroup represents a named collection of devices.
+ */
 export interface DeviceGroup {
 	/** Discriminator for type checks. */
 	readonly type: "DeviceGroup";
@@ -747,7 +751,9 @@ export interface DeviceGroup {
 	getDevices(): Promise<Device[]>;
 }
 
-/** User represents a single user. */
+/**
+ * User represents a single user.
+ */
 export interface User {
 	/** Discriminator for type checks. */
 	readonly type: "User";
@@ -796,7 +802,9 @@ export interface User {
 	getGroups(): Promise<UserGroup[]>;
 }
 
-/** JamfSchoolUserGroup represents a named group of users. */
+/**
+ * UserGroup represents a named group of users.
+ */
 export interface UserGroup {
 	/** Discriminator for type checks. */
 	readonly type: "UserGroup";
