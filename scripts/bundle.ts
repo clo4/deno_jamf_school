@@ -1,7 +1,6 @@
 import * as flags from "./deps/std_flags.ts";
 import { copy as fsCopy } from "./deps/std_fs_copy.ts";
 import { writeAll } from "./deps/std_io_util.ts";
-import * as log from "./deps/std_log.ts";
 import * as path from "./deps/std_path.ts";
 
 import * as esbuild from "./deps/esbuild.ts";
@@ -14,19 +13,7 @@ import standaloneCode from "../src/deps/ajv_standalone.ts";
 
 import * as schemas from "../src/schemas/mod.ts";
 
-type Timer = () => () => number;
-
-/**
- * Get a function that, when called, returns the number of milliseconds since
- * the first function was created. More accurate with --allow-hrtime
- */
-const timer: Timer = (start = performance.now()) => () => performance.now() - start;
-
-let {
-	log: logArg,
-	help: helpArg,
-} = flags.parse(Deno.args, {
-	string: ["log"],
+const { help: helpArg } = flags.parse(Deno.args, {
 	boolean: ["help"],
 	alias: { help: ["h"] },
 });
@@ -43,35 +30,18 @@ if (helpArg) {
 	Deno.exit(0);
 }
 
-if (typeof logArg === "string") {
-	if (logArg === "") logArg = "INFO";
+type Timer = () => () => number;
 
-	await log.setup({
-		loggers: {
-			bundle: {
-				// @ts-ignore this will throw if we give it an invalid level, which is
-				// the desired behaviour
-				level: logArg,
-				handlers: ["console"],
-			},
-		},
-		handlers: {
-			console: new log.handlers.ConsoleHandler("DEBUG", {
-				formatter: (record) => {
-					const { loggerName, levelName, msg } = record;
-					return `${loggerName} ${levelName.toLowerCase()}: ${msg}`;
-				},
-			}),
-		},
-	});
-}
-
-const logger = log.getLogger("bundle");
+/**
+ * Get a function that, when called, returns the number of milliseconds since
+ * the first function was created. More accurate with --allow-hrtime
+ */
+const timer: Timer = (start = performance.now()) => () => performance.now() - start;
 
 const timeFinish = timer();
 
 addEventListener("unload", () => {
-	logger.info(`Finished in ${timeFinish()} ms`);
+	console.info(`Finished in ${timeFinish()} ms`);
 });
 
 // These paths are used as bases for the important shit
@@ -99,18 +69,18 @@ const buildModTsPath = path.join(buildDir, "mod.ts");
 const outFile = path.join(schemasDir, "mod.bundle.js");
 
 const oldSize = (await Deno.stat(outFile)).size;
-logger.debug(`${repo(outFile)} is ${oldSize}B`);
+console.debug(`${repo(outFile)} is ${oldSize}B`);
 
 // This is done to make sure the bundle is done in essentially an identical
 // directory to this one (minus the different name). The validators are
 // overwritten.
-logger.debug(`Copying ${repo(schemasDir)} to ${repo(buildDir)}`);
+console.debug(`Copying ${repo(schemasDir)} to ${repo(buildDir)}`);
 await fsCopy(schemasDir, buildDir, { overwrite: true });
 
 const te = new TextEncoder();
 
-logger.info("Compiling route validators");
-const timeTranspiling = timer();
+console.info("Compiling and writing route validators");
+const timeWritingValidators = timer();
 await Promise.all([
 	...Object.entries(schemas.validators).map(
 		// Originally, I thought I had to transpile the validator to ESM, since AJV
@@ -118,7 +88,7 @@ await Promise.all([
 		// from ESM and esbuild will just... handle it. Somehow, it actually ended
 		// up slimming down the bundle by a few kB too. Dunno how, but that's cool!
 		async ([key, validator]) => {
-			logger.debug(`Compiling validator: ${key}`);
+			console.debug(`Compiling validator: ${key}`);
 			const src = standaloneCode(ajv, validator);
 
 			// There is a direct* map between the object key and file path.
@@ -134,7 +104,7 @@ await Promise.all([
 			// to rewrite the imports of mod.ts.
 			const outFilePath = path.join(buildDir, outFileName);
 
-			logger.debug(`Opening ${repo(outFilePath)}`);
+			console.debug(`Opening ${repo(outFilePath)}`);
 			// Note the omission of `create` - if there's no file to open, that's an
 			// error, since `key` should directly map to a file.
 			const file = await Deno.open(outFilePath, {
@@ -143,15 +113,15 @@ await Promise.all([
 			});
 			const bytes = te.encode(src);
 
-			logger.debug(`Writing code for '${key}' to ${repo(outFilePath)}`);
+			console.debug(`Writing code for '${key}' to ${repo(outFilePath)}`);
 			await writeAll(file, bytes);
 
-			logger.debug(`Closing file ${repo(outFilePath)}`);
+			console.debug(`Closing file ${repo(outFilePath)}`);
 			Deno.close(file.rid);
 		},
 	),
 ]);
-logger.debug(`Transpiled in ${timeTranspiling()} ms`);
+console.debug(`Written validators in ${timeWritingValidators()} ms`);
 
 // Referencing ./mod.ts basically makes TS treat the bundled file as if it
 // were actually mod.ts. I have no idea if this is the intended behaviour, but
@@ -171,7 +141,7 @@ const banner = `/// <reference types="./mod.ts" />
 // restart or reload your editor now (it's faster than waiting for the LS)
 `;
 
-logger.info(`Bundling, write to ${repo(outFile)}`);
+console.info(`Bundling, write to ${repo(outFile)}`);
 await esbuild.build({
 	entryPoints: [buildModTsPath],
 	bundle: true,
@@ -189,13 +159,13 @@ await esbuild.build({
 // the program will keep running indefinitely.
 esbuild.stop();
 
-logger.debug(`Deleting ${repo(buildDir)}`);
+console.debug(`Deleting ${repo(buildDir)}`);
 await Deno.remove(buildDir, { recursive: true });
 
 const newSize = (await Deno.stat(outFile)).size;
-logger.debug(`${repo(outFile)} is ${newSize}B`);
+console.debug(`${repo(outFile)} is ${newSize}B`);
 
 const delta = newSize - oldSize;
 const sign = delta > 0 ? "+" : "";
 
-logger.info(`${repo(outFile)} changed by ${sign}${delta}B`);
+console.info(`${repo(outFile)} changed by ${sign}${delta}B`);
