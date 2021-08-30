@@ -61,6 +61,13 @@ export function assertValid<E extends Endpoint>(
 	throw new ValidationError(errors);
 }
 
+function createMessage(error: ErrorObject): string {
+	const msg = error.message ?? "[no message]";
+	const schemaPath = error.schemaPath;
+	const path = error.instancePath;
+	return `Failed at '${path}': ${msg}`
+}
+
 export class ValidationError extends Error {
 	errors: ErrorObject[];
 	constructor(errors: ErrorObject[]) {
@@ -71,7 +78,7 @@ export class ValidationError extends Error {
 		const moreErrors = errors.length > 1
 			? ` (and ${errors.length - 1} more errors)`
 			: "";
-		super((errors[0].message ?? "[no error message]") + moreErrors);
+		super(createMessage(errors[0]) + moreErrors);
 		this.name = this.constructor.name;
 		Error.captureStackTrace?.(this, this.constructor);
 		this.errors = errors;
