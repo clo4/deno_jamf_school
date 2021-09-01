@@ -118,9 +118,7 @@ const afterHashes = await hashRenderedMdFiles();
 
 // 4. Compare the hashes
 if (!equal(beforeHashes, afterHashes)) {
-	logger.error(
-		"Hashes are unequal. Templates must be rendered before pushing (hint: run `vr prep` before each commit)",
-	);
+	logger.error("Hashes are unequal. Templates must be rendered before pushing.");
 	Deno.exit(1);
 }
 

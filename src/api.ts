@@ -3,8 +3,8 @@
 import ky, { AfterResponseHook } from "./deps/ky.ts";
 import * as base64 from "./deps/std_encoding_base64.ts";
 import { assert } from "./deps/std_testing_asserts.ts";
-import * as schemas from "./schemas/mod.ts";
-import { RouteData } from "./schemas/mod.ts";
+import * as schemas from "./schemas/mod.bundle.js";
+import type { RouteData } from "./schemas/mod.bundle.js";
 import { APIError, PermissionError } from "./errors.ts";
 import * as models from "./models.ts";
 
@@ -160,17 +160,17 @@ class API implements models.API {
 		assertValidID(id);
 		const data = await this.http.get(`users/${id}`, {
 			throwHttpErrors: true,
-		}).text();
-		const json = schemas.mustParse("GET /users/:id", data);
-		return json.user;
+		}).json();
+		schemas.assertValid("GET /users/:id", data);
+		return data.user;
 	}
 
 	async getUsers(): Promise<RouteData<"GET /users">["users"]> {
 		const data = await this.http.get(`users`, {
 			throwHttpErrors: true,
-		}).text();
-		const json = schemas.mustParse("GET /users", data);
-		return json.users;
+		}).json();
+		schemas.assertValid("GET /users", data);
+		return data.users;
 	}
 
 	async getUserGroup(
@@ -179,17 +179,17 @@ class API implements models.API {
 		assertValidID(id);
 		const data = await this.http.get(`users/groups/${id}`, {
 			throwHttpErrors: true,
-		}).text();
-		const json = schemas.mustParse("GET /users/groups/:id", data);
-		return json.group;
+		}).json();
+		schemas.assertValid("GET /users/groups/:id", data);
+		return data.group;
 	}
 
 	async getUserGroups(): Promise<RouteData<"GET /users/groups">["groups"]> {
 		const data = await this.http.get(`users/groups`, {
 			throwHttpErrors: true,
-		}).text();
-		const json = schemas.mustParse("GET /users/groups", data);
-		return json.groups;
+		}).json();
+		schemas.assertValid("GET /users/groups", data);
+		return data.groups;
 	}
 
 	async getDevice(
@@ -202,9 +202,9 @@ class API implements models.API {
 			searchParams: toSearchParams({
 				includeApps: options.includeApps || undefined,
 			}),
-		}).text();
-		const json = schemas.mustParse("GET /devices/:udid", data);
-		return json.device;
+		}).json();
+		schemas.assertValid("GET /devices/:udid", data);
+		return data.device;
 	}
 
 	async getDevices(
@@ -236,9 +236,9 @@ class API implements models.API {
 				// it's treated the same as true.
 				includeApps: options.includeApps || undefined,
 			}),
-		}).text();
-		const json = schemas.mustParse("GET /devices", data);
-		return json.devices;
+		}).json();
+		schemas.assertValid("GET /devices", data);
+		return data.devices;
 	}
 
 	async getDeviceGroup(
@@ -247,9 +247,9 @@ class API implements models.API {
 		assertValidID(id);
 		const data = await this.http.get(`devices/groups/${id}`, {
 			throwHttpErrors: true,
-		}).text();
-		const json = schemas.mustParse("GET /devices/groups/:id", data);
-		return json.deviceGroup;
+		}).json();
+		schemas.assertValid("GET /devices/groups/:id", data);
+		return data.deviceGroup;
 	}
 
 	async getDeviceGroups(): Promise<
@@ -257,9 +257,9 @@ class API implements models.API {
 	> {
 		const data = await this.http.get(`devices/groups`, {
 			throwHttpErrors: true,
-		}).text();
-		const json = schemas.mustParse("GET /devices/groups", data);
-		return json.deviceGroups;
+		}).json();
+		schemas.assertValid("GET /devices/groups", data);
+		return data.deviceGroups;
 	}
 
 	async restartDevice(
@@ -269,9 +269,9 @@ class API implements models.API {
 		assertValidUDID(udid);
 		const data = await this.http.post(`devices/${udid}/restart`, {
 			json: options,
-		}).text();
-		const json = schemas.mustParse("POST /devices/:udid/restart", data);
-		return json;
+		}).json();
+		schemas.assertValid("POST /devices/:udid/restart", data);
+		return data;
 	}
 
 	// async updateDeviceDetails(
@@ -281,9 +281,9 @@ class API implements models.API {
 	// 	assertValidUDID(udid);
 	// 	const data = await this.http.post(`devices/${udid}/update`, {
 	// 		json: options,
-	// 	}).text();
-	// 	const json = schemas.mustParse("POST /devices/:udid/details", data);
-	// 	return json;
+	// 	}).json();
+	// 	schemas.mustParse("POST /devices/:udid/details", data);
+	// 	return data;
 	// }
 
 	// async refreshDeviceInventory(
@@ -293,9 +293,9 @@ class API implements models.API {
 	// 	assertValidUDID(udid);
 	// 	const data = await this.http.post(`devices/${udid}/refresh`, {
 	// 		json: options,
-	// 	}).text();
-	// 	const json = schemas.mustParse("POST /devices/:udid/refresh", data);
-	// 	return json;
+	// 	}).json();
+	// 	schemas.mustParse("POST /devices/:udid/refresh", data);
+	// 	return data;
 	// }
 
 	async wipeDevice(
@@ -305,36 +305,36 @@ class API implements models.API {
 		assertValidUDID(udid);
 		const data = await this.http.post(`devices/${udid}/wipe`, {
 			json: options,
-		}).text();
-		const json = schemas.mustParse("POST /devices/:udid/wipe", data);
-		return json;
+		}).json();
+		schemas.assertValid("POST /devices/:udid/wipe", data);
+		return data;
 	}
 
 	// async restoreDevice(
 	// 	udid: string,
 	// ): Promise<RouteData<"POST /devices/:udid/restore">> {
 	// 	assertValidUDID(udid);
-	// 	const data = await this.http.post(`devices/${udid}/restore`).text();
-	// 	const json = schemas.mustParse("POST /devices/:udid/restore", data);
-	// 	return json;
+	// 	const data = await this.http.post(`devices/${udid}/restore`).json();
+	// 	schemas.mustParse("POST /devices/:udid/restore", data);
+	// 	return data;
 	// }
 
 	// async unenrollDevice(
 	// 	udid: string,
 	// ): Promise<RouteData<"POST /devices/:udid/unenroll">> {
 	// 	assertValidUDID(udid);
-	// 	const data = await this.http.post(`devices/${udid}/unenroll`).text();
-	// 	const json = schemas.mustParse("POST /devices/:udid/unenroll", data);
-	// 	return json;
+	// 	const data = await this.http.post(`devices/${udid}/unenroll`).json();
+	// 	schemas.mustParse("POST /devices/:udid/unenroll", data);
+	// 	return data;
 	// }
 
 	// async trashDevice(
 	// 	udid: string,
 	// ): Promise<RouteData<"DELETE /devices/:udid">> {
 	// 	assertValidUDID(udid);
-	// 	const data = await this.http.delete(`devices/${udid}`).text();
-	// 	const json = schemas.mustParse("DELETE /devices/:udid", data);
-	// 	return json;
+	// 	const data = await this.http.delete(`devices/${udid}`).json();
+	// 	schemas.mustParse("DELETE /devices/:udid", data);
+	// 	return data;
 	// }
 
 	// async assignDeviceOwner(
@@ -345,9 +345,9 @@ class API implements models.API {
 	// 	assertValidID(userId);
 	// 	const data = await this.http.put(`devices/${udid}/owner`, {
 	// 		json: { user: userId },
-	// 	}).text();
-	// 	const json = schemas.mustParse("PUT /devices/:udid/owner", data);
-	// 	return json;
+	// 	}).json();
+	// 	schemas.mustParse("PUT /devices/:udid/owner", data);
+	// 	return data;
 	// }
 
 	// async moveDevice(

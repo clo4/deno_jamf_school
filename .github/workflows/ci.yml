@@ -20,6 +20,10 @@ jobs:
       - name: Print version
         run: deno --version
 
+      - name: Check schema bundle is up-to-date
+        run: |
+          deno run --no-check --quiet --allow-run=deno --allow-read=./src/schemas/mod.bundle.js ./scripts/check_bundle.ts
+
       - name: Check markdown files are up-to-date
         run: |
           deno run --no-check --quiet tpl.ts > tpl.json

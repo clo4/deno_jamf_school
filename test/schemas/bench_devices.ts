@@ -13,7 +13,7 @@ bench({
 	runs: 1000,
 	func(timer) {
 		timer.start();
-		schemas.mustParse("GET /devices", devices);
+		schemas.assertValid("GET /devices", JSON.parse(devices));
 		timer.stop();
 	},
 });
@@ -23,7 +23,7 @@ bench({
 	runs: 1000,
 	func(timer) {
 		timer.start();
-		schemas.mustParse("GET /devices", devicesApps);
+		schemas.assertValid("GET /devices", JSON.parse(devicesApps));
 		timer.stop();
 	},
 });

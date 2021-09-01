@@ -15,4 +15,4 @@ const responseDataSchema: JTDSchemaType<ResponseData> = {
 	},
 };
 
-export default ajv.compileParser(responseDataSchema);
+export default ajv.compile(responseDataSchema);
