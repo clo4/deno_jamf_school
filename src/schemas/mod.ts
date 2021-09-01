@@ -1,18 +1,18 @@
 import type { ErrorObject, ValidateFunction as Validator } from "./_ajv_jtd.ts";
 
 // GET
-import parseGetDevices from "./GET_devices.ts";
-import parseGetDevicesGroups from "./GET_devices_groups.ts";
-import parseGetDevicesGroupsId from "./GET_devices_groups_id.ts";
-import parseGetDevicesUdid from "./GET_devices_udid.ts";
-import parseGetUsers from "./GET_users.ts";
-import parseGetUsersGroups from "./GET_users_groups.ts";
-import parseGetUsersGroupsId from "./GET_users_groups_id.ts";
-import parseGetUsersId from "./GET_users_id.ts";
+import validateGetDevices from "./GET_devices.ts";
+import validateGetDevicesGroups from "./GET_devices_groups.ts";
+import validateGetDevicesGroupsId from "./GET_devices_groups_id.ts";
+import validateGetDevicesUdid from "./GET_devices_udid.ts";
+import validateGetUsers from "./GET_users.ts";
+import validateGetUsersGroups from "./GET_users_groups.ts";
+import validateGetUsersGroupsId from "./GET_users_groups_id.ts";
+import validateGetUsersId from "./GET_users_id.ts";
 
 // POST
-import parsePostDevicesUdidRestart from "./POST_devices_udid_restart.ts";
-import parsePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
+import validatePostDevicesUdidRestart from "./POST_devices_udid_restart.ts";
+import validatePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
 
 // The naming scheme here consistently maps between the file name and the
 // route identifier. spaces and colons are removed, slashes are replaced with
@@ -22,16 +22,16 @@ import parsePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
 
 // dprint-ignore
 export const validators = {
-	"GET /devices": parseGetDevices,
-	"GET /devices/:udid": parseGetDevicesUdid,
-	"GET /devices/groups": parseGetDevicesGroups,
-	"GET /devices/groups/:id": parseGetDevicesGroupsId,
-	"GET /users": parseGetUsers,
-	"GET /users/:id": parseGetUsersId,
-	"GET /users/groups": parseGetUsersGroups,
-	"GET /users/groups/:id": parseGetUsersGroupsId,
-	"POST /devices/:udid/restart": parsePostDevicesUdidRestart,
-	"POST /devices/:udid/wipe": parsePostDevicesUdidWipe,
+	"GET /devices": validateGetDevices,
+	"GET /devices/:udid": validateGetDevicesUdid,
+	"GET /devices/groups": validateGetDevicesGroups,
+	"GET /devices/groups/:id": validateGetDevicesGroupsId,
+	"GET /users": validateGetUsers,
+	"GET /users/:id": validateGetUsersId,
+	"GET /users/groups": validateGetUsersGroups,
+	"GET /users/groups/:id": validateGetUsersGroupsId,
+	"POST /devices/:udid/restart": validatePostDevicesUdidRestart,
+	"POST /devices/:udid/wipe": validatePostDevicesUdidWipe,
 } as const;
 
 type Validators = typeof validators;
@@ -50,37 +50,57 @@ export function validate<E extends Endpoint>(
 }
 
 export function assertValid<E extends Endpoint>(
-	key: E,
+	route: E,
 	data: unknown,
 ): asserts data is RouteData<E> {
-	const validator = validators[key];
+	const validator = validators[route];
 	if (validator(data)) {
 		return;
 	}
 	const errors = validator.errors!;
-	throw new ValidationError(errors);
+	throw new ValidationError(errors, route);
 }
 
-function createMessage(error: ErrorObject): string {
-	const msg = error.message ?? "[no message]";
-	const schemaPath = error.schemaPath;
-	const path = error.instancePath;
-	return `Failed at '${path}': ${msg}`
+function createMessage({ errors, route }: {
+	errors: ErrorObject[];
+	route: string;
+}): string {
+	const schemaFile = route
+		.replaceAll(" ", "")
+		.replaceAll(":", "")
+		.replaceAll("/", "_") + ".ts";
+
+	const msgs = [];
+	for (const error of errors) {
+		const { keyword, instancePath, message } = error;
+		const msg = message ?? "[no message]";
+		msgs.push(`${keyword} at '${instancePath}': ${msg}`);
+	}
+
+	return `${errors.length} validation failure(s)
+
+This is probably due to the Jamf School API returning unexpected data.
+Please open an issue by visiting the link below, and include as much of
+the following message and stack trace as you can, so we can resolve it.
+https://github.com/SeparateRecords/deno_jamf_school/issues/new
+
+Schema: ${schemaFile}
+
+${msgs.join("\n")}
+`;
 }
 
 export class ValidationError extends Error {
 	errors: ErrorObject[];
-	constructor(errors: ErrorObject[]) {
+	constructor(errors: ErrorObject[], route: string) {
 		if (errors.length === 0) {
 			throw new Error("ValidationError constructor called with no error objects");
 		}
 
-		const moreErrors = errors.length > 1
-			? ` (and ${errors.length - 1} more errors)`
-			: "";
-		super(createMessage(errors[0]) + moreErrors);
+		super(createMessage({ errors, route }));
+
 		this.name = this.constructor.name;
-		Error.captureStackTrace?.(this, this.constructor);
 		this.errors = errors;
+		Error.captureStackTrace?.(this, this.constructor);
 	}
 }
