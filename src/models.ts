@@ -7,6 +7,14 @@ import type { RouteData } from "./schemas/mod.ts";
  * A low-level wrapper over the Jamf School API. It serves as a replacement
  * to manually making requests. It performs data validation error handling.
  * Network errors, validation errors, and permission errors will all be raised.
+ *
+ * Unfortunately, the data returned by these methods cannot be explored through
+ * doc.deno.land due to limitations with `deno doc`, as it would require a full
+ * TypeScript implementation to evaluate the types.
+ *
+ * Instead, the best solution is to browse https://deno.land/x/jamf_school/schemas
+ * (each file has a `ResponseData` type) or to use the Deno language service in
+ * your editor.
  */
 export interface API {
 	/** Discriminator for type checks. */
@@ -23,14 +31,14 @@ export interface API {
 		options?: APIGetDevicesOptions,
 	): Promise<RouteData<"GET /devices">["devices"]>;
 
-	// /**
-	//  * (Edit) Assign a new owner to a device. Using ID 0 will remove
-	//  * the owner without setting a new one.
-	//  */
-	// assignDeviceOwner(
-	// 	udid: string,
-	// 	userId: number,
-	// ): Promise<RouteData<"PUT /devices/:udid/owner">>;
+	/**
+	 * (Edit) Assign a new owner to a device. Using ID 0 will remove
+	 * the owner without setting a new one.
+	 */
+	assignDeviceOwner(
+		udid: string,
+		userId: number,
+	): Promise<RouteData<"PUT /devices/:udid/owner">>;
 
 	// /**
 	//  * (Edit) Move the device and its owner to a new location.
@@ -681,6 +689,9 @@ export interface Device {
 
 	/** (Add) Schedule a complete wipe. */
 	wipe(): Promise<this>;
+
+	/** (Edit) Assign a new owner to this device. */
+	setOwner(user: { id: number }): Promise<this>;
 }
 
 /**

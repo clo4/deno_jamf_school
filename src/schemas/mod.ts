@@ -14,6 +14,9 @@ import validateGetUsersId from "./GET_users_id.ts";
 import validatePostDevicesUdidRestart from "./POST_devices_udid_restart.ts";
 import validatePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
 
+// PUT
+import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
+
 // The naming scheme here consistently maps between the file name and the
 // route identifier. spaces and colons are removed, slashes are replaced with
 // underscores, capitalization is kept the same, ".ts" is appended.
@@ -32,6 +35,7 @@ export const validators = {
 	"GET /users/groups/:id": validateGetUsersGroupsId,
 	"POST /devices/:udid/restart": validatePostDevicesUdidRestart,
 	"POST /devices/:udid/wipe": validatePostDevicesUdidWipe,
+	"PUT /devices/:udid/owner": validatePutDevicesUdidOwner,
 } as const;
 
 type Validators = typeof validators;

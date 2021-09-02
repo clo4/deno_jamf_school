@@ -133,14 +133,19 @@ class API implements models.API {
 			headers: {
 				"Authorization": `Basic ${auth}`,
 				"X-Server-Protocol-Version": "3",
+				// Note that Content-Type and Accept aren't explicitly set - ky sets
+				// these automatically based on the request method and whether .json()
+				// was called on the promise.
 			},
 			prefixUrl: url,
 			// This API returns different status codes depending on the operation,
 			// which makes errors harder. 404 can mean the request was good but
 			// the [thing] you were looking for wasn't found, OR it can mean that the
 			// endpoint doesn't exist, OR it can mean the endpoint *does* exist but
-			// you don't have the right X-Server-Whatever to use it. For fuck's sake!
-			// We'll do the error handling in hooks. That's easier.
+			// you don't have the right X-Server-Whatever to use it. And you BET each
+			// of those errors returns a slightly different JSON response, if it's
+			// even JSON at all (sometimes it's just plain text). That's why the
+			// error handling is ham-fisted and done in hooks.
 			throwHttpErrors: false,
 			retry: 0,
 			hooks: {
@@ -337,18 +342,18 @@ class API implements models.API {
 	// 	return data;
 	// }
 
-	// async assignDeviceOwner(
-	// 	udid: string,
-	// 	userId: number,
-	// ): Promise<RouteData<"PUT /devices/:udid/owner">> {
-	// 	assertValidUDID(udid);
-	// 	assertValidID(userId);
-	// 	const data = await this.http.put(`devices/${udid}/owner`, {
-	// 		json: { user: userId },
-	// 	}).json();
-	// 	schemas.mustParse("PUT /devices/:udid/owner", data);
-	// 	return data;
-	// }
+	async assignDeviceOwner(
+		udid: string,
+		userId: number,
+	): Promise<RouteData<"PUT /devices/:udid/owner">> {
+		assertValidUDID(udid);
+		assertValidID(userId);
+		const data = await this.http.put(`devices/${udid}/owner`, {
+			json: { user: userId },
+		}).json();
+		schemas.assertValid("PUT /devices/:udid/owner", data);
+		return data;
+	}
 
 	// async moveDevice(
 	// 	udid: string,

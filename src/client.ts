@@ -442,6 +442,11 @@ class Device implements models.Device {
 		await this.#api.wipeDevice(this.#data.UDID);
 		return this;
 	}
+
+	async setOwner(user: { id: number }) {
+		await this.#api.assignDeviceOwner(this.udid, user.id);
+		return this;
+	}
 }
 
 type DeviceGroupData = models.APIData["getDeviceGroups"][number];
