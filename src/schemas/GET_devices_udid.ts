@@ -20,16 +20,24 @@ type ResponseData = {
 			identifier: string;
 			type: { value: string };
 		};
+		// This can be a completely empty object if the device has no owner.
 		owner: {
-			id: number;
-			locationId: number;
-			name: string;
+			id?: number;
+			locationId?: number;
+			name?: string;
 			username?: string;
 			email?: string;
 			firstName?: string;
 			lastName?: string;
 			notes?: string;
 			modified?: string;
+			inTrash?: boolean;
+			deviceCount?: number;
+			groupIds?: number[];
+			groups?: string[];
+			teacherGroups?: number[];
+			children?: number[];
+			vpp?: number[];
 		};
 		groups: string[];
 		batteryLevel: number;
@@ -42,6 +50,30 @@ type ResponseData = {
 			icon: string;
 		}[];
 		modified: string;
+		lastCheckin: {
+			date: string;
+			"timezone_type": number;
+			timezone: string;
+		};
+		inTrash: boolean;
+		deviceEnrollType: "ac2" | "dep" | "ac2Pending" | "depPending" | "manual";
+		deviceDepProfile: string | null;
+		availableCapacity: number;
+		hasPasscode: boolean;
+		passcodeCompliant: number;
+		hardwareEncryptionEnabled: number;
+		iTunesStoreLoggedIn: number;
+		iCloudBackupEnabled: number;
+		iCloudBackupLatest: number;
+		groupIds: number[];
+		WiFiMAC: string;
+		bluetoothMAC: string;
+		IPAddress: string;
+		region: {
+			string: string;
+			coordinates: string | null;
+		};
+		notes: string;
 	};
 };
 
@@ -76,20 +108,24 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 					},
 				},
 				owner: {
-					properties: {
+					optionalProperties: {
 						id: { type: "int32" },
 						locationId: { type: "int32" },
 						name: { type: "string" },
-					},
-					optionalProperties: {
 						username: { type: "string" },
 						email: { type: "string" },
 						firstName: { type: "string" },
 						lastName: { type: "string" },
 						notes: { type: "string" },
 						modified: { type: "string" },
+						inTrash: { type: "boolean" },
+						deviceCount: { type: "int32" },
+						groups: { elements: { type: "string" } },
+						groupIds: { elements: { type: "int32" } },
+						teacherGroups: { elements: { type: "int32" } },
+						children: { elements: { type: "int32" } },
+						vpp: { elements: { type: "int32" } },
 					},
-					additionalProperties: true,
 				},
 				groups: {
 					elements: { type: "string" },
@@ -97,6 +133,38 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 				batteryLevel: { type: "float32" },
 				totalCapacity: { type: "float32" },
 				modified: { type: "string" },
+				lastCheckin: {
+					properties: {
+						date: { type: "string" },
+						timezone_type: { type: "int32" },
+						timezone: { type: "string" },
+					},
+				},
+				IPAddress: { type: "string" },
+				WiFiMAC: { type: "string" },
+				bluetoothMAC: { type: "string" },
+				availableCapacity: { type: "float32" },
+				deviceDepProfile: { type: "string", nullable: true },
+				deviceEnrollType: {
+					enum: ["ac2", "ac2Pending", "dep", "depPending", "manual"],
+				},
+				groupIds: {
+					elements: { type: "int32" },
+				},
+				hardwareEncryptionEnabled: { type: "int32" },
+				hasPasscode: { type: "boolean" },
+				passcodeCompliant: { type: "int32" },
+				iCloudBackupEnabled: { type: "int32" },
+				iCloudBackupLatest: { type: "int32" },
+				iTunesStoreLoggedIn: { type: "int32" },
+				inTrash: { type: "boolean" },
+				notes: { type: "string" },
+				region: {
+					properties: {
+						string: { type: "string" },
+						coordinates: { type: "string", nullable: true },
+					},
+				},
 			},
 			optionalProperties: {
 				apps: {
@@ -111,7 +179,6 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 					},
 				},
 			},
-			additionalProperties: true,
 		},
 	},
 };
