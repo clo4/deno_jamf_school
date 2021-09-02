@@ -28,11 +28,43 @@
 import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
 
 const client = jamf.createClient({
-	id: "YOUR_ID",
+	id: "YOUR_NETWORK_ID",
 	token: "YOUR_API_TOKEN",
-	url: "YOUR_SCHOOL.jamfcloud.com",
+	url: "YOUR_SCHOOL.jamfcloud.com/api",
 });
 
 // See the docs for everything clients can do.
 const devices = await client.getDevices();
 ```
+
+<details>
+<summary>A more complex example</summary>
+
+```typescript
+#!/usr/bin/env deno run --allow-net=YOUR_SCHOOL.jamfcloud.com
+import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
+
+const api = jamf.createAPI({
+	id: "YOUR_NETWORK_ID",
+	token: "YOUR_API_TOKEN",
+	url: "YOUR_SCHOOL.jamfcloud.com/api",
+});
+
+// The client can be instantiated with an API instead of credentials.
+const client = jamf.createClient({ api });
+
+// Using the API, it's easier to get finer control over requests,
+// and implement more low-level optimizations.
+const deviceData = await api.getDevices({
+	name: "Robert",
+});
+
+// The API doesn't stop you from using the niceties of objects.
+// Client and API are designed to work well together.
+const devices = deviceData.map((data) => client.createDevice(data));
+
+// Everything is promise-based, so you can do things concurrently.
+await Promise.allSettled((devices) => device.restart());
+```
+
+</details>
