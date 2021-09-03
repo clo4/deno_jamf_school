@@ -418,6 +418,13 @@ class Device implements models.Device {
 		return this.#client.createUser(userData);
 	}
 
+	async setOwner(user: { id: number }) {
+		if (user.id !== this.#data.owner.id) {
+			await this.#api.assignDeviceOwner(this.udid, user.id);
+		}
+		return this;
+	}
+
 	async getGroups(): Promise<models.DeviceGroup[]> {
 		let allGroups;
 		try {
@@ -440,11 +447,6 @@ class Device implements models.Device {
 
 	async wipe() {
 		await this.#api.wipeDevice(this.#data.UDID);
-		return this;
-	}
-
-	async setOwner(user: { id: number }) {
-		await this.#api.assignDeviceOwner(this.udid, user.id);
 		return this;
 	}
 }

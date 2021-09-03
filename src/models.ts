@@ -681,6 +681,22 @@ export interface Device {
 	/** (Read) Get the device's owner, if any. */
 	getOwner(): Promise<User | null>;
 
+	/**
+	 * (Edit) Assign a new owner to this device.
+	 *
+	 * The owner can be set by using an object with an `id` property (number).
+	 * ```
+	 * device.setOwner(testAccount)
+	 * ```
+	 *
+	 * Alternatively, if you know the ID of the user you want to use, an object
+	 * literal may be more appropriate.
+	 * ```
+	 * device.setOwner({ id: 4 });
+	 * ```
+	 */
+	setOwner(user: { id: number }): Promise<this>;
+
 	/** (Read) Get the device's groups. */
 	getGroups(): Promise<DeviceGroup[]>;
 
@@ -689,9 +705,6 @@ export interface Device {
 
 	/** (Add) Schedule a complete wipe. */
 	wipe(): Promise<this>;
-
-	/** (Edit) Assign a new owner to this device. */
-	setOwner(user: { id: number }): Promise<this>;
 }
 
 /**
