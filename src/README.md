@@ -7,7 +7,8 @@
 
 **Jamf School for Deno** is an idiomatic, unofficial API wrapper for Jamf School.
 
-**[Here's the docs.][docs]**
+Read on for an introduction. Alternatively,
+**[here's the documentation for the latest release.][docs]**
 
 [docs]: https://doc.deno.land/https/deno.land/x/jamf_school@0.1.0/mod.ts
 
@@ -47,23 +48,20 @@ const devices = await client.getDevices();
 #!/usr/bin/env deno run --allow-net=YOUR_SCHOOL.jamfcloud.com
 import * as jamf from "https://deno.land/x/jamf_school@0.1.0/mod.ts";
 
+// The client can be instantiated with an API instead of credentials.
 const api = jamf.createAPI({
   id: "YOUR_NETWORK_ID",
   token: "YOUR_API_TOKEN",
   url: "YOUR_SCHOOL.jamfcloud.com/api",
 });
 
-// The client can be instantiated with an API instead of credentials.
 const client = jamf.createClient({ api });
 
-// Using the API, it's easier to get finer control over requests,
-// and implement more low-level optimizations.
-const deviceData = await api.getDevices({
-  name: "Robert",
-});
+// Using the API directly gives you control over exactly what requests
+// are made. All the data returned is validated, of course.
+const deviceData = await api.getDevices({ ownerName: "Robert" });
 
-// The API doesn't stop you from using the niceties of objects.
-// Client and API are designed to work well together.
+// If you have a client, objects can be created from API data directly.
 const devices = deviceData.map((data) => client.createDevice(data));
 
 // Everything is promise-based, so you can do things concurrently.
