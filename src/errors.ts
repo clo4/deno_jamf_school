@@ -35,7 +35,7 @@ export class PermissionError extends Error {
 
 // APIError: POST /devices/2097209720972/wipe returned 404 Not Found, with the following data:
 export class APIError extends Error {
-	private constructor(
+	constructor(
 		init: {
 			status: number;
 			statusText: string;
