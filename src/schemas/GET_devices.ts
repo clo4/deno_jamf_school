@@ -31,6 +31,7 @@ type ResponseData = {
 			lastName?: string;
 			notes?: string;
 			modified?: string;
+			vpp: number[];
 		};
 		groups: string[];
 		enrollType: "manual" | "ac2" | "ac2Pending" | "dep" | "depPending";
@@ -52,6 +53,8 @@ type ResponseData = {
 			icon: string;
 		}[];
 		modified: string;
+		depProfile: string;
+		notes: string;
 		lastCheckin: string;
 		networkInformation: {
 			IPAddress: string;
@@ -116,6 +119,7 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 							id: { type: "int32" },
 							locationId: { type: "int32" },
 							name: { type: "string" },
+							vpp: { elements: { type: "int32" } },
 						},
 						optionalProperties: {
 							username: { type: "string" },
@@ -125,7 +129,6 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 							notes: { type: "string" },
 							modified: { type: "string" },
 						},
-						additionalProperties: true,
 					},
 					groups: {
 						elements: { type: "string" },
@@ -141,6 +144,8 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 					iTunesStoreLoggedIn: { type: "boolean" },
 					modified: { type: "string" },
 					lastCheckin: { type: "string" },
+					depProfile: { type: "string" },
+					notes: { type: "string" },
 					region: {
 						properties: {
 							string: { type: "string" },
@@ -197,7 +202,6 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 						},
 					},
 				},
-				additionalProperties: true,
 			},
 		},
 	},
