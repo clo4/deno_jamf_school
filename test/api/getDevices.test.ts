@@ -1,6 +1,6 @@
 import * as jamf from "../../src/mod.ts";
 import validateGetDevices from "../../src/schemas/GET_devices.ts";
-import { assertEquals, assertThrowsAsync } from "../deps/asserts.ts";
+import { assert, assertEquals, assertThrowsAsync } from "../deps/asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as mockFetch from "../deps/mock_fetch.ts";
 
@@ -111,6 +111,23 @@ Deno.test({
 		await assertThrowsAsync(async () => {
 			await api.getDevices();
 		});
+		mockFetch.reset();
+	},
+});
+
+Deno.test({
+	name: "api/getDevices: sets request Accept header",
+	async fn() {
+		let didTest = false;
+		mockFetch.mock("GET@/devices", (request) => {
+			const accept = request.headers.get("Accept");
+			assertEquals(accept, "application/json");
+			didTest = true;
+			return response;
+		});
+		// This will throw if it doesn't work
+		await api.getDevices();
+		assert(didTest);
 		mockFetch.reset();
 	},
 });

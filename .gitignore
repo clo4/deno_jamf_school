@@ -3,3 +3,5 @@
 src/_schemas
 
 tpl.json
+
+/ignore*
