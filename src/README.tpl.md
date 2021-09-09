@@ -76,11 +76,11 @@ Each entry only explains what changed, but links to a pull request that explains
 
 ### Version 0.2.0
 
-- **Added methods to set device ownership ([#9])**\
+- **Added methods to set device ownership ([#10])**\
   `API.assignDeviceOwner` and `Device.setOwner`. The documentation contains examples.
 
-- **Fixed broken schemas ([#9])**\
-  `API.getDevice` should fail less often now.
+- **Improved schemas ([#10])**\
+  `API.getDevice` should fail less often now, and `API.getDevices` has more detail.
 
 - **Changed how clients are instantiated with an API ([#8])**\
   The `API` must now be passed in as an `api` property on an object.
@@ -88,7 +88,7 @@ Each entry only explains what changed, but links to a pull request that explains
 - **Changed how data is validated ([#7])**\
   Technical change, but a pretty good performance win.
 
-[#9]: $REPO/pull/9
+[#10]: $REPO/pull/10
 [#8]: $REPO/pull/8
 [#7]: $REPO/pull/7
 
