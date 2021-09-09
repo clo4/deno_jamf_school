@@ -331,7 +331,14 @@ const resuffix = (p: string) =>
 const guessEOL = (s: string) => s[s.indexOf("\n") - 1] === "\r" ? "\r\n" : "\n";
 
 // This may get logging later
-const getVar = (key: string) => vars.get(key);
+const getVar = (key: string) => {
+	const value = vars.get(key);
+	if (value === undefined) {
+		console.error(`Attempted to access an underfined variable: ${key}`);
+		Deno.exit(1);
+	}
+	return value;
+};
 
 const substituteOptions: SubstituteOptions = {
 	percent: allowPercentVariables,

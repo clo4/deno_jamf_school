@@ -4,10 +4,13 @@
 
 **Jamf School for Deno** is an idiomatic, unofficial API wrapper for Jamf School.
 
-Read on for an introduction. Alternatively,
-**[here's the documentation for the latest release.][docs]**
+If something doesn't work as expected, _please_ [raise an issue on GitHub][issues] so we
+can improve the library for everyone!
 
-[docs]: https://doc.deno.land/https/deno.land/x/jamf_school@$VERSION/mod.ts
+**[Here's the documentation for the latest release.][docs]**
+
+[issues]: $REPO/issues
+[docs]: $DOCS/mod.ts
 
 ## Status
 
@@ -31,7 +34,7 @@ import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
 const client = jamf.createClient({
 	id: "YOUR_NETWORK_ID",
 	token: "YOUR_API_TOKEN",
-	url: "YOUR_SCHOOL.jamfcloud.com/api",
+	url: "https://YOUR_SCHOOL.jamfcloud.com/api",
 });
 
 // See the docs for everything clients can do.
@@ -49,7 +52,7 @@ import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
 const api = jamf.createAPI({
 	id: "YOUR_NETWORK_ID",
 	token: "YOUR_API_TOKEN",
-	url: "YOUR_SCHOOL.jamfcloud.com/api",
+	url: "https://YOUR_SCHOOL.jamfcloud.com/api",
 });
 
 const client = jamf.createClient({ api });
@@ -66,3 +69,31 @@ await Promise.allSettled((devices) => device.restart());
 ```
 
 </details>
+
+## Changelog
+
+Each entry only explains what changed, but links to a pull request that explains why.
+
+### Version 0.2.0
+
+- **Added methods to set device ownership ([#9])**\
+  `API.assignDeviceOwner` and `Device.setOwner`. The documentation contains examples.
+
+- **Fixed broken schemas ([#9])**\
+  `API.getDevice` should fail less often now.
+
+- **Changed how clients are instantiated with an API ([#8])**\
+  The `API` must now be passed in as an `api` property on an object.
+
+- **Changed how data is validated ([#7])**\
+  Technical change, but a pretty good performance win.
+
+[#9]: $REPO/pull/9
+[#8]: $REPO/pull/8
+[#7]: $REPO/pull/7
+
+### Version 0.1.0
+
+- **Initial release**\
+  Includes basic API support for devices, device groups, users, and user groups, as well
+  as an object-oriented layer to simplify using the API.
