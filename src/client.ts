@@ -713,8 +713,8 @@ class App implements models.App {
 		return this.#data.bundleId;
 	}
 
-	get iconURL() {
-		return new URL(this.#data.icon);
+	get icon() {
+		return this.#data.icon;
 	}
 
 	get isBook() {

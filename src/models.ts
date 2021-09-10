@@ -886,7 +886,7 @@ export interface App {
 	readonly bundleId: string;
 
 	/** The URL of the icon of the app. */
-	readonly iconURL: URL;
+	readonly icon: string;
 
 	/** The app's name. */
 	readonly name: string;
