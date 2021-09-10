@@ -73,3 +73,11 @@ Deno.test("schemas/assertValid: GET /users/groups/:id (200 OK)", async () => {
 	schemasJIT.assertValid("GET /users/groups/:id", JSON.parse(json));
 	schemasAOT.assertValid("GET /users/groups/:id", JSON.parse(json));
 });
+
+Deno.test("schemas/assertValid: GET /apps (200 OK)", async () => {
+	const json = await readRelativeTextFile(
+		"../example_data/GET_apps__200.json",
+	);
+	schemasJIT.assertValid("GET /apps", JSON.parse(json));
+	schemasAOT.assertValid("GET /apps", JSON.parse(json));
+});

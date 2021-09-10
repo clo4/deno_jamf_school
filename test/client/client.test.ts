@@ -110,3 +110,30 @@ Deno.test({
 		client.createUserGroup(data.group);
 	},
 });
+
+Deno.test({
+	name: "Client/createApp: from multiple apps",
+	async fn() {
+		const data = JSON.parse(
+			await readRelativeTextFile("../example_data/GET_apps__200.json"),
+		);
+		assertValid("GET /apps", data);
+
+		data.apps.map((app) => client.createApp(app));
+	},
+});
+
+Deno.test({
+	name: "Client/createApp: from multiple apps, accessing icon",
+	async fn() {
+		const data = JSON.parse(
+			await readRelativeTextFile("../example_data/GET_apps__200.json"),
+		);
+		assertValid("GET /apps", data);
+
+		const apps = data.apps.map((app) => client.createApp(app));
+		apps.forEach((app) => {
+			app.iconURL;
+		});
+	},
+});

@@ -1,6 +1,7 @@
 import type { ErrorObject, ValidateFunction as Validator } from "./_ajv_jtd.ts";
 
 // GET
+import validateGetApps from "./GET_apps.ts";
 import validateGetDevices from "./GET_devices.ts";
 import validateGetDevicesGroups from "./GET_devices_groups.ts";
 import validateGetDevicesGroupsId from "./GET_devices_groups_id.ts";
@@ -25,6 +26,7 @@ import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
 
 // dprint-ignore
 export const validators = {
+	"GET /apps": validateGetApps,
 	"GET /devices": validateGetDevices,
 	"GET /devices/:udid": validateGetDevicesUdid,
 	"GET /devices/groups": validateGetDevicesGroups,
