@@ -130,6 +130,13 @@ export class Device implements models.Device {
 		return this;
 	}
 
+	async removeOwner() {
+		if (this.#data.owner.id !== 0) {
+			await this.#api.assignDeviceOwner(this.udid, 0);
+		}
+		return this;
+	}
+
 	async getGroups(): Promise<models.DeviceGroup[]> {
 		let allGroups;
 		try {

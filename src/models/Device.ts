@@ -126,6 +126,9 @@ export interface Device {
 	 */
 	setOwner(user: { id: number }): Promise<this>;
 
+	/** (Edit) Remove this device's owner. */
+	removeOwner(): Promise<this>;
+
 	/** (Read) Get the device's groups. */
 	getGroups(): Promise<DeviceGroup[]>;
 
