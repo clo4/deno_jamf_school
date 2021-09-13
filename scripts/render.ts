@@ -91,6 +91,11 @@ ${["outputFileSuffix", "underline"]}: ${["string", "italic"]}  [default: ""]
   The input suffix will be replaced with this string.
   This must not contain any glob characters such as * or ?.
 
+${["root", "underline"]}: ${["string", "italic"]}  [default: <cwd>]
+  The root directory, from which all recursive searches will be started. This
+  path should be absolute, as relative paths are relative to your CWD. If this
+  option is set, it is assumed to be a valid path - it is never checked.
+
 
 ${["NOTES:", "bold"]}
 
@@ -106,6 +111,7 @@ ${["USAGE EXAMPLES:", "bold"]}
 
 The script requires '--allow-read=.' and '--allow-write=.' but the flags have
 been omitted from the examples for brevity. The script will fail without them.
+Because stdin is a pipe, not a terminal, '--prompt' cannot be used.
 
   ${["$", "dim"]} "cat" tpl.json
   {
@@ -132,16 +138,22 @@ ${["With PowerShell on Windows:", "underline"]}
 
 ${["Using a script:", "underline"]}
 
-  This example shows accessing environment variables.
+  This example gives the render script access to all environment variables,
+  and sets the search root to the directory containing the script.
 
   ${["$", "dim"]} cat tpl.js
   console.log(JSON.stringify({
-    variables: Deno.env.toObject(),
+    settings: {
+      root: new URL(".", import.meta.url).pathname,
+    },
+    variables: {
+      ...Deno.env.toObject(),
+    },
   }));
 
   ${["$", "dim"]} deno run --allow-env tpl.js | deno run ./scripts/render.ts
 
-`.slice(1)
+`.trimStart()
 
 //
 // 0. Argument parsing and help
@@ -159,14 +171,8 @@ if (help || Deno.isatty(Deno.stdin.rid)) {
 }
 
 //
-// 1. Grant permissions and set up logging
+// 1. Set up logging
 //
-
-// Since stdin isn't a TTY, grantOrThrow can't prompt and will just throw.
-permissions.grantOrThrow(
-	{ name: "read", path: "." },
-	{ name: "write", path: "." },
-);
 
 /** TS 4.1 added string manipulation types! */
 // @ts-ignore since `Uppercase` is implemented with String.toUpperCase
@@ -214,7 +220,7 @@ addEventListener("unload", () => {
 });
 
 //
-// 2. Parse and validate the input
+// 2. Parse and validate the input, and ensure the correct permissions are granted
 //
 
 const validateSuffix = (s: string) => /^[A-Za-z0-9_\-\.\$]*$/.test(s);
@@ -236,6 +242,7 @@ const schema = z.object({
 		outputFileSuffix: z.optional(z.string().refine(validateSuffix, suffixmsg)),
 		excludePaths: z.optional(z.array(z.string())),
 		allowPercentVariables: z.optional(z.boolean()),
+		root: z.optional(z.string()),
 	})),
 	variables: z.record(z.string()),
 }).strict();
@@ -290,7 +297,18 @@ const {
 	outputFileSuffix = "",
 	excludePaths = [],
 	allowPercentVariables = false,
+	root = null,
 } = userConfig.settings ?? {};
+
+// Since stdin isn't a TTY, grantOrThrow can't prompt and will just throw.
+await permissions.grantOrThrow(
+	{ name: "read", path: root ?? "." },
+	{ name: "write", path: root ?? "." },
+);
+
+if (root !== null) {
+	Deno.chdir(root);
+}
 
 /** A map of all variables that aren't configuration. */
 const vars = new Map(Object.entries(userConfig.variables));
@@ -313,7 +331,14 @@ const resuffix = (p: string) =>
 const guessEOL = (s: string) => s[s.indexOf("\n") - 1] === "\r" ? "\r\n" : "\n";
 
 // This may get logging later
-const getVar = (key: string) => vars.get(key);
+const getVar = (key: string) => {
+	const value = vars.get(key);
+	if (value === undefined) {
+		console.error(`Attempted to access an underfined variable: ${key}`);
+		Deno.exit(1);
+	}
+	return value;
+};
 
 const substituteOptions: SubstituteOptions = {
 	percent: allowPercentVariables,
