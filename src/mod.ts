@@ -22,10 +22,7 @@
  * SOFTWARE.
  */
 
-export { createAPI } from "./api.ts";
-export type { Credentials } from "./api.ts";
-
-export { createClient } from "./client.ts";
+export { createAPI, createClient } from "./internal/mod.ts";
 
 export type {
 	API,

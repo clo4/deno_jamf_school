@@ -1,37 +1,4 @@
-import { STATUS_TEXT } from "./deps/std_http_status.ts";
-import { assert } from "./deps/std_testing_asserts.ts";
-
-const permissionMethodMap = {
-	GET: "Read",
-	POST: "Add",
-	PUT: "Edit",
-	DELETE: "Delete",
-} as const;
-
-type PermissionErrorInit = {
-	method: string;
-	endpoint: string;
-};
-
-export class PermissionError extends Error {
-	method: string;
-	endpoint: string;
-
-	constructor({ method, endpoint }: PermissionErrorInit) {
-		method = method.toUpperCase();
-
-		// dprint-ignore
-		assert(method === "GET" || method === "PUT" || method === "POST" || method === "DELETE");
-		const permission = permissionMethodMap[method];
-
-		// dprint-ignore
-		super(`Your API key requires the '${permission}' permission for ${method} ${endpoint}`);
-		this.name = this.constructor.name;
-		Error.captureStackTrace?.(this, this.constructor);
-		this.method = method;
-		this.endpoint = endpoint;
-	}
-}
+import { STATUS_TEXT } from "../deps/std_http_status.ts";
 
 // APIError: POST /devices/2097209720972/wipe returned 404 Not Found, with the following data:
 export class APIError extends Error {
@@ -69,4 +36,19 @@ export class APIError extends Error {
 			route: new URL(request.url).pathname,
 		});
 	}
+}
+
+// Everything this function does could be done better by a decorator.
+/**
+ * Return `value` if `error` is an `APIError`, otherwise throw `error`.
+ *
+ * JavaScript (or at least V8, not sure if this is in the spec) captures
+ * the stack on error instantiation instead of when it's thrown, so re-throwing
+ * it won't touch the trace.
+ */
+export function suppressAPIError<T>(value: T, error: unknown): T {
+	if (!(error instanceof APIError)) {
+		throw error;
+	}
+	return value;
 }

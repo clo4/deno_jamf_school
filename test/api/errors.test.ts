@@ -1,6 +1,7 @@
 import * as jamf from "../../src/mod.ts";
-import * as errors from "../../src/errors.ts";
 import ky from "../../src/deps/ky.ts";
+import { PermissionError } from "../../src/internal/PermissionError.ts";
+import { APIError } from "../../src/internal/APIError.ts";
 import { assert, assertThrowsAsync } from "../deps/asserts.ts";
 import { install as installMockFetch, mock, reset } from "../deps/mock_fetch.ts";
 
@@ -31,22 +32,22 @@ Deno.test({
 		});
 		await assertThrowsAsync(
 			async () => await http.get("405"),
-			errors.PermissionError,
+			PermissionError,
 			"Read",
 		);
 		await assertThrowsAsync(
 			async () => await http.post("405"),
-			errors.PermissionError,
+			PermissionError,
 			"Add",
 		);
 		await assertThrowsAsync(
 			async () => await http.put("405"),
-			errors.PermissionError,
+			PermissionError,
 			"Edit",
 		);
 		await assertThrowsAsync(
 			async () => await http.delete("405"),
-			errors.PermissionError,
+			PermissionError,
 			"Delete",
 		);
 		reset();
@@ -63,22 +64,22 @@ Deno.test({
 		});
 		await assertThrowsAsync(
 			async () => await http.get("404"),
-			errors.APIError,
+			APIError,
 			"Failed, resource not found",
 		);
 		await assertThrowsAsync(
 			async () => await http.post("404"),
-			errors.APIError,
+			APIError,
 			"Failed, resource not found",
 		);
 		await assertThrowsAsync(
 			async () => await http.put("404"),
-			errors.APIError,
+			APIError,
 			"Failed, resource not found",
 		);
 		await assertThrowsAsync(
 			async () => await http.delete("404"),
-			errors.APIError,
+			APIError,
 			"Failed, resource not found",
 		);
 		reset();

@@ -1,64 +1,11 @@
-// // deno-lint-ignore-file require-await
-
-import ky, { AfterResponseHook } from "./deps/ky.ts";
-import * as base64 from "./deps/std_encoding_base64.ts";
-import { assert } from "./deps/std_testing_asserts.ts";
-import * as schemas from "./schemas/mod.bundle.js";
-import type { RouteData } from "./schemas/mod.bundle.js";
-import { APIError, PermissionError } from "./errors.ts";
-import type * as models from "./models/mod.ts";
-
-export type Credentials = {
-	/**
-	 * Your Jamf School network ID.
-	 *
-	 * This can be located in the Jamf School web interface:
-	 *
-	 * Devices > Enroll device(s) > On-device enrollment (iOS & macOS)
-	 */
-	id: string;
-
-	/**
-	 * Your API token.
-	 *
-	 * This must be created through the Jamf School web interface:
-	 *
-	 * Organisation > Settings > API > Add API Key
-	 *
-	 * All methods state their required permissions.
-	 */
-	token: string;
-
-	/**
-	 * Your API endpoint.
-	 *
-	 * This generally follows this format:
-	 *
-	 * https://your_school_instance.jamfcloud.com/api
-	 */
-	url: string;
-};
-
-/**
- * A low-level, type-safe wrapper over the Jamf School API that validates all
- * data it receives.
- *
- * The only state it has is your network ID and API token, which are immutable
- * once set.
- *
- * To find your network ID:
- *
- *   Devices > Enroll device(s) > On-device enrollment (iOS & macOS)
- *
- * To create an API token:
- *
- *   Organisation > Settings > API > Add API Key
- *
- */
-export function createAPI(credentials: Credentials): models.API {
-	return new API(credentials);
-}
-
+import ky, { AfterResponseHook } from "../deps/ky.ts";
+import type * as models from "../models/mod.ts";
+import type { RouteData } from "../schemas/mod.bundle.js";
+import * as base64 from "../deps/std_encoding_base64.ts";
+import * as schemas from "../schemas/mod.bundle.js";
+import { PermissionError } from "./PermissionError.ts";
+import { APIError } from "./APIError.ts";
+import { assert } from "../deps/std_testing_asserts.ts";
 /**
  * Convert an object to search params, skipping undefined and null entries.
  * If there are no entries remaining after filtering, `undefined` is returned.
@@ -123,7 +70,7 @@ type APIConstructorInit = {
 	url: string;
 };
 
-class API implements models.API {
+export class API implements models.API {
 	readonly http: typeof ky;
 
 	constructor({ id, token, url }: APIConstructorInit) {
