@@ -4,3 +4,4 @@ export * from "./Device.ts";
 export * from "./DeviceGroup.ts";
 export * from "./User.ts";
 export * from "./UserGroup.ts";
+export * from "./App.ts";

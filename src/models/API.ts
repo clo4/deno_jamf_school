@@ -183,6 +183,9 @@ export interface API {
 
 	/** (Read) Get all user groups. */
 	getUserGroups(): Promise<RouteData<"GET /users/groups">["groups"]>;
+
+	/** (Read) Get all apps. */
+	getApps(): Promise<RouteData<"GET /apps">["apps"]>;
 }
 
 /** Helper type to map from API method name to the method's return type. */

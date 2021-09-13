@@ -377,4 +377,12 @@ export class API implements models.API {
 	// 		assertValidID(init.locationId);
 	// 		throw NOT_IMPLEMENTED;
 	// 	}
+
+	async getApps(): Promise<RouteData<"GET /apps">["apps"]> {
+		const data = await this.http.get(`apps`, {
+			throwHttpErrors: false,
+		}).json();
+		schemas.assertValid("GET /apps", data);
+		return data.apps;
+	}
 }

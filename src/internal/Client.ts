@@ -4,6 +4,7 @@ import { Device, DeviceData } from "./Device.ts";
 import { DeviceGroup, DeviceGroupData } from "./DeviceGroup.ts";
 import { User, UserData } from "./User.ts";
 import { UserGroup, UserGroupData } from "./UserGroup.ts";
+import { App, AppData } from "./App.ts";
 import { suppressAPIError } from "./APIError.ts";
 
 /**
@@ -17,6 +18,7 @@ export type Creator = Pick<
 	| "createDeviceGroup"
 	| "createUser"
 	| "createUserGroup"
+	| "createApp"
 >;
 
 /**
@@ -74,6 +76,14 @@ export class Client implements models.Client {
 
 	createUserGroup(data: UserGroupData): models.UserGroup {
 		return new UserGroup({
+			api: this.#api,
+			client: this,
+			data: data,
+		});
+	}
+
+	createApp(data: AppData): models.App {
+		return new App({
 			api: this.#api,
 			client: this,
 			data: data,
