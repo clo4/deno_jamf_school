@@ -38,7 +38,7 @@ export type {
 	DeviceGroup,
 	User,
 	UserGroup,
-} from "./models.ts";
+} from "./models/mod.ts";
 
 // Deno's standard library does the same thing. Good for consistency.
 export { version } from "./version.ts";

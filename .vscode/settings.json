@@ -2,7 +2,7 @@
   "deno.enable": true,
   "deno.lint": true,
   "deno.unstable": false,
-  // mostly for src/models.ts to quickly move to the implementation class
+  // mostly for src/models to quickly move to the implementation class
   "deno.codeLens.implementations": true,
   "deno.codeLens.references": false,
   // this makes the code move around as the lenses enable/disable when you

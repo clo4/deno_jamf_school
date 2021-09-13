@@ -6,7 +6,7 @@ import { assert } from "./deps/std_testing_asserts.ts";
 import * as schemas from "./schemas/mod.bundle.js";
 import type { RouteData } from "./schemas/mod.bundle.js";
 import { APIError, PermissionError } from "./errors.ts";
-import * as models from "./models.ts";
+import type * as models from "./models/mod.ts";
 
 export type Credentials = {
 	/**

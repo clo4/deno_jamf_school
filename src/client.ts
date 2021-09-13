@@ -1,4 +1,4 @@
-import * as models from "./models.ts";
+import type * as models from "./models/mod.ts";
 import * as api from "./api.ts";
 import { APIError } from "./errors.ts";
 
@@ -59,7 +59,7 @@ type BasicObjectInit<T> = {
 };
 
 // All of the classes in this file are purely implementation details. The
-// interfaces exported from ./models.ts are the source of truth.
+// interfaces exported from ./models/mod.ts are the source of truth.
 
 type ClientInit = {
 	api: models.API;
