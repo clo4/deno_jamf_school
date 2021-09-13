@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-import type * as models from "./models/mod.ts";
-import { API } from "./internal/API.ts";
-import { Client } from "./internal/Client.ts";
+import type { API, Client } from "./models/mod.ts";
+import { API as ImplAPI } from "./internal/API.ts";
+import { Client as ImplClient } from "./internal/Client.ts";
 
 export type Credentials = {
 	/**
@@ -73,8 +73,8 @@ export type Credentials = {
  *   Organisation > Settings > API > Add API Key
  *
  */
-export function createAPI(credentials: Credentials): models.API {
-	return new API(credentials);
+export function createAPI(credentials: Credentials): API {
+	return new ImplAPI(credentials);
 }
 
 /**
@@ -87,9 +87,9 @@ export function createAPI(credentials: Credentials): models.API {
  * take data returned from an `API` and upgrade it to an object with methods.
  */
 export function createClient(
-	init: Credentials | { api: models.API },
-): models.Client {
-	return new Client({
+	init: Credentials | { api: API },
+): Client {
+	return new ImplClient({
 		api: "api" in init ? init.api : createAPI(init),
 	});
 }
