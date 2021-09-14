@@ -21,29 +21,32 @@ export interface Client {
 	/**
 	 * Create a device object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getDeviceById` or
-	 * `getDeviceBySerialNumber`.
+	 * If you don't already have the data, you may want `getDeviceById`,
+	 * `getDeviceBySerialNumber`, or `getDevices`.
 	 */
 	createDevice(data: APIData["getDevices"][number]): Device;
 
 	/**
 	 * Create a device group object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getDeviceGroupById`.
+	 * If you don't already have the data, you may want `getDeviceGroupById` or
+	 * `getDeviceGroups`.
 	 */
 	createDeviceGroup(data: APIData["getDeviceGroup"]): DeviceGroup;
 
 	/**
 	 * Create a user object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getUserById`.
+	 * If you don't already have the data, you may want `getUserById` or
+	 * `getUsers`.
 	 */
 	createUser(data: APIData["getUser"]): User;
 
 	/**
 	 * Create a user group object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getUserGroupById`.
+	 * If you don't already have the data, you may want `getUserGroupById` or
+	 * `getUserGroups`.
 	 */
 	createUserGroup(data: APIData["getUserGroup"]): UserGroup;
 
