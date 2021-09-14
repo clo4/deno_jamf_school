@@ -1,3 +1,4 @@
+import { assert } from "../deps/std_testing_asserts.ts";
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
@@ -124,6 +125,10 @@ export class Device implements models.Device {
 	}
 
 	async setOwner(user: { id: number }) {
+		assert(
+			user.id !== 0,
+			"Using ID 0 would remove the owner. If this is intentional, use `Device.removeOwner()`",
+		);
 		if (user.id !== this.#data.owner.id) {
 			await this.#api.assignDeviceOwner(this.udid, user.id);
 		}
