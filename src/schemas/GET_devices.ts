@@ -41,6 +41,7 @@ type ResponseData = {
 		iCloudBackupEnabled: boolean;
 		iCloudBackupLatest: string;
 		iTunesStoreLoggedIn: boolean;
+		isBootstrapStored?: boolean;
 		region: {
 			// Yeah, it really is a key named "string"
 			string: string;
@@ -190,6 +191,7 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 					},
 				},
 				optionalProperties: {
+					isBootstrapStored: { type: "boolean" },
 					apps: {
 						elements: {
 							properties: {
