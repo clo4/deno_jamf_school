@@ -56,7 +56,7 @@ import type { API, Client } from "./models/mod.ts";
 import { API as ImplAPI } from "./internal/API.ts";
 import { Client as ImplClient } from "./internal/Client.ts";
 
-export type Credentials = {
+export interface Credentials {
 	/**
 	 * Your Jamf School network ID.
 	 *
@@ -85,7 +85,7 @@ export type Credentials = {
 	 * https://your_school_instance.jamfcloud.com/api
 	 */
 	url: string;
-};
+}
 
 /**
  * A low-level, type-safe wrapper over the Jamf School API that validates all
