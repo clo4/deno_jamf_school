@@ -10,6 +10,8 @@ import { colorizeConsole } from "./deps/colorize.ts";
 // but it's more consistent this way.
 import ajv from "../src/schemas/_ajv_jtd.ts";
 import standaloneCode from "../src/deps/ajv_standalone.ts";
+
+// This shim has to be imported before any of the schemas are compiled.
 import "./ajv_compile_shim.js";
 
 import * as schemas from "../src/schemas/mod.ts";
