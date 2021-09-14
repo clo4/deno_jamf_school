@@ -8,11 +8,11 @@ import type { UserGroup } from "./UserGroup.ts";
  * A high-level abstraction over the Jamf School API that allows you to reason
  * about data as objects with methods.
  *
- * A client instance does not act on the objects it creates, only acting as a
- * way to get other objects that can perform actions.
+ * As the implementations of these objects are not public, instance checks must
+ * be done using the `type` property on each object.
  *
- * Lower-level actions can be done with the API, for example bulk
- * editing operations.
+ * Lower-level actions can be done using an `API` object. This data can be
+ * upgraded to an object using one of the create-methods on the `Client`.
  */
 export interface Client {
 	/** Discriminator for type checks. */
