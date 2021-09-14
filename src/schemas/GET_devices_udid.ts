@@ -37,7 +37,9 @@ type ResponseData = {
 			groups?: string[];
 			teacherGroups?: string[];
 			children?: number[];
-			vpp?: number[];
+			vpp?: {
+				status: string;
+			}[];
 		};
 		groups: string[];
 		batteryLevel: number;
@@ -142,7 +144,13 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 						groupIds: { elements: { type: "int32" } },
 						teacherGroups: { elements: { type: "string" } },
 						children: { elements: { type: "int32" } },
-						vpp: { elements: { type: "int32" } },
+						vpp: {
+							elements: {
+								properties: {
+									status: { type: "string" },
+								},
+							},
+						},
 					},
 				},
 				groups: {
