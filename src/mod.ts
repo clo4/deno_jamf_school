@@ -1,25 +1,55 @@
+// MIT License
+//
+// Copyright (c) 2021 SeparateRecords
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 /**
- * MIT License
+ * Jamf School for Deno is an idiomatic, unofficial wrapper for the Jamf School
+ * API.
  *
- * Copyright (c) 2021 SeparateRecords
+ * All data you get back from the API is validated against a custom, public
+ * JSON schema to ensure you don't get any unexpected results without knowing.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * The `Client` and related objects are an optional layer of sugar over an
+ * `API` object that abstract away the actual routes and
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * It's modelled after web APIs, so it feels right at home in JavaScript and
+ * TypeScript.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Getting started is super quick. Once you've got your network ID and API
+ * token, create a new JS or TS file and write the following.
+ *
+ * ```
+ * import * as jamf from "https://deno.land/x/jamf_school@0.1.0/mod.ts";
+ *
+ * const client = jamf.createClient({
+ *   id: "YOUR_NETWORK_ID",
+ *   token: "YOUR_API_TOKEN",
+ *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
+ * })
+ * ```
+ *
+ * You can now start calling methods on the `client` object. If your credential
+ * were incorrect, awaiting a method will throw an exception.
+ *
+ * @module
  */
 
 import type { API, Client } from "./models/mod.ts";
