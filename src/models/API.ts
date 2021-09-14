@@ -1,17 +1,17 @@
 import type { RouteData } from "../schemas/mod.ts";
 
 /**
- * A low-level wrapper over the Jamf School API. It serves as a replacement
- * to manually making requests. It performs data validation error handling.
- * Network errors, validation errors, and permission errors will all be raised.
+ * API is a low-level wrapper over the Jamf School API. It serves as a
+ * replacement to manually making requests. It performs data validation and
+ * error handling. Network errors, validation errors, and permission errors
+ * will all be raised.
  *
  * Unfortunately, the data returned by these methods cannot be explored through
- * doc.deno.land due to limitations with `deno doc`, as it would require a full
- * TypeScript implementation to evaluate the types.
- *
- * Instead, the best solution is to browse https://deno.land/x/jamf_school/schemas
- * (each file has a `ResponseData` type) or to use the Deno language service in
- * your editor.
+ * doc.deno.land due to limitations with the documentation generator, as it
+ * would require a full TypeScript implementation to evaluate the types.
+ * Instead, the best solution is to either use the deno language server, or
+ * find the RouteData parameter in the method you want and find the matching
+ * file in https://deno.land/x/jamf_school/schemas.
  */
 export interface API {
 	/** Discriminator for type checks. */
