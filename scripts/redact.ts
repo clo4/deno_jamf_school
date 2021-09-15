@@ -146,7 +146,7 @@ type RedactOptions = {
 	preserveKeys: Set<string>;
 
 	/**
-	 * A set of object keys for which, if the value is an arra, between 10%
+	 * A set of object keys for which, if the value is an array, between 10%
 	 * and 80% of the values in the array will be deleted.
 	 */
 	pruneKeys: Set<string>;
