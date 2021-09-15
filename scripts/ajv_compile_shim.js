@@ -18,12 +18,14 @@ if (isRelease) {
 }
 
 const recurisvelyAddAdditionalProps = (object) => {
-	if ("properties" in object || "optionalProperties" in object) {
-		object.additionalProperties = true;
-		for (const value of Object.values(object.properties ?? {})) {
+	if ("properties" in object) {
+		object.additionalProperties ??= true;
+		for (const value of Object.values(object.properties)) {
 			recurisvelyAddAdditionalProps(value);
 		}
-		for (const value of Object.values(object.optionalProperties ?? {})) {
+	} else if ("optionalProperties" in object) {
+		object.additionalProperties ??= true;
+		for (const value of Object.values(object.optionalProperties)) {
 			recurisvelyAddAdditionalProps(value);
 		}
 	} else if ("elements" in object) {
