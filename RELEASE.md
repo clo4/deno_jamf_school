@@ -76,3 +76,9 @@ Use **just the version number**, do not include a leading 'v'.
 git tag -a {version}
 git push origin {version}
 ```
+
+Once the tag is pushed, the new version on deno.land/x is published automatically.
+
+## 10. Update links
+
+The documentation link in the repository description needs to be updated.
