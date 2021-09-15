@@ -6,7 +6,9 @@ import ajv from "../src/schemas/_ajv_jtd.ts";
 
 const realCompile = ajv.compile.bind(ajv);
 
-if (Deno.env.get("BUNDLE_RELEASE") === "1") {
+export const isRelease = Deno.env.get("BUNDLE_RELEASE") === "1";
+
+if (isRelease) {
 	ajv.compile = function (...args) {
 		const [schema] = args;
 		recurisvelyAddAdditionalProps(schema);
