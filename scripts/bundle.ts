@@ -11,6 +11,9 @@ import { colorizeConsole } from "./deps/colorize.ts";
 import ajv from "../src/schemas/_ajv_jtd.ts";
 import standaloneCode from "../src/deps/ajv_standalone.ts";
 
+// This shim must be imported before any of the schemas are compiled.
+import { isRelease } from "./ajv_compile_shim.js";
+
 import * as schemas from "../src/schemas/mod.ts";
 
 colorizeConsole();
@@ -117,6 +120,8 @@ console.debug(`Wrote validators in ${timeWritingValidators()} ms`);
 const banner = `
 /// <reference types="./mod.ts" />
 
+// Bundle mode: ${isRelease ? "release" : "development"}
+
 // dprint-ignore-file
 // deno-lint-ignore-file
 
@@ -162,3 +167,6 @@ const delta = newSize - oldSize;
 const sign = delta > 0 ? "+" : "";
 
 console.info(`${repo(outFile)} changed by ${sign}${delta}B`);
+if (isRelease) {
+	console.info(`Bundled as release (additionalProperties is always true)`);
+}

@@ -9,10 +9,17 @@ const repo = (p: string) => p.slice(repoRoot.length + 1);
 
 const bundlePath = path.join(repoRoot, "src", "schemas", "mod.bundle.js");
 
+const inputText = await Deno.readTextFile(bundlePath);
+
 console.info("Hashing bundle");
 const beforeHash = hash.createHash("md5")
-	.update(await Deno.readTextFile(bundlePath))
+	.update(inputText)
 	.digest();
+
+// The hashes will never match if we don't also bundle as release. The bundle
+// script injects a comment for release builds, specifically so this script can
+// detect that and also bundle as a release build.
+const isReleaseBuild = inputText.includes("// Bundle mode: release\n");
 
 const scriptPath = path.join(thisDir, "bundle.ts");
 console.info(`Running ${repo(scriptPath)}`);
@@ -27,6 +34,9 @@ const status = await Deno.run({
 		"--allow-all",
 		path.join(thisDir, "bundle.ts"),
 	],
+	env: {
+		"BUNDLE_RELEASE": isReleaseBuild ? "1" : "0",
+	},
 }).status();
 console.log();
 
@@ -41,7 +51,10 @@ const afterHash = hash.createHash("md5")
 	.digest();
 
 if (!equal(beforeHash, afterHash)) {
-	console.error("Hashes are unequal. Schemas must be bundled before committing.");
+	console.error(
+		"%cHashes are unequal. Schemas must be bundled before committing.",
+		"color: red",
+	);
 	console.error("$ deno run --unstable --allow-all ./scripts/bundle.ts");
 	Deno.exit(1);
 }

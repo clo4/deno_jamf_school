@@ -1,5 +1,7 @@
 /// <reference types="./mod.ts" />
 
+// Bundle mode: development
+
 // dprint-ignore-file
 // deno-lint-ignore-file
 
