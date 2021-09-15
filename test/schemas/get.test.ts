@@ -24,6 +24,16 @@ Deno.test("schemas/assertValid: GET /devices/:udid (200 OK)", async () => {
 	schemasAOT.assertValid("GET /devices/:udid", JSON.parse(json));
 });
 
+Deno.test("schemas/assertValid: GET /devices/:udid (200 OK, many)", async () => {
+	const text = await readRelativeTextFile(
+		"../example_data/many__GET_devices_udid__200.json",
+	);
+	for (const json of JSON.parse(text)) {
+		schemasAOT.assertValid("GET /devices/:udid", json);
+		schemasJIT.assertValid("GET /devices/:udid", json);
+	}
+});
+
 Deno.test("schemas/assertValid: GET /devices/:udid (200 OK, no owner)", async () => {
 	const json = await readRelativeTextFile(
 		"../example_data/GET_devices_udid__200__no_owner.json",
