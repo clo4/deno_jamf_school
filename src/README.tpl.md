@@ -1,11 +1,11 @@
 # Jamf School for Deno
 
-<!-- I made a cool banner but can't use it due to potential trademark issues. RIP -->
+**Jamf School for Deno is an unofficial, idiomatic API wrapper for Jamf School.**\
+It should be usable by any school IT admin with _some_ experience in JavaScript.
 
-**Jamf School for Deno** is an idiomatic, unofficial API wrapper for Jamf School.
-
-If something doesn't work as expected, _please_ [raise an issue on GitHub][issues] so we
-can improve the library for everyone!
+If something doesn't work as expected or you just want some help, please
+[raise an issue on GitHub][issues] so we can improve the library and documentation for
+everyone!
 
 **[Here's the documentation for the latest release.][docs]**
 
@@ -14,21 +14,25 @@ can improve the library for everyone!
 
 ## Status
 
-**Currently an MVP. Don't use this yet.**
-
-(Unless you only need to restart and wipe devices, it's great at doing that.)
+This is currently in alpha. There may be unexpected breakages due to API changes. This
+library only supports a very limited subset of API features for devices, device groups,
+users, and user groups.
 
 ## Features
 
-- Complete data validation, for maximum safety.
-- Excellent documentation and errors.
-- Consistent API modelled after the web's document API.
-- Only requires `--allow-net=YOUR_URL`
+- Designed for Deno: only requires `--allow-net=YOUR_URL`
+- Excellent documentation and error messages.
+- Complete data validation for all API requests.
+- A consistent API modelled after the web's document API.
 
 ## Usage
 
-```typescript
-#!/usr/bin/env deno run --allow-net=YOUR_SCHOOL.jamfcloud.com
+This will print the name of each registered device. To run this example, you'll have to
+change the ID, token, and URL. [Here's how to get those credentials.][credentials]
+
+<h6>device_names.ts</h6>
+
+```javascript
 import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
 
 const client = jamf.createClient({
@@ -39,13 +43,27 @@ const client = jamf.createClient({
 
 // See the docs for everything clients can do.
 const devices = await client.getDevices();
+
+for (const device of devices) {
+	console.log(device.udid, device.name);
+}
 ```
+
+Now run that script.
+
+```console
+$ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
+```
+
+[credentials]: $DOCS/mod.ts#Credentials
 
 <details>
 <summary>A more complex example</summary>
+<br>
 
-```typescript
-#!/usr/bin/env deno run --allow-net=YOUR_SCHOOL.jamfcloud.com
+Restart all devices owned by anyone named "Robert".
+
+```javascript
 import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
 
 // The client can be instantiated with an API instead of credentials.
@@ -109,3 +127,13 @@ Each entry only explains what changed, but links to a pull request that explains
 - **Initial release**\
   Includes basic API support for devices, device groups, users, and user groups, as well
   as an object-oriented layer to simplify using the API.
+
+## License and Disclaimer
+
+JAMF is a trademark beloning to JAMF Software, LLC. This project's development is not
+affiliated with JAMF Software, LLC.
+
+There is a copy of the project's license (MIT) located in
+[the root of the repository][repo] and in the [module entrypoint (mod.ts)](./mod.ts).
+
+[repo]: $REPO
