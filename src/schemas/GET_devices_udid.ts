@@ -35,9 +35,11 @@ type ResponseData = {
 			deviceCount?: number;
 			groupIds?: number[];
 			groups?: string[];
-			teacherGroups?: number[];
+			teacherGroups?: string[];
 			children?: number[];
-			vpp?: number[];
+			vpp?: {
+				status: string;
+			}[];
 		};
 		groups: string[];
 		batteryLevel: number;
@@ -74,6 +76,24 @@ type ResponseData = {
 			coordinates: string | null;
 		};
 		notes: string;
+		isBootstrapStored?: boolean;
+		serviceSubscription?: {
+			CarrierSettingsVersion: string;
+			CurrentCarrierNetwork: string;
+			CurrentMCC: string;
+			CurrentMNC: string;
+			ICCID: string;
+			IMEI: string;
+			IsDataPreferred: boolean;
+			IsRoaming: boolean;
+			IsVoicePreferred: boolean;
+			Label: string;
+			LabelID: string;
+			MEID?: string;
+			EID?: string;
+			PhoneNumber: string;
+			Slot: string;
+		}[];
 	};
 };
 
@@ -122,9 +142,15 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 						deviceCount: { type: "int32" },
 						groups: { elements: { type: "string" } },
 						groupIds: { elements: { type: "int32" } },
-						teacherGroups: { elements: { type: "int32" } },
+						teacherGroups: { elements: { type: "string" } },
 						children: { elements: { type: "int32" } },
-						vpp: { elements: { type: "int32" } },
+						vpp: {
+							elements: {
+								properties: {
+									status: { type: "string" },
+								},
+							},
+						},
 					},
 				},
 				groups: {
@@ -167,6 +193,7 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 				},
 			},
 			optionalProperties: {
+				isBootstrapStored: { type: "boolean" },
 				apps: {
 					elements: {
 						properties: {
@@ -178,7 +205,31 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 						},
 					},
 				},
+				serviceSubscription: {
+					elements: {
+						properties: {
+							CarrierSettingsVersion: { type: "string" },
+							CurrentCarrierNetwork: { type: "string" },
+							CurrentMCC: { type: "string" },
+							CurrentMNC: { type: "string" },
+							ICCID: { type: "string" },
+							IMEI: { type: "string" },
+							IsDataPreferred: { type: "boolean" },
+							IsRoaming: { type: "boolean" },
+							IsVoicePreferred: { type: "boolean" },
+							Label: { type: "string" },
+							LabelID: { type: "string" },
+							PhoneNumber: { type: "string" },
+							Slot: { type: "string" },
+						},
+						optionalProperties: {
+							MEID: { type: "string" },
+							EID: { type: "string" },
+						},
+					},
+				},
 			},
+			// additionalProperties: true,
 		},
 	},
 };
