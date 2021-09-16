@@ -338,7 +338,7 @@ const getVar = (key: string) => {
 		const all = [...vars.keys()];
 		const match = closest(key, all);
 		console.error(
-			`Attempted to access an undefined variable: ${key} (did you mean '${match}'?)`,
+			`Attempted to access an undefined variable: ${key} (did you mean ${match}?)`,
 		);
 		Deno.exit(1);
 	}
