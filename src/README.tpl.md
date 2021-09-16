@@ -16,7 +16,11 @@ everyone!
 
 This is currently in alpha. There may be unexpected breakages due to API changes. This
 library only supports a very limited subset of API features for devices, device groups,
-users, and user groups.
+users, and user groups are supported as of version 0.2.0.
+
+> **I'd recommend not using this library until it's a little more complete.** If it's
+> something you'd like to keep an eye on, give it a Star on [GitHub]($REPO) and click
+> _Watch_ > _Custom_ > _tick 'Releases'_ > _Apply_.
 
 ## Features
 
@@ -29,6 +33,8 @@ users, and user groups.
 
 This will print the name of each registered device. To run this example, you'll have to
 change the ID, token, and URL. [Here's how to get those credentials.][credentials]
+
+[credentials]: $DOCS/mod.ts#Credentials
 
 <h6>device_names.ts</h6>
 
@@ -51,11 +57,9 @@ for (const device of devices) {
 
 Now run that script.
 
-```console
-$ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
+```bash
+deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 ```
-
-[credentials]: $DOCS/mod.ts#Credentials
 
 <details>
 <summary>A more complex example</summary>
