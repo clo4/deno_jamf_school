@@ -1,17 +1,17 @@
 import type { RouteData } from "../schemas/mod.ts";
 
 /**
- * A low-level wrapper over the Jamf School API. It serves as a replacement
- * to manually making requests. It performs data validation error handling.
- * Network errors, validation errors, and permission errors will all be raised.
+ * API is a low-level wrapper over the Jamf School API. It serves as a
+ * replacement to manually making requests. It performs data validation and
+ * error handling. Network errors, validation errors, and permission errors
+ * will all be raised.
  *
  * Unfortunately, the data returned by these methods cannot be explored through
- * doc.deno.land due to limitations with `deno doc`, as it would require a full
- * TypeScript implementation to evaluate the types.
- *
- * Instead, the best solution is to browse https://deno.land/x/jamf_school/schemas
- * (each file has a `ResponseData` type) or to use the Deno language service in
- * your editor.
+ * doc.deno.land due to limitations with the documentation generator, as it
+ * would require a full TypeScript implementation to evaluate the types.
+ * Instead, the best solution is to either use the deno language server, or
+ * find the RouteData parameter in the method you want and find the matching
+ * file in https://deno.land/x/jamf_school/schemas.
  */
 export interface API {
 	/** Discriminator for type checks. */
@@ -192,18 +192,18 @@ export type APIData = {
 		Promise<infer T> ? T : never;
 };
 
-export type APIGetDeviceOptions = {
+export interface APIGetDeviceOptions {
 	/**
 	 * Specify whether the API should include apps in the output.
 	 * Apps will be included unless `false` is provided.
 	 */
 	includeApps?: boolean;
-};
+}
 
 // Some of the names of the options are different, because the API is bad and
 // inconsistent. Have I said that enough yet? Anyway, implementations are
 // expected to adapt these options to the _actual_ names.
-export type APIGetDevicesOptions = {
+export interface APIGetDevicesOptions {
 	/**
 	 * Specify whether each device should include its apps in the response.
 	 * Apps will not be included in the response unless this is `true`.
@@ -325,34 +325,34 @@ export type APIGetDevicesOptions = {
 	 * Select only devices with the given enrollment type.
 	 */
 	enrollmentType?: "manual" | "dep" | "depPending" | "ac2" | "ac2Pending";
-};
+}
 
-export type APIRestartDeviceOptions = {
+export interface APIRestartDeviceOptions {
 	/**
 	 * Specifies whether the passcode should be cleared before restarting.
 	 * The passcode will be restored after restarting.
 	 */
 	clearPasscode: boolean;
-};
+}
 
-type APIRefreshDeviceInventoryOptions = {
+interface APIRefreshDeviceInventoryOptions {
 	/**
 	 * Specify whether errors should be cleared when refreshing the device's
 	 * inventory. For example, this will attempt to reinstall apps if
 	 * installation failed previously.
 	 */
 	clearErrors: boolean;
-};
+}
 
-type APIUpdateDeviceDetailsOptions = {
+interface APIUpdateDeviceDetailsOptions {
 	/** Set a new asset tag for the device. */
 	assetTag?: string;
 
 	/** Set a new note for the device. */
 	notes?: string;
-};
+}
 
-export type APIWipeDeviceOptions = {
+export interface APIWipeDeviceOptions {
 	/**
 	 * Specify whether to clear the activation lock before wiping the device.
 	 *
@@ -366,9 +366,9 @@ export type APIWipeDeviceOptions = {
 	 * In most cases, you'll want this to be `true`.
 	 */
 	clearActivationLock: boolean;
-};
+}
 
-type APIUpdateDeviceCellularPlanInit = {
+interface APIUpdateDeviceCellularPlanInit {
 	/**
 	 * The carrier's eSIM server URL. This information varies from carrier to
 	 * carrier.
@@ -380,9 +380,9 @@ type APIUpdateDeviceCellularPlanInit = {
 	 * command.
 	 */
 	requiresNetworkTether?: boolean;
-};
+}
 
-type APIMoveDeviceInit = {
+interface APIMoveDeviceInit {
 	/**
 	 * The ID of the location to move the device to.
 	 *
@@ -395,9 +395,9 @@ type APIMoveDeviceInit = {
 	 * moving the device and its owner.
 	 */
 	onlyDevice?: boolean;
-};
+}
 
-type APIMoveDevicesInit = {
+interface APIMoveDevicesInit {
 	/**
 	 * The array of devices to move. This array must not be empty
 	 * and may only contain a maximum of 20 items.
@@ -415,9 +415,9 @@ type APIMoveDevicesInit = {
 	 * moving the device and its owner.
 	 */
 	onlyDevice?: boolean;
-};
+}
 
-type APIUserData = {
+interface APIUserData {
 	/** The user's username. This must be unique. */
 	username: string;
 
@@ -466,20 +466,20 @@ type APIUserData = {
 
 	/** The ID of the location to assign the user to. */
 	locationId?: number;
-};
+}
 
-type APIUserDataBulkUpdate = APIUserData & {
+interface APIUserDataBulkUpdate extends APIUserData {
 	/**
 	 * Specify the action to perform on the user. By default, the user will be
 	 * updated or created as necessary ("auto"). Using "delete" will trash the
 	 * user.
 	 */
 	action?: "auto" | "delete";
-};
+}
 
-type APIMoveUserInit = {
+interface APIMoveUserInit {
 	/** ID of the location to move the user to. */
 	locationId: number;
 	/** Whether to only move the user, instead of the user and their devices. */
 	onlyUser?: boolean;
-};
+}

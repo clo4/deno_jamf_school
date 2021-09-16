@@ -8,11 +8,11 @@ import type { UserGroup } from "./UserGroup.ts";
  * A high-level abstraction over the Jamf School API that allows you to reason
  * about data as objects with methods.
  *
- * A client instance does not act on the objects it creates, only acting as a
- * way to get other objects that can perform actions.
+ * As the implementations of these objects are not public, instance checks must
+ * be done using the `type` property on each object.
  *
- * Lower-level actions can be done with the API, for example bulk
- * editing operations.
+ * Lower-level actions can be done using an `API` object. This data can be
+ * upgraded to an object using one of the create-methods on the `Client`.
  */
 export interface Client {
 	/** Discriminator for type checks. */
@@ -21,29 +21,32 @@ export interface Client {
 	/**
 	 * Create a device object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getDeviceById` or
-	 * `getDeviceBySerialNumber`.
+	 * If you don't already have the data, you may want `getDeviceById`,
+	 * `getDeviceBySerialNumber`, or `getDevices`.
 	 */
 	createDevice(data: APIData["getDevices"][number]): Device;
 
 	/**
 	 * Create a device group object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getDeviceGroupById`.
+	 * If you don't already have the data, you may want `getDeviceGroupById` or
+	 * `getDeviceGroups`.
 	 */
 	createDeviceGroup(data: APIData["getDeviceGroup"]): DeviceGroup;
 
 	/**
 	 * Create a user object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getUserById`.
+	 * If you don't already have the data, you may want `getUserById` or
+	 * `getUsers`.
 	 */
 	createUser(data: APIData["getUser"]): User;
 
 	/**
 	 * Create a user group object with data from the API.
 	 *
-	 * If you don't already have the data, you may want `getUserGroupById`.
+	 * If you don't already have the data, you may want `getUserGroupById` or
+	 * `getUserGroups`.
 	 */
 	createUserGroup(data: APIData["getUserGroup"]): UserGroup;
 
