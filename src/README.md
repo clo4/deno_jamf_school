@@ -95,6 +95,11 @@ Each entry only explains what changed, but links to a pull request that explains
   Release builds of schemas are now resilient against additional properties being added,
   but will still break if any properties are unexpectedly removed.
 
+- **Handle authentication errors with a better message ([#24])**\
+  Previously, auth errors were lumped in with other API errors, which made them
+  confusing to read. Now it should be much more obvious when your token or ID is wrong.
+
+[#24]: https://github.com/SeparateRecords/deno_jamf_school/pull/24
 [#20]: https://github.com/SeparateRecords/deno_jamf_school/pull/20
 [#19]: https://github.com/SeparateRecords/deno_jamf_school/pull/19
 [#16]: https://github.com/SeparateRecords/deno_jamf_school/pull/16

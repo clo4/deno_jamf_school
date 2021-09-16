@@ -5,7 +5,9 @@ import * as base64 from "../deps/std_encoding_base64.ts";
 import * as schemas from "../schemas/mod.bundle.js";
 import { PermissionError } from "./PermissionError.ts";
 import { APIError } from "./APIError.ts";
+import { AuthError } from "./AuthError.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
+
 /**
  * Convert an object to search params, skipping undefined and null entries.
  * If there are no entries remaining after filtering, `undefined` is returned.
@@ -50,7 +52,7 @@ function assertValidID(id: number): void {
 // const NOT_IMPLEMENTED = new Error("Not yet implemeted.");
 
 /** Throw a PermissionError if a response was 405 */
-const handlePermissionError: AfterResponseHook = (request, _, response) => {
+const handlePermissionError: AfterResponseHook = (request, _options, response) => {
 	if (response.status === 405) {
 		const method = request.method;
 		const endpoint = new URL(request.url).pathname;
@@ -58,7 +60,13 @@ const handlePermissionError: AfterResponseHook = (request, _, response) => {
 	}
 };
 
-const handleNotOk: AfterResponseHook = async (request, _, response) => {
+const handleAuthError: AfterResponseHook = (_request, _options, response) => {
+	if (response.status === 401) {
+		throw new AuthError();
+	}
+};
+
+const handleNotOk: AfterResponseHook = async (request, _options, response) => {
 	if (!response.ok) {
 		throw await APIError.of({ request, response });
 	}
@@ -98,6 +106,7 @@ export class API implements models.API {
 			hooks: {
 				afterResponse: [
 					handlePermissionError,
+					handleAuthError,
 					handleNotOk,
 				],
 			},
