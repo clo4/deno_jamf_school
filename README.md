@@ -74,7 +74,7 @@ descriptively named file. Don't import from a deps directory in user-code.
 Tests live here. Tests must be allowed to read the test data.
 
 ```bash
-deno test --allow-read=test/example_data
+deno test --allow-read=./test/example_data
 ```
 
 ### [test / example_data](test/example_data)

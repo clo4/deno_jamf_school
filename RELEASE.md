@@ -27,7 +27,7 @@ deno run -A --unstable --no-check ./scripts/render.ts
 Don't continue if the tests fail.
 
 ```bash
-deno test --allow-read
+deno test --allow-read=./test/example_data
 ```
 
 ## 5. Bundle for release
@@ -49,7 +49,7 @@ Remove-Item Env:\BUNDLE_RELEASE
 Now, run the tests again. Can't have any surprises.
 
 ```bash
-deno test --allow-read
+deno test --allow-read=./test/example_data
 ```
 
 Don't continue if the tests fail.
@@ -57,6 +57,8 @@ Don't continue if the tests fail.
 ## 6. Create a pull request
 
 Use the version as the title, eg. '0.2.0', '0.3.0'
+
+If CI fails, fix it.
 
 ## 7. Leave it for a day. Seriously.
 
