@@ -3,11 +3,11 @@
 **An unofficial, idiomatic API wrapper for Jamf School.**\
 It should be usable by any school IT admin with _some_ experience in JavaScript.
 
-Currently, only a limited (mostly read-only) subset of API features are supported.
-
 If something doesn't work as expected or you just want some help, please
 [raise an issue on GitHub][issues] so we can improve the library and documentation for
 everyone!
+
+Currently, only a limited (mostly read-only) subset of API features are supported.
 
 **[Here's the documentation for the latest release.][docs]**
 
@@ -94,7 +94,7 @@ Each entry only explains what changed, but links to a pull request that explains
 ### Version 0.2.0
 
 - **Breaking: Changed how clients are instantiated with an API ([#8])**\
-  The `API` must now be passed in as an `api` property on an object.
+  The `API` object must now be passed in as an `api` property on an object.
 
 - **Added methods to set device ownership ([#10], [#16])**\
   `API.assignDeviceOwner` and `Device.setOwner`. The documentation contains examples.
@@ -105,14 +105,14 @@ Each entry only explains what changed, but links to a pull request that explains
 
 - **Schemas don't fail when additional properties are returned ([#19])**\
   Release builds of schemas are now resilient against additional properties being added,
-  but will still break if any properties are unexpectedly removed.
+  but will still fail if any required properties are omitted.
 
 - **Handle authentication errors with a better message ([#24])**\
-  Previously, auth errors were lumped in with other API errors, which made them
-  confusing to read. Now it should be much more obvious when your token or ID is wrong.
+  Previously, authentication errors were lumped in with other errors, which made them
+  confusing to read.
 
 - **Changed how data is validated ([#7])**\
-  Technical change, but a pretty good performance win.
+  Technical change, but a good increase in real-world performance.
 
 [#24]: $REPO/pull/24
 [#20]: $REPO/pull/20
