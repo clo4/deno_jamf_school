@@ -1,7 +1,9 @@
-# Jamf School for Deno
+# Jamf School API for Deno
 
-**Jamf School for Deno is an unofficial, idiomatic API wrapper for Jamf School.**\
+**An unofficial, idiomatic API wrapper for Jamf School.**\
 It should be usable by any school IT admin with _some_ experience in JavaScript.
+
+Currently, only a limited (mostly read-only) subset of API features are supported.
 
 If something doesn't work as expected or you just want some help, please
 [raise an issue on GitHub][issues] so we can improve the library and documentation for
@@ -12,25 +14,18 @@ everyone!
 [issues]: $REPO/issues
 [docs]: $DOCS/mod.ts
 
-## Status
-
-**This is currently in alpha.**
-
-At this stage, only a limited subset of (mostly read-only) API features for devices,
-device groups, users, and user groups are supported as of version 0.2.0.
-
 ## Features
 
+- Designed for modern JavaScript
+- A low-level API wrapper and a higher-level object-oriented interface
+- Data validation means you always get the data you're promised
+- Comprehensive documentation
 - Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
-- Good documentation
-- Actionable error messages.
-- Complete data validation for all network requests.
-- A consistently designed API surface
 
 ## Usage
 
-[Here's how to get your API credentials.]($DOCS/mod.ts#Credentials) You'll have to
-replace the token, ID, and URL in the examples.
+[Here's how to get your API credentials.]($DOCS/mod.ts#Credentials)\
+You'll have to replace the token, ID, and URL in the examples.
 
 This example will print the name of each registered device.
 
