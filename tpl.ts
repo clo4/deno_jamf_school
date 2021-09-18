@@ -23,6 +23,7 @@ export const config: Schema = {
 	variables: {
 		VERSION: jamf.version,
 		STD_VERSION: "0.106.0",
+		src: `https://deno.land/x/jamf_school@${jamf.version}`,
 		REPO: "https://github.com/SeparateRecords/deno_jamf_school",
 		DOCS: `https://doc.deno.land/https/deno.land/x/jamf_school@${jamf.version}`,
 	},

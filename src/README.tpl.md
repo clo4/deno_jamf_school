@@ -14,34 +14,32 @@ everyone!
 
 ## Status
 
-> **I'd recommend not using this library until it's a little more complete.** If it's
-> something you'd like to keep an eye on, give it a Star on [GitHub]($REPO) and enable
-> **_Watch_** > **_Custom_** > _tick '**Releases**'_.
+**This is currently in alpha.**
 
-This is currently in alpha. There may be unexpected breakages due to API changes. At
-this stage, only a limited subset of API features for devices, device groups, users, and
-user groups are supported as of version 0.2.0.
+At this stage, only a limited subset of (mostly read-only) API features for devices,
+device groups, users, and user groups are supported as of version 0.2.0.
 
 ## Features
 
-- Designed for Deno: only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
-- Excellent documentation and error messages.
-- Complete data validation for all API requests.
-- A consistent API modelled after the web's document API.
+- Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
+- Good documentation
+- Actionable error messages.
+- Complete data validation for all network requests.
+- A consistently designed API surface
 
 ## Usage
 
-This will print the name of each registered device. To run this example, you'll have to
-change the ID, token, and URL. [Here's how to get those credentials.][credentials]
+[Here's how to get your API credentials.]($DOCS/mod.ts#Credentials) You'll have to
+replace the token, ID, and URL in the examples.
 
-[credentials]: $DOCS/mod.ts#Credentials
+This example will print the name of each registered device.
 
 <h6>device_names.ts</h6>
 
 <!-- Using JS as the language for the more reliable syntax highlighting -->
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
+import * as jamf from "$src/mod.ts";
 
 const client = jamf.createClient({
 	id: "YOUR_NETWORK_ID",
@@ -70,7 +68,7 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 Restart all devices owned by anyone named "Robert".
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@$VERSION/mod.ts";
+import * as jamf from "$src/mod.ts";
 
 // The client can be instantiated with an API instead of credentials.
 const api = jamf.createAPI({

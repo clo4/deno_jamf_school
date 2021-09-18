@@ -17,27 +17,25 @@ everyone!
 
 ## Status
 
-> **I'd recommend not using this library until it's a little more complete.** If it's
-> something you'd like to keep an eye on, give it a Star on [GitHub](https://github.com/SeparateRecords/deno_jamf_school) and enable
-> **_Watch_** > **_Custom_** > _tick '**Releases**'_.
+**This is currently in alpha.**
 
-This is currently in alpha. There may be unexpected breakages due to API changes. At
-this stage, only a limited subset of API features for devices, device groups, users, and
-user groups are supported as of version 0.2.0.
+At this stage, only a limited subset of (mostly read-only) API features for devices,
+device groups, users, and user groups are supported as of version 0.2.0.
 
 ## Features
 
-- Designed for Deno: only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
-- Excellent documentation and error messages.
-- Complete data validation for all API requests.
-- A consistent API modelled after the web's document API.
+- Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
+- Good documentation
+- Actionable error messages.
+- Complete data validation for all network requests.
+- A consistently designed API surface
 
 ## Usage
 
-This will print the name of each registered device. To run this example, you'll have to
-change the ID, token, and URL. [Here's how to get those credentials.][credentials]
+[Here's how to get your API credentials.](https://doc.deno.land/https/deno.land/x/jamf_school@0.1.0/mod.ts#Credentials) You'll have to
+replace the token, ID, and URL in the examples.
 
-[credentials]: https://doc.deno.land/https/deno.land/x/jamf_school@0.1.0/mod.ts#Credentials
+This example will print the name of each registered device.
 
 <h6>device_names.ts</h6>
 
