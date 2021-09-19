@@ -9,6 +9,7 @@ import * as z from "./deps/zod.ts";
 import { readAll } from "./deps/std_io_util.ts";
 import { colorize } from "./deps/colorize.ts";
 import { substitute, SubstituteOptions } from "./deps/substitute.ts";
+import { closest } from "./deps/fastest_levenshtein.ts";
 
 // dprint-ignore
 const helpText = colorize`
@@ -334,7 +335,11 @@ const guessEOL = (s: string) => s[s.indexOf("\n") - 1] === "\r" ? "\r\n" : "\n";
 const getVar = (key: string) => {
 	const value = vars.get(key);
 	if (value === undefined) {
-		console.error(`Attempted to access an underfined variable: ${key}`);
+		const all = [...vars.keys()];
+		const match = closest(key, all);
+		console.error(
+			`Attempted to use an undefined variable '${key}' (did you mean ${match}?)`,
+		);
 		Deno.exit(1);
 	}
 	return value;
