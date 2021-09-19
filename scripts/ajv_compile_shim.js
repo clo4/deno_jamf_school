@@ -14,10 +14,9 @@ if (isRelease) {
 		recurisvelyAddAdditionalProps(schema);
 		return realCompile(...args);
 	};
-	ajv.compile.prototype = realCompile.prototype;
 }
 
-const recurisvelyAddAdditionalProps = (object) => {
+function recurisvelyAddAdditionalProps(object) {
 	if ("properties" in object) {
 		object.additionalProperties ??= true;
 		for (const value of Object.values(object.properties)) {
@@ -41,4 +40,4 @@ const recurisvelyAddAdditionalProps = (object) => {
 			recurisvelyAddAdditionalProps(value);
 		}
 	}
-};
+}
