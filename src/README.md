@@ -15,7 +15,7 @@ Currently, only a limited (mostly read-only) subset of API features are supporte
 **[Here's the documentation for the latest release.][docs]**
 
 [issues]: https://github.com/SeparateRecords/deno_jamf_school/issues
-[docs]: https://doc.deno.land/https/deno.land/x/jamf_school@0.1.0/mod.ts
+[docs]: https://doc.deno.land/https/deno.land/x/jamf_school@0.2.0/mod.ts
 
 ## Features
 
@@ -27,7 +27,7 @@ Currently, only a limited (mostly read-only) subset of API features are supporte
 
 ## Usage
 
-[Here's how to get your API credentials.](https://doc.deno.land/https/deno.land/x/jamf_school@0.1.0/mod.ts#Credentials)\
+[Here's how to get your API credentials.](https://doc.deno.land/https/deno.land/x/jamf_school@0.2.0/mod.ts#Credentials)\
 You'll have to replace the token, ID, and URL in the examples.
 
 This example will print the name of each registered device.
@@ -37,7 +37,7 @@ This example will print the name of each registered device.
 <!-- Using JS as the language for the more reliable syntax highlighting -->
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@0.1.0/mod.ts";
+import * as jamf from "https://deno.land/x/jamf_school@0.2.0/mod.ts";
 
 const client = jamf.createClient({
   id: "YOUR_NETWORK_ID",
@@ -66,7 +66,7 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 Restart all devices owned by anyone named "Robert".
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@0.1.0/mod.ts";
+import * as jamf from "https://deno.land/x/jamf_school@0.2.0/mod.ts";
 
 // The client can be instantiated with an API instead of credentials.
 const api = jamf.createAPI({
