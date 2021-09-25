@@ -1,3 +1,4 @@
+import type { AnyIdentifier } from "../deps/apple_device_identifiers.ts";
 import type { RouteData } from "../schemas/mod.ts";
 
 /**
@@ -234,11 +235,11 @@ export interface APIGetDevicesOptions {
 	 * { modelIdentifier: "iPad11,6" }
 	 * ```
 	 *
-	 * This API provides a good, but non-comprehensive, list of device
-	 * identifiers and their human-readable names.
-	 * https://api.ipsw.me/v4/devices
+	 * Any string is valid, but not all strings are identifiers. If an invalid
+	 * identifier is given, no devices will be returned. Currently known valid
+	 * identifiers will be suggested in your editor.
 	 */
-	modelIdentifier?: string;
+	modelIdentifier?: AnyIdentifier;
 
 	/**
 	 * Select devices based on which location they have been assigned to.
