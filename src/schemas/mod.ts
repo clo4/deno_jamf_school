@@ -24,7 +24,7 @@ import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
 // The name used for the import is completely arbitrary for bundling, but
 // do try to follow the same conventions.
 
-// dprint-ignore
+// deno-fmt-ignore
 export const validators = {
 	"GET /apps": validateGetApps,
 	"GET /devices": validateGetDevices,
@@ -42,7 +42,7 @@ export const validators = {
 
 type Validators = typeof validators;
 type Endpoint = keyof Validators;
-// dprint-ignore
+// deno-fmt-ignore
 export type RouteData<E extends Endpoint> =
 	Validators[E] extends Validator<infer T>
 		? T

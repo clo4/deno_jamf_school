@@ -1,7 +1,6 @@
 {
-  "recommendations": [
-    "denoland.vscode-deno",
-    "EditorConfig.EditorConfig",
-    "dprint.dprint"
-  ]
+	"recommendations": [
+		"denoland.vscode-deno",
+		"EditorConfig.EditorConfig"
+	]
 }

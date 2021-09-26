@@ -1,4 +1,4 @@
-import { bench, runBenchmarks } from "../deps/bench.ts";
+import { bench, runBenchmarks } from "../deps/std_testing_bench.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as schemas from "../../src/schemas/mod.ts";
 

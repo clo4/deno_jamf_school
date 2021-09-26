@@ -31,7 +31,9 @@ type ResponseData = {
 			lastName?: string;
 			notes?: string;
 			modified?: string;
-			vpp: number[];
+			vpp: {
+				status: string;
+			}[];
 		};
 		groups: string[];
 		enrollType: "manual" | "ac2" | "ac2Pending" | "dep" | "depPending";
@@ -41,6 +43,7 @@ type ResponseData = {
 		iCloudBackupEnabled: boolean;
 		iCloudBackupLatest: string;
 		iTunesStoreLoggedIn: boolean;
+		isBootstrapStored?: boolean;
 		region: {
 			// Yeah, it really is a key named "string"
 			string: string;
@@ -119,7 +122,13 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 							id: { type: "int32" },
 							locationId: { type: "int32" },
 							name: { type: "string" },
-							vpp: { elements: { type: "int32" } },
+							vpp: {
+								elements: {
+									properties: {
+										status: { type: "string" },
+									},
+								},
+							},
 						},
 						optionalProperties: {
 							username: { type: "string" },
@@ -190,6 +199,7 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 					},
 				},
 				optionalProperties: {
+					isBootstrapStored: { type: "boolean" },
 					apps: {
 						elements: {
 							properties: {

@@ -12,7 +12,7 @@ export const config: Schema = {
 		outputFileSuffix: ".md",
 		replaceLeadingTabs: "  ",
 		contentPrefix:
-			"<!-- dprint-ignore-file -->${eol}<!-- DO NOT EDIT: Generated from ./${name} -->",
+			"<!-- deno-fmt-ignore-file -->${eol}<!-- DO NOT EDIT: Generated from ./${name} -->",
 		lineEnding: "lf",
 		excludePaths: [
 			"**/node_modules", // just in case!
@@ -22,7 +22,8 @@ export const config: Schema = {
 	},
 	variables: {
 		VERSION: jamf.version,
-		STD_VERSION: "0.106.0",
+		STD_VERSION: "0.108.0",
+		src: `https://deno.land/x/jamf_school@${jamf.version}`,
 		REPO: "https://github.com/SeparateRecords/deno_jamf_school",
 		DOCS: `https://doc.deno.land/https/deno.land/x/jamf_school@${jamf.version}`,
 	},

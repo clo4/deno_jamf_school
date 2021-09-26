@@ -1,0 +1,9 @@
+{
+	"fmt": {
+		"options": {
+			"useTabs": true,
+			"proseWrap": "never",
+			"lineWidth": 88
+		}
+	}
+}

@@ -3,9 +3,10 @@
 import * as flags from "./deps/std_flags.ts";
 import * as collections from "./deps/std_collections.ts";
 import { colorize } from "./deps/colorize.ts";
+import { shuffle } from "./deps/shuffle.ts";
 import { readAll } from "./deps/std_io_util.ts";
 
-// dprint-ignore
+// deno-fmt-ignore
 const helpText = colorize`
 Preserve privacy by redacting JSON values.
 This script takes UTF-8 JSON over stdin and outputs UTF-8 JSON over stdout.
@@ -22,27 +23,30 @@ ${["OPTIONS:", "bold"]}
   -d, --prune <keys>      Comma-separated list of keys of arrays to prune.
                           Eg.  --prune${["=", "dim"]}devices,deviceGroups,users,userGroups
 
+  -s, --shuffle <keys>    Comma-separated list of keys of arrays to shuffle.
+                          Eg.  --shuffle${["=", "dim"]}devices,deviceGroups,users,userGroups
+
 ${["NOTES:", "bold"]}
 
-o   Pruning means each item in an array has between a 10% and 80% chance of
+ o  Pruning means each item in an array has between a 10% and 80% chance of
     being removed. This percentage changes between arrays. Note that because
     ${["each element", "italic"]} has a chance of being deleted, you shouldn't use this
     for small arrays.
 
-o   Preserving a key means its value won't be redacted. If a key is to be
+ o  Preserving a key means its value won't be redacted. If a key is to be
     preserved ${["and", "italic"]} pruned, it will be pruned and the remaining values will not
     be changed.
 
-o   Pruning arrays uses 'Math.random', so setting the seed with
+ o  Pruning arrays uses 'Math.random', so setting the seed with
     'deno run --seed=<seed>' should produce deterministic output (untested)
 
-o   Pretty-printing is supported using JSON.stringify, but is not recommended.
+ o  Pretty-printing is supported using JSON.stringify, but is not recommended.
     Instead, pipe into 'deno fmt --ext=json -' for a nicer looking result.
 
-o   You can import 'redact' from this module to use it programmatically. See
+ o  You can import 'redact' from this module to use it programmatically. See
     the ${["EXAMPLES", "underline"]} section below.
 
-o   This script requires no permissions, it reads stdin and writes to stdout.
+ o  This script requires no permissions, it reads stdin and writes to stdout.
 
 
 ${["EXAMPLES:", "bold"]}
@@ -75,45 +79,6 @@ ${["Redact data in JavaScript:", "underline"]}
 
 `.slice(1)
 
-async function main() {
-	const argv = flags.parse(Deno.args, {
-		boolean: ["help", "pretty"],
-		string: ["preserve", "prune-array"],
-		alias: {
-			help: "h",
-			pretty: "p",
-			preserve: "k",
-			prune: "d",
-		},
-	});
-
-	const help: boolean = argv.help;
-	const pretty: boolean = argv.pretty;
-	const preserve: Set<string> = new Set(argv.preserve?.split(","));
-	const prune: Set<string> = new Set(argv.prune?.split(","));
-
-	if (help || Deno.isatty(Deno.stdin.rid)) {
-		console.log(helpText);
-		Deno.exit(0);
-	}
-
-	const stdin = new TextDecoder().decode(await readAll(Deno.stdin));
-	const json: JSONValue = JSON.parse(stdin);
-
-	const redactedObject = redact(json, {
-		preserveKeys: preserve,
-		pruneKeys: prune,
-	});
-	const redactedText = JSON.stringify(
-		redactedObject,
-		null, // no replacer
-		pretty ? 2 : undefined, // only indent if --pretty
-	);
-
-	console.log(redactedText);
-	Deno.exit(0);
-}
-
 export type JSONValue =
 	| string
 	| number
@@ -124,6 +89,48 @@ export type JSONValue =
 
 type JSONArray = JSONValue[];
 type JSONObject = { readonly [key: string]: JSONValue };
+
+async function main() {
+	const argv = flags.parse(Deno.args, {
+		boolean: ["help", "pretty"],
+		string: ["preserve", "prune", "shuffle"],
+		alias: {
+			help: "h",
+			pretty: "p",
+			preserve: "k",
+			prune: "d",
+			shuffle: "s",
+		},
+	});
+
+	const help: boolean = argv.help;
+	const pretty: boolean = argv.pretty;
+	const preserve: Set<string> = new Set(argv.preserve?.split(","));
+	const prune: Set<string> = new Set(argv.prune?.split(","));
+	const shuffle: Set<string> = new Set(argv.shuffle?.split(","));
+
+	if (help || Deno.isatty(Deno.stdin.rid)) {
+		console.log(helpText);
+		Deno.exit(0);
+	}
+
+	const stdin = new TextDecoder().decode(await readAll(Deno.stdin));
+	const json: JSONObject | JSONArray = JSON.parse(stdin);
+
+	const redactedObject = redact(json, {
+		preserveKeys: preserve,
+		pruneKeys: prune,
+		shuffleKeys: shuffle,
+	});
+	const redactedText = JSON.stringify(
+		redactedObject,
+		null, // no replacer
+		pretty ? 2 : undefined, // only indent if --pretty
+	);
+
+	console.log(redactedText);
+	Deno.exit(0);
+}
 
 /**
  * Scale a number so that 0 is `min` (0.1) and 1 is `max` (0.8).
@@ -139,10 +146,16 @@ type RedactOptions = {
 	preserveKeys: Set<string>;
 
 	/**
-	 * A set of object keys for which (if the value is an array) between 10%
+	 * A set of object keys for which, if the value is an array, between 10%
 	 * and 80% of the values in the array will be deleted.
 	 */
 	pruneKeys: Set<string>;
+
+	/**
+	 * A set of object keys for which, if the value is an array, the array
+	 * will be shuffled.
+	 */
+	shuffleKeys: Set<string>;
 };
 
 /**
@@ -166,10 +179,12 @@ type RedactOptions = {
 export function redact(item: JSONValue, {
 	preserveKeys = new Set(),
 	pruneKeys = new Set(),
+	shuffleKeys = new Set(),
 }: Partial<RedactOptions> = {}): JSONValue {
 	const options: RedactOptions = {
 		preserveKeys,
 		pruneKeys,
+		shuffleKeys,
 	};
 	return redactValue(item, options);
 }
@@ -211,13 +226,17 @@ function redactObject(item: JSONObject, options: RedactOptions): JSONObject {
 		// Math.random outputs a uniform distribution of numbers between
 		// zero and one, over a large enough array the number of elements
 		// deleted will approach percentChanceToDelete. It's less effort :p
-		const filtered = options.pruneKeys.has(key) && value instanceof Array
+		const filtered = options.pruneKeys.has(key) && Array.isArray(value)
 			? value.filter(() => Math.random() > percentChanceToDelete)
 			: value;
 
+		const shuffled = options.shuffleKeys.has(key) && Array.isArray(filtered)
+			? shuffle(filtered)
+			: filtered;
+
 		return options.preserveKeys.has(key)
-			? [key, filtered]
-			: [key, redactValue(filtered, options)];
+			? [key, shuffled]
+			: [key, redactValue(shuffled, options)];
 	});
 }
 

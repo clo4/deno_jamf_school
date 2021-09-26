@@ -2,7 +2,8 @@ import * as jamf from "../../src/mod.ts";
 import ky from "../../src/deps/ky.ts";
 import { PermissionError } from "../../src/internal/PermissionError.ts";
 import { APIError } from "../../src/internal/APIError.ts";
-import { assert, assertThrowsAsync } from "../deps/asserts.ts";
+import { AuthError } from "../../src/internal/AuthError.ts";
+import { assert, assertThrowsAsync } from "../deps/std_testing_asserts.ts";
 import { install as installMockFetch, mock, reset } from "../deps/mock_fetch.ts";
 
 // This is (currently) the only file that knows anything about the
@@ -49,6 +50,22 @@ Deno.test({
 			async () => await http.delete("405"),
 			PermissionError,
 			"Delete",
+		);
+		reset();
+	},
+});
+
+Deno.test({
+	name: "API/http: 401 status throws AuthError",
+	async fn() {
+		mock("/401", () => {
+			return new Response("Bad token lol", {
+				status: 401,
+			});
+		});
+		await assertThrowsAsync(
+			async () => await http.get("401"),
+			AuthError,
 		);
 		reset();
 	},
