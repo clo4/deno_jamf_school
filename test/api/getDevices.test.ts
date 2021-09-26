@@ -1,6 +1,10 @@
 import * as jamf from "../../src/mod.ts";
 import validateGetDevices from "../../src/schemas/GET_devices.ts";
-import { assert, assertEquals, assertThrowsAsync } from "../deps/asserts.ts";
+import {
+	assert,
+	assertEquals,
+	assertThrowsAsync,
+} from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as mockFetch from "../deps/mock_fetch.ts";
 

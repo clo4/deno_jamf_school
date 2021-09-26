@@ -3,7 +3,7 @@ import ky from "../../src/deps/ky.ts";
 import { PermissionError } from "../../src/internal/PermissionError.ts";
 import { APIError } from "../../src/internal/APIError.ts";
 import { AuthError } from "../../src/internal/AuthError.ts";
-import { assert, assertThrowsAsync } from "../deps/asserts.ts";
+import { assert, assertThrowsAsync } from "../deps/std_testing_asserts.ts";
 import { install as installMockFetch, mock, reset } from "../deps/mock_fetch.ts";
 
 // This is (currently) the only file that knows anything about the
