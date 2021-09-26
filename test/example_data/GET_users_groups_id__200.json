@@ -1,12 +1,12 @@
 {
-  "code": 200,
-  "group": {
-    "id": 0,
-    "locationId": 0,
-    "name": "[redacted]",
-    "description": "[redacted]",
-    "userCount": 0,
-    "acl": { "teacher": "inherit", "parent": "inherit" },
-    "modified": "[redacted]"
-  }
+	"code": 200,
+	"group": {
+		"id": 0,
+		"locationId": 0,
+		"name": "[redacted]",
+		"description": "[redacted]",
+		"userCount": 0,
+		"acl": { "teacher": "inherit", "parent": "inherit" },
+		"modified": "[redacted]"
+	}
 }

@@ -23,7 +23,7 @@ const { help: helpArg } = flags.parse(Deno.args, {
 	alias: { help: ["h"] },
 });
 
-// dprint-ignore
+// deno-fmt-ignore
 const help = `
 Optimize src/schemas/mod.ts by:
 1. Compiling all validators ahead of time
@@ -122,7 +122,7 @@ const banner = `
 
 // Bundle mode: ${isRelease ? "release" : "development"}
 
-// dprint-ignore-file
+// deno-fmt-ignore-file
 // deno-lint-ignore-file
 
 // This file was generated automatically.

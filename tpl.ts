@@ -12,7 +12,7 @@ export const config: Schema = {
 		outputFileSuffix: ".md",
 		replaceLeadingTabs: "  ",
 		contentPrefix:
-			"<!-- dprint-ignore-file -->${eol}<!-- DO NOT EDIT: Generated from ./${name} -->",
+			"<!-- deno-fmt-ignore-file -->${eol}<!-- DO NOT EDIT: Generated from ./${name} -->",
 		lineEnding: "lf",
 		excludePaths: [
 			"**/node_modules", // just in case!

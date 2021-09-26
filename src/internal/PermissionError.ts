@@ -19,11 +19,11 @@ export class PermissionError extends Error {
 	constructor({ method, endpoint }: PermissionErrorInit) {
 		method = method.toUpperCase();
 
-		// dprint-ignore
+		// deno-fmt-ignore
 		assert(method === "GET" || method === "PUT" || method === "POST" || method === "DELETE");
 		const permission = permissionMethodMap[method];
 
-		// dprint-ignore
+		// deno-fmt-ignore
 		super(`Your API key requires the '${permission}' permission for ${method} ${endpoint}`);
 		this.name = this.constructor.name;
 		Error.captureStackTrace?.(this, this.constructor);

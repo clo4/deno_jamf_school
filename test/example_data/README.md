@@ -1,17 +1,12 @@
 # example_data
 
-All the data in this directory is from the Jamf School API. It has been manually
-curated, and completely redacted to ensure no personally or professionally identifiable
-data is remaining. Arrays are shuffled and have random elements deleted, and all other
-values are replaced with a known constant. The resulting JSON exists purely to check
-schemas against.
+All the data in this directory is from the Jamf School API. It has been manually curated, and completely redacted to ensure no personally or professionally identifiable data is remaining. Arrays are shuffled and have random elements deleted, and all other values are replaced with a known constant. The resulting JSON exists purely to check schemas against.
 
 This data must be manually updated occasionally.
 
 ## How to redact data
 
-To get help for the redaction script, run it without arguments. It takes in all its data
-over stdin, and outputs over stdout.
+To get help for the redaction script, run it without arguments. It takes in all its data over stdin, and outputs over stdout.
 
 ```bash
 deno run scripts/redact.ts
