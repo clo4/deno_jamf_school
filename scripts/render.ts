@@ -11,7 +11,7 @@ import { colorize } from "./deps/colorize.ts";
 import { substitute, SubstituteOptions } from "./deps/substitute.ts";
 import { closest } from "./deps/fastest_levenshtein.ts";
 
-// dprint-ignore
+// deno-fmt-ignore
 const helpText = colorize`
 ${["INTRODUCTION:", "bold"]}
 

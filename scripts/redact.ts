@@ -6,7 +6,7 @@ import { colorize } from "./deps/colorize.ts";
 import { shuffle } from "./deps/shuffle.ts";
 import { readAll } from "./deps/std_io_util.ts";
 
-// dprint-ignore
+// deno-fmt-ignore
 const helpText = colorize`
 Preserve privacy by redacting JSON values.
 This script takes UTF-8 JSON over stdin and outputs UTF-8 JSON over stdout.

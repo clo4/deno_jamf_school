@@ -3,9 +3,7 @@
 **An unofficial, idiomatic API wrapper for Jamf School.**\
 It should be usable by any school IT admin with _some_ experience in JavaScript.
 
-If something doesn't work as expected or you just want some help, please
-[raise an issue on GitHub][issues] so we can improve the library and documentation for
-everyone!
+If something doesn't work as expected or you just want some help, please [raise an issue on GitHub][issues] so we can improve the library and documentation for everyone!
 
 Currently, only a limited (mostly read-only) subset of API features are supported.
 
@@ -100,16 +98,13 @@ Each entry only explains what changed, but links to a pull request that explains
   `API.assignDeviceOwner` and `Device.setOwner`. The documentation contains examples.
 
 - **Various schema improvements and corrections ([#10], [#20])**\
-  More data is now included. To the best of my knowledge, the current schemas are
-  complete.
+  More data is now included. To the best of my knowledge, the current schemas are complete.
 
 - **Schemas don't fail when additional properties are returned ([#19])**\
-  Release builds of schemas are now resilient against additional properties being added,
-  but will still fail if any required properties are omitted.
+  Release builds of schemas are now resilient against additional properties being added, but will still fail if any required properties are omitted.
 
 - **Handle authentication errors with a better message ([#24])**\
-  Previously, authentication errors were lumped in with other errors, which made them
-  confusing to read.
+  Previously, authentication errors were lumped in with other errors, which made them confusing to read.
 
 - **Changed how data is validated ([#7])**\
   Technical change, but a good increase in real-world performance.
@@ -125,15 +120,12 @@ Each entry only explains what changed, but links to a pull request that explains
 ### Version 0.1.0
 
 - **Initial release**\
-  Includes basic API support for devices, device groups, users, and user groups, as well
-  as an object-oriented layer to simplify using the API.
+  Includes basic API support for devices, device groups, users, and user groups, as well as an object-oriented layer to simplify using the API.
 
 ## License and Disclaimer
 
-JAMF is a trademark beloning to JAMF Software, LLC. This project's development is not
-affiliated with JAMF Software, LLC.
+JAMF is a trademark beloning to JAMF Software, LLC. This project's development is not affiliated with JAMF Software, LLC.
 
-There is a copy of the project's license (MIT) located in
-[the root of the repository][repo] and in the [module entrypoint (mod.ts)](./mod.ts).
+There is a copy of the project's license (MIT) located in [the root of the repository][repo] and in the [module entrypoint (mod.ts)](./mod.ts).
 
 [repo]: $REPO

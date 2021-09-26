@@ -1,45 +1,45 @@
 {
-  "code": 200,
-  "device": {
-    "UDID": "[redacted]",
-    "locationId": 0,
-    "serialNumber": "[redacted]",
-    "assetTag": "[redacted]",
-    "inTrash": false,
-    "class": "[redacted]",
-    "model": {
-      "name": "[redacted]",
-      "identifier": "[redacted]",
-      "type": { "value": "[redacted]" }
-    },
-    "os": { "prefix": "[redacted]", "version": "[redacted]" },
-    "name": "[redacted]",
-    "owner": {},
-    "isManaged": false,
-    "isSupervised": false,
-    "deviceEnrollType": "ac2",
-    "deviceDepProfile": null,
-    "batteryLevel": 0,
-    "totalCapacity": 0,
-    "availableCapacity": 0,
-    "hasPasscode": false,
-    "passcodeCompliant": 0,
-    "hardwareEncryptionEnabled": 0,
-    "iTunesStoreLoggedIn": 0,
-    "iCloudBackupEnabled": 0,
-    "iCloudBackupLatest": 0,
-    "groupIds": [],
-    "groups": [],
-    "WiFiMAC": "[redacted]",
-    "bluetoothMAC": "[redacted]",
-    "IPAddress": "[redacted]",
-    "region": { "string": "[redacted]", "coordinates": null },
-    "notes": "[redacted]",
-    "lastCheckin": {
-      "date": "[redacted]",
-      "timezone_type": 0,
-      "timezone": "[redacted]"
-    },
-    "modified": "[redacted]"
-  }
+	"code": 200,
+	"device": {
+		"UDID": "[redacted]",
+		"locationId": 0,
+		"serialNumber": "[redacted]",
+		"assetTag": "[redacted]",
+		"inTrash": false,
+		"class": "[redacted]",
+		"model": {
+			"name": "[redacted]",
+			"identifier": "[redacted]",
+			"type": { "value": "[redacted]" }
+		},
+		"os": { "prefix": "[redacted]", "version": "[redacted]" },
+		"name": "[redacted]",
+		"owner": {},
+		"isManaged": false,
+		"isSupervised": false,
+		"deviceEnrollType": "ac2",
+		"deviceDepProfile": null,
+		"batteryLevel": 0,
+		"totalCapacity": 0,
+		"availableCapacity": 0,
+		"hasPasscode": false,
+		"passcodeCompliant": 0,
+		"hardwareEncryptionEnabled": 0,
+		"iTunesStoreLoggedIn": 0,
+		"iCloudBackupEnabled": 0,
+		"iCloudBackupLatest": 0,
+		"groupIds": [],
+		"groups": [],
+		"WiFiMAC": "[redacted]",
+		"bluetoothMAC": "[redacted]",
+		"IPAddress": "[redacted]",
+		"region": { "string": "[redacted]", "coordinates": null },
+		"notes": "[redacted]",
+		"lastCheckin": {
+			"date": "[redacted]",
+			"timezone_type": 0,
+			"timezone": "[redacted]"
+		},
+		"modified": "[redacted]"
+	}
 }

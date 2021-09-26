@@ -101,7 +101,6 @@ export interface Credentials {
  * To create an API token:
  *
  *   Organisation > Settings > API > Add API Key
- *
  */
 export function createAPI(credentials: Credentials): API {
 	return new ImplAPI(credentials);

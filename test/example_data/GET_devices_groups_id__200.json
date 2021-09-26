@@ -1,15 +1,15 @@
 {
-  "code": 200,
-  "deviceGroup": {
-    "id": 0,
-    "locationId": 0,
-    "name": "[redacted]",
-    "description": "[redacted]",
-    "information": "[redacted]",
-    "members": 0,
-    "type": "normal",
-    "shared": false,
-    "imageUrl": null,
-    "isSmartGroup": false
-  }
+	"code": 200,
+	"deviceGroup": {
+		"id": 0,
+		"locationId": 0,
+		"name": "[redacted]",
+		"description": "[redacted]",
+		"information": "[redacted]",
+		"members": 0,
+		"type": "normal",
+		"shared": false,
+		"imageUrl": null,
+		"isSmartGroup": false
+	}
 }
