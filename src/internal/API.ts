@@ -119,17 +119,13 @@ export class API implements models.API {
 
 	async getUser(id: number): Promise<RouteData<"GET /users/:id">["user"]> {
 		assertValidID(id);
-		const data = await this.http.get(`users/${id}`, {
-			throwHttpErrors: true,
-		}).json();
+		const data = await this.http.get(`users/${id}`).json();
 		schemas.assertValid("GET /users/:id", data);
 		return data.user;
 	}
 
 	async getUsers(): Promise<RouteData<"GET /users">["users"]> {
-		const data = await this.http.get(`users`, {
-			throwHttpErrors: true,
-		}).json();
+		const data = await this.http.get(`users`).json();
 		schemas.assertValid("GET /users", data);
 		return data.users;
 	}
@@ -156,7 +152,8 @@ export class API implements models.API {
 		assertValidUDID(udid);
 		const data = await this.http.get(`devices/${udid}`, {
 			searchParams: toSearchParams({
-				includeApps: options.includeApps || undefined,
+				// Unlike other booleans, this has to be the string "true" or "false".
+				includeApps: options.includeApps ? "true" : undefined,
 			}),
 		}).json();
 		schemas.assertValid("GET /devices/:udid", data);
