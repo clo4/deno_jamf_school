@@ -1,7 +1,6 @@
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
-import { intersect } from "../deps/fast_array_intersect.ts";
 
 export type DeviceGroupData = models.APIData["getDeviceGroups"][number];
 
@@ -73,29 +72,5 @@ export class DeviceGroup implements models.DeviceGroup {
 		}
 
 		return devices.map((device) => this.#client.createDevice(device));
-	}
-
-	async getCommonApps() {
-		let devices, apps;
-		try {
-			[apps, devices] = await Promise.all([
-				this.#api.getApps(),
-				this.#api.getDevices({
-					groupIds: [this.#data.id],
-					includeApps: true,
-				}),
-			]);
-		} catch (e: unknown) {
-			return suppressAPIError([], e);
-		}
-
-		const appIdentifiers = devices.map((device) => {
-			return device.apps!.map((app) => app.identifier);
-		});
-
-		const commonIdentifiers = new Set(intersect(appIdentifiers));
-
-		const filteredApps = apps.filter((app) => commonIdentifiers.has(app.bundleId));
-		return filteredApps.map((app) => this.#client.createApp(app));
 	}
 }
