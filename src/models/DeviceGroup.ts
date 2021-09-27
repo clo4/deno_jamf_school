@@ -1,4 +1,5 @@
 import type { Device } from "./Device.ts";
+import type { App } from "./App.ts";
 
 /**
  * DeviceGroup represents a named collection of devices.
@@ -66,4 +67,12 @@ export interface DeviceGroup {
 	 * ```
 	 */
 	getDevices(): Promise<Device[]>;
+
+	/**
+	 * (Read) Get all the apps that every device in the group has installed.
+	 *
+	 * Note that this is _not_ the apps that are assigned to this device group,
+	 * as the API does not provide this data.
+	 */
+	getCommonApps(): Promise<App[]>;
 }
