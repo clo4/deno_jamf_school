@@ -187,6 +187,13 @@ export interface API {
 
 	/** (Read) Get all apps. */
 	getApps(): Promise<RouteData<"GET /apps">["apps"]>;
+
+	/**
+	 * (Read) Get a single app by its ID.
+	 *
+	 * The ID used is a Jamf School ID, not the app's App Store ID.
+	 */
+	getApp(id: number): Promise<RouteData<"GET /apps/:id">>;
 }
 
 /** Helper type to map from API method name to the method's return type. */

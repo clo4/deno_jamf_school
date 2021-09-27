@@ -98,4 +98,10 @@ export interface Client {
 
 	/** (Read) Get all device groups. */
 	getDeviceGroups(): Promise<DeviceGroup[]>;
+
+	/** (Read) Get all the apps registered to this Jamf School instance. */
+	getApps(): Promise<App[]>;
+
+	/** (Read) Get a single app by its Jamf School ID. */
+	getAppById(id: number): Promise<App | null>;
 }

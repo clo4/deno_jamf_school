@@ -138,17 +138,13 @@ export class API implements models.API {
 		id: number,
 	): Promise<RouteData<"GET /users/groups/:id">["group"]> {
 		assertValidID(id);
-		const data = await this.http.get(`users/groups/${id}`, {
-			throwHttpErrors: true,
-		}).json();
+		const data = await this.http.get(`users/groups/${id}`).json();
 		schemas.assertValid("GET /users/groups/:id", data);
 		return data.group;
 	}
 
 	async getUserGroups(): Promise<RouteData<"GET /users/groups">["groups"]> {
-		const data = await this.http.get(`users/groups`, {
-			throwHttpErrors: true,
-		}).json();
+		const data = await this.http.get(`users/groups`).json();
 		schemas.assertValid("GET /users/groups", data);
 		return data.groups;
 	}
@@ -159,7 +155,6 @@ export class API implements models.API {
 	): Promise<RouteData<"GET /devices/:udid">["device"]> {
 		assertValidUDID(udid);
 		const data = await this.http.get(`devices/${udid}`, {
-			throwHttpErrors: false,
 			searchParams: toSearchParams({
 				includeApps: options.includeApps || undefined,
 			}),
@@ -172,7 +167,6 @@ export class API implements models.API {
 		options: models.APIGetDevicesOptions = {},
 	): Promise<RouteData<"GET /devices">["devices"]> {
 		const data = await this.http.get(`devices`, {
-			throwHttpErrors: true,
 			searchParams: toSearchParams({
 				groups: options.groupIds?.join(","),
 				ownergroups: options.ownerGroupIds?.join(","),
@@ -206,9 +200,7 @@ export class API implements models.API {
 		id: number,
 	): Promise<RouteData<"GET /devices/groups/:id">["deviceGroup"]> {
 		assertValidID(id);
-		const data = await this.http.get(`devices/groups/${id}`, {
-			throwHttpErrors: true,
-		}).json();
+		const data = await this.http.get(`devices/groups/${id}`).json();
 		schemas.assertValid("GET /devices/groups/:id", data);
 		return data.deviceGroup;
 	}
@@ -216,9 +208,7 @@ export class API implements models.API {
 	async getDeviceGroups(): Promise<
 		RouteData<"GET /devices/groups">["deviceGroups"]
 	> {
-		const data = await this.http.get(`devices/groups`, {
-			throwHttpErrors: true,
-		}).json();
+		const data = await this.http.get(`devices/groups`).json();
 		schemas.assertValid("GET /devices/groups", data);
 		return data.deviceGroups;
 	}
@@ -388,10 +378,15 @@ export class API implements models.API {
 	// 	}
 
 	async getApps(): Promise<RouteData<"GET /apps">["apps"]> {
-		const data = await this.http.get(`apps`, {
-			throwHttpErrors: false,
-		}).json();
+		const data = await this.http.get(`apps`).json();
 		schemas.assertValid("GET /apps", data);
 		return data.apps;
+	}
+
+	async getApp(id: number): Promise<RouteData<"GET /apps/:id">> {
+		assertValidID(id);
+		const data = await this.http.get(`apps/${id}`).json();
+		schemas.assertValid("GET /apps/:id", data);
+		return data;
 	}
 }

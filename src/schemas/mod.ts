@@ -2,6 +2,7 @@ import type { ErrorObject, ValidateFunction as Validator } from "./_ajv_jtd.ts";
 
 // GET
 import validateGetApps from "./GET_apps.ts";
+import validateGetAppsId from "./GET_apps_id.ts";
 import validateGetDevices from "./GET_devices.ts";
 import validateGetDevicesGroups from "./GET_devices_groups.ts";
 import validateGetDevicesGroupsId from "./GET_devices_groups_id.ts";
@@ -27,6 +28,7 @@ import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
 // deno-fmt-ignore
 export const validators = {
 	"GET /apps": validateGetApps,
+	"GET /apps/:id": validateGetAppsId,
 	"GET /devices": validateGetDevices,
 	"GET /devices/:udid": validateGetDevicesUdid,
 	"GET /devices/groups": validateGetDevicesGroups,
@@ -83,17 +85,21 @@ function createMessage({ errors, route }: {
 		msgs.push(`${keyword} at '${instancePath}': ${msg}`);
 	}
 
-	return `${errors.length} validation failure(s)
+	const lines = [
+		`${errors.length} validation failure(s)`,
+		"",
+		"This is probably due to the Jamf School API returning unexpected data.",
+		"Please open an issue by visiting the link below, and include as much of",
+		"the following message and stack trace as you can, so we can resolve it.",
+		"https://github.com/SeparateRecords/deno_jamf_school/issues/new",
+		"",
+		`Schema: ${schemaFile}`,
+		"",
+		...msgs,
+		"",
+	];
 
-This is probably due to the Jamf School API returning unexpected data.
-Please open an issue by visiting the link below, and include as much of
-the following message and stack trace as you can, so we can resolve it.
-https://github.com/SeparateRecords/deno_jamf_school/issues/new
-
-Schema: ${schemaFile}
-
-${msgs.join("\n")}
-`;
+	return lines.join("\n");
 }
 
 export class ValidationError extends Error {

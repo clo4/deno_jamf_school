@@ -277,4 +277,30 @@ export class Client implements models.Client {
 
 		return this.createDeviceGroup(groups[0]);
 	}
+
+	async getApps() {
+		let apps;
+		try {
+			apps = await this.#api.getApps();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		return apps.map((app) => this.createApp(app));
+	}
+
+	async getAppById(id: number) {
+		if (!isValidID(id)) {
+			return null;
+		}
+
+		let app;
+		try {
+			app = await this.#api.getApp(id);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		return this.createApp(app);
+	}
 }

@@ -91,3 +91,13 @@ Deno.test("schemas/assertValid: GET /apps (200 OK)", async () => {
 	schemasJIT.assertValid("GET /apps", JSON.parse(json));
 	schemasAOT.assertValid("GET /apps", JSON.parse(json));
 });
+
+Deno.test("schemas/assertValid: GET /apps/:id (200 OK, many)", async () => {
+	const text = await readRelativeTextFile(
+		"../example_data/many__GET_apps_id__200.json",
+	);
+	for (const json of JSON.parse(text)) {
+		schemasAOT.assertValid("GET /apps/:id", json);
+		schemasJIT.assertValid("GET /apps/:id", json);
+	}
+});
