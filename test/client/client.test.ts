@@ -122,3 +122,15 @@ Deno.test({
 		data.apps.map((app) => client.createApp(app));
 	},
 });
+
+Deno.test({
+	name: "Client/createLocation: from multiple locations",
+	async fn() {
+		const data = JSON.parse(
+			await readRelativeTextFile("../example_data/GET_locations.json"),
+		);
+		assertValid("GET /locations", data);
+
+		data.locations.map((location) => client.createLocation(location));
+	},
+});
