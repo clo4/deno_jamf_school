@@ -187,4 +187,14 @@ export class Device implements models.Device {
 		const myApps = apps.filter((app) => myAppIdentifiers.has(app.bundleId));
 		return myApps.map((app) => this.#client.createApp(app));
 	}
+
+	async getLocation() {
+		let locationData;
+		try {
+			locationData = await this.#api.getLocation(this.#data.locationId);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+		return this.#client.createLocation(locationData);
+	}
 }
