@@ -127,7 +127,7 @@ Deno.test({
 	name: "Client/createLocation: from multiple locations",
 	async fn() {
 		const data = JSON.parse(
-			await readRelativeTextFile("../example_data/GET_locations.json"),
+			await readRelativeTextFile("../example_data/GET_locations__200.json"),
 		);
 		assertValid("GET /locations", data);
 
