@@ -94,6 +94,8 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Add support for apps ([#15])** <br>
   This includes `Client.getApps`, `Client.getAppsById`, and `Device.getApps`. See the documentation for more information (the `App` interface).
 
+[#15]: $REPO/pull/15
+
 <details>
 <summary>Older versions</summary>
 
