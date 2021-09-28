@@ -5,6 +5,7 @@ import { DeviceGroup, DeviceGroupData } from "./DeviceGroup.ts";
 import { User, UserData } from "./User.ts";
 import { UserGroup, UserGroupData } from "./UserGroup.ts";
 import { App, AppData } from "./App.ts";
+import { Location, LocationData } from "./Location.ts";
 import { suppressAPIError } from "./APIError.ts";
 
 /**
@@ -19,6 +20,7 @@ export type Creator = Pick<
 	| "createUser"
 	| "createUserGroup"
 	| "createApp"
+	| "createLocation"
 >;
 
 /**
@@ -80,6 +82,14 @@ export class Client implements models.Client {
 
 	createApp(data: AppData): models.App {
 		return new App({
+			api: this.#api,
+			client: this,
+			data: data,
+		});
+	}
+
+	createLocation(data: LocationData): models.Location {
+		return new Location({
 			api: this.#api,
 			client: this,
 			data: data,
@@ -298,5 +308,48 @@ export class Client implements models.Client {
 		}
 
 		return this.createApp(app);
+	}
+
+	async getLocations() {
+		let locations;
+		try {
+			locations = await this.#api.getLocations();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		return locations.map((app) => this.createLocation(app));
+	}
+
+	async getLocationById(id: number) {
+		if (!isValidID(id)) {
+			return null;
+		}
+
+		let location;
+		try {
+			location = await this.#api.getLocation(id);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		return this.createLocation(location);
+	}
+
+	async getLocationByName(name: string) {
+		let locations;
+		try {
+			locations = await this.#api.getLocations();
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		const found = locations.filter((location) => location.name === name);
+
+		if (found.length !== 1) {
+			return null;
+		}
+
+		return this.createLocation(found[0]);
 	}
 }

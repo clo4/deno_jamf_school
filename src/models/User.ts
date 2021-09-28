@@ -1,5 +1,6 @@
 import type { Device } from "./Device.ts";
 import type { UserGroup } from "./UserGroup.ts";
+import type { Location } from "./Location.ts";
 
 /**
  * User represents a single user.
@@ -50,4 +51,7 @@ export interface User {
 
 	/** (Read) Get all the groups the user is in. */
 	getGroups(): Promise<UserGroup[]>;
+
+	/** (Read) Get the location this user belongs to. */
+	getLocation(): Promise<Location | null>;
 }

@@ -73,4 +73,14 @@ export class DeviceGroup implements models.DeviceGroup {
 
 		return devices.map((device) => this.#client.createDevice(device));
 	}
+
+	async getLocation() {
+		let locationData;
+		try {
+			locationData = await this.#api.getLocation(this.#data.locationId);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+		return this.#client.createLocation(locationData);
+	}
 }

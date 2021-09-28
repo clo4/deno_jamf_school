@@ -3,6 +3,7 @@ import type { Device } from "./Device.ts";
 import type { DeviceGroup } from "./DeviceGroup.ts";
 import type { User } from "./User.ts";
 import type { UserGroup } from "./UserGroup.ts";
+import type { Location } from "./Location.ts";
 import type { App } from "./App.ts";
 
 /**
@@ -49,6 +50,13 @@ export interface Client {
 	 * If you don't already have the data, you may want `getApps`.
 	 */
 	createApp(data: APIData["getApps"][number]): App;
+
+	/**
+	 * Create a site object with data from the API.
+	 *
+	 * If you don't already have the data, you may want `getLocations`.
+	 */
+	createLocation(data: APIData["getLocation"]): Location;
 
 	/**
 	 * Create a user group object with data from the API.
@@ -104,4 +112,13 @@ export interface Client {
 
 	/** (Read) Get a single app by its Jamf School ID. */
 	getAppById(id: number): Promise<App | null>;
+
+	/** (Read) Get all locations. */
+	getLocations(): Promise<Location[]>;
+
+	/** (Read) Get a location by its ID. */
+	getLocationById(id: number): Promise<Location | null>;
+
+	/** (Read) Get a location by its name. */
+	getLocationByName(name: string): Promise<Location | null>;
 }

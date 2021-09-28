@@ -1,3 +1,5 @@
+import type { Location } from "./Location.ts";
+
 export interface App {
 	/** Discriminator for type checks. */
 	readonly type: "App";
@@ -41,4 +43,7 @@ export interface App {
 	//  * Other apps created from the same data will not be updated.
 	//  */
 	// update(): Promise<this>;
+
+	/** (Read) Get the location this app belongs to. */
+	getLocation(): Promise<Location | null>;
 }

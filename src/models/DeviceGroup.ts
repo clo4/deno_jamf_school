@@ -1,4 +1,5 @@
 import type { Device } from "./Device.ts";
+import type { Location } from "./Location.ts";
 
 /**
  * DeviceGroup represents a named collection of devices.
@@ -66,4 +67,7 @@ export interface DeviceGroup {
 	 * ```
 	 */
 	getDevices(): Promise<Device[]>;
+
+	/** (Read) Get the location this device group belongs to. */
+	getLocation(): Promise<Location | null>;
 }

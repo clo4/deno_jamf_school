@@ -52,4 +52,14 @@ export class UserGroup implements models.UserGroup {
 
 		return myUsers.map((user) => this.#client.createUser(user));
 	}
+
+	async getLocation() {
+		let locationData;
+		try {
+			locationData = await this.#api.getLocation(this.#data.locationId);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+		return this.#client.createLocation(locationData);
+	}
 }
