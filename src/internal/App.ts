@@ -4,12 +4,12 @@ import type { BasicObjectInit } from "./Client.ts";
 export type AppData = models.APIData["getApps"][number];
 
 export class App implements models.App {
-	// #api: models.API;
+	#api: models.API;
 	// #client: Creator;
 	#data: AppData;
 
 	constructor(init: BasicObjectInit<AppData>) {
-		// this.#api = init.api;
+		this.#api = init.api;
 		// this.#client = init.client;
 		this.#data = init.data;
 	}
@@ -60,5 +60,10 @@ export class App implements models.App {
 
 	get version() {
 		return this.#data.version;
+	}
+
+	async update() {
+		this.#data = await this.#api.getApp(this.#data.id);
+		return this;
 	}
 }

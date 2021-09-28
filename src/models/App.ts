@@ -35,10 +35,10 @@ export interface App {
 	/** Whether or not the app is in the trash (deleted). */
 	readonly isTrashed: boolean;
 
-	// /**
-	//  * (Read) Update this apps's data.
-	//  *
-	//  * Other apps created from the same data will not be updated.
-	//  */
-	// update(): Promise<this>;
+	/**
+	 * (Read) Update this apps's data.
+	 *
+	 * Other apps created from the same data will not be updated.
+	 */
+	update(): Promise<this>;
 }
