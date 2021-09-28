@@ -1,4 +1,3 @@
-import { assert } from "../deps/std_testing_asserts.ts";
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
