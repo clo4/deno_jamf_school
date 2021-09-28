@@ -194,6 +194,12 @@ export interface API {
 	 * The ID used is a Jamf School ID, not the app's App Store ID.
 	 */
 	getApp(id: number): Promise<RouteData<"GET /apps/:id">>;
+
+	/** (Read) Get all locations. */
+	getLocations(): Promise<RouteData<"GET /locations">["locations"]>;
+
+	/** (Read) Get a single location by its ID (zero-indexed). */
+	getLocation(id: number): Promise<RouteData<"GET /locations/:id">>;
 }
 
 /** Helper type to map from API method name to the method's return type. */
