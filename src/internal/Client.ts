@@ -22,18 +22,14 @@ export type Creator = Pick<
 >;
 
 /**
- * Init object containing an API, Client, and some data.
- *
- * This should be enough to instantiate most objects.
+ * Init object with an API, Client, and some data (T). This should be enough to
+ * instantiate most objects.
  */
 export type BasicObjectInit<T> = {
 	api: models.API;
 	client: Creator;
 	data: T;
 };
-
-// All of the classes in this file are purely implementation details. The
-// interfaces exported from ./models/mod.ts are the source of truth.
 
 export type ClientInit = {
 	api: models.API;

@@ -1,17 +1,21 @@
 import type * as models from "../models/mod.ts";
-import type { BasicObjectInit, Creator } from "./Client.ts";
+import type { BasicObjectInit } from "./Client.ts";
 
 export type AppData = models.APIData["getApps"][number];
 
 export class App implements models.App {
-	#api: models.API;
-	#client: Creator;
+	// #api: models.API;
+	// #client: Creator;
 	#data: AppData;
 
 	constructor(init: BasicObjectInit<AppData>) {
-		this.#api = init.api;
-		this.#client = init.client;
+		// this.#api = init.api;
+		// this.#client = init.client;
 		this.#data = init.data;
+	}
+
+	toString() {
+		return `${this.name} (${this.bundleId})`;
 	}
 
 	toJSON() {
