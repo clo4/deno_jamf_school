@@ -88,7 +88,17 @@ await Promise.allSettled((devices) => device.restart());
 
 ## Changelog
 
-Each entry only explains what changed, but links to a pull request that explains why.
+Each entry explains what changed and links to a pull request that has more details.
+
+### Version 0.3.0
+
+<!-- deno-fmt-ignore -->
+
+- **Add support for apps ([#15])** <br>
+  This includes `Client.getApps`, `Client.getAppsById`, and `Device.getApps`. See the documentation for more information (the `App` interface).
+
+<details>
+<summary>Older versions</summary>
 
 ### Version 0.2.1
 
@@ -99,9 +109,6 @@ Each entry only explains what changed, but links to a pull request that explains
 
 [SeparateRecords/apple_device_identifiers]: https://github.com/SeparateRecords/apple_device_identifiers
 [#34]: https://github.com/SeparateRecords/deno_jamf_school/pull/34
-
-<details>
-<summary>Older versions</summary>
 
 ### Version 0.2.0
 
