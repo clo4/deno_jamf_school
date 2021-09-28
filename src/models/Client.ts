@@ -3,6 +3,7 @@ import type { Device } from "./Device.ts";
 import type { DeviceGroup } from "./DeviceGroup.ts";
 import type { User } from "./User.ts";
 import type { UserGroup } from "./UserGroup.ts";
+import type { App } from "./App.ts";
 
 /**
  * A high-level abstraction over the Jamf School API that allows you to reason
@@ -41,6 +42,13 @@ export interface Client {
 	 * `getUsers`.
 	 */
 	createUser(data: APIData["getUser"]): User;
+
+	/**
+	 * Create an app object with data from the API.
+	 *
+	 * If you don't already have the data, you may want `getApps`.
+	 */
+	createApp(data: APIData["getApps"][number]): App;
 
 	/**
 	 * Create a user group object with data from the API.
@@ -90,4 +98,10 @@ export interface Client {
 
 	/** (Read) Get all device groups. */
 	getDeviceGroups(): Promise<DeviceGroup[]>;
+
+	/** (Read) Get all the apps registered to this Jamf School instance. */
+	getApps(): Promise<App[]>;
+
+	/** (Read) Get a single app by its Jamf School ID. */
+	getAppById(id: number): Promise<App | null>;
 }

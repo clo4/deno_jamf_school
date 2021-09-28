@@ -4,6 +4,7 @@ import { Device, DeviceData } from "./Device.ts";
 import { DeviceGroup, DeviceGroupData } from "./DeviceGroup.ts";
 import { User, UserData } from "./User.ts";
 import { UserGroup, UserGroupData } from "./UserGroup.ts";
+import { App, AppData } from "./App.ts";
 import { suppressAPIError } from "./APIError.ts";
 
 /**
@@ -17,21 +18,18 @@ export type Creator = Pick<
 	| "createDeviceGroup"
 	| "createUser"
 	| "createUserGroup"
+	| "createApp"
 >;
 
 /**
- * Init object containing an API, Client, and some data.
- *
- * This should be enough to instantiate most objects.
+ * Init object with an API, Client, and some data (T). This should be enough to
+ * instantiate most objects.
  */
 export type BasicObjectInit<T> = {
 	api: models.API;
 	client: Creator;
 	data: T;
 };
-
-// All of the classes in this file are purely implementation details. The
-// interfaces exported from ./models/mod.ts are the source of truth.
 
 export type ClientInit = {
 	api: models.API;
@@ -74,6 +72,14 @@ export class Client implements models.Client {
 
 	createUserGroup(data: UserGroupData): models.UserGroup {
 		return new UserGroup({
+			api: this.#api,
+			client: this,
+			data: data,
+		});
+	}
+
+	createApp(data: AppData): models.App {
+		return new App({
 			api: this.#api,
 			client: this,
 			data: data,
@@ -266,5 +272,31 @@ export class Client implements models.Client {
 		}
 
 		return this.createDeviceGroup(groups[0]);
+	}
+
+	async getApps() {
+		let apps;
+		try {
+			apps = await this.#api.getApps();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		return apps.map((app) => this.createApp(app));
+	}
+
+	async getAppById(id: number) {
+		if (!isValidID(id)) {
+			return null;
+		}
+
+		let app;
+		try {
+			app = await this.#api.getApp(id);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		return this.createApp(app);
 	}
 }

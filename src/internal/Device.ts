@@ -166,4 +166,25 @@ export class Device implements models.Device {
 		await this.#api.wipeDevice(this.#data.UDID);
 		return this;
 	}
+
+	async getApps() {
+		let apps, myAppData;
+		try {
+			[apps, myAppData] = await Promise.all([
+				this.#api.getApps(),
+				this.#api.getDevice(this.udid, { includeApps: true }),
+			]);
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+		// It's possible that this could be omitted, which is an error condition.
+		// That shouldn't fail silently, since that's (in this particular case) a
+		// validation failure.
+		if (!("apps" in myAppData)) {
+			throw new Error("Missing 'apps' property in returned apps");
+		}
+		const myAppIdentifiers = new Set(myAppData.apps!.map((app) => app.identifier));
+		const myApps = apps.filter((app) => myAppIdentifiers.has(app.bundleId));
+		return myApps.map((app) => this.#client.createApp(app));
+	}
 }

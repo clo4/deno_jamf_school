@@ -1,6 +1,6 @@
 # internal
 
-This directory is not part of the public API. There is no guarantee of stability.
+This directory is not part of the public API. There is no guarantee of stability as all files are considered implementation details.
 
 ## Structure
 

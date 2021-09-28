@@ -1,5 +1,6 @@
 import type { DeviceGroup } from "./DeviceGroup.ts";
 import type { User } from "./User.ts";
+import type { App } from "./App.ts";
 
 /**
  * Device represents a single device.
@@ -137,4 +138,7 @@ export interface Device {
 
 	/** (Add) Schedule a complete wipe. */
 	wipe(): Promise<this>;
+
+	/** (Read) Get the apps that are assigned to this device. */
+	getApps(): Promise<App[]>;
 }
