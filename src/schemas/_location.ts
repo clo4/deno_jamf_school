@@ -9,7 +9,10 @@ export type LocationData = {
 	postalCode: string | null;
 	city: string | null;
 	source: string;
-	asmIdentifier: string | null; // TODO: what is this type? I don't think it's string
+	// I'm *pretty* sure this is a string, but I don't know for sure. This
+	// support article makes me think I'm correct. Might need testing later.
+	// https://support.apple.com/en-au/guide/apple-school-manager/apd230e24905/web
+	asmIdentifier: string | null;
 	schoolNumber: string | null;
 };
 
