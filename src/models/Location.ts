@@ -4,26 +4,41 @@ import type { User } from "./User.ts";
 import type { UserGroup } from "./UserGroup.ts";
 import type { App } from "./App.ts";
 
+/**
+ * Location represents a physical site. All data in Jamf School must be
+ * assigned to a location.
+ *
+ * Locations are able to get the data that is assigned to them.
+ *
+ * Many of the properties are nullable because the web data entry form only
+ * requires a name.
+ */
 export interface Location {
 	/** The ID of this location, starting from zero. */
 	readonly id: number;
 
+	/** The name of the location. */
+	readonly name: string;
+
 	/** Whether this location is a district. */
 	readonly isDistrict: boolean;
 
-	/** The street this location is on (null if empty) */
+	/** The street this location is on. */
 	readonly streetName: string | null;
 
-	/** The street number this location is at (null if empty) */
+	/** The street number this location is at. */
 	readonly streetNumber: string | null;
 
-	/** The post code this location is in (null if empty) */
+	/** The post code this location is in. */
 	readonly postalCode: string | null;
 
-	/** The city this location is in (null if empty) */
+	/** The city this location is in. */
 	readonly city: string | null;
 
-	/** The number assigned to this school in the Jamf School web interface. */
+	/** The ID this location is assigned in Apple School Manager. */
+	readonly asmIdentifier: string | null;
+
+	/** The number assigned to this school. */
 	readonly schoolNumber: string | null;
 
 	/** (Read) Get all devices that belong to this location. */
@@ -40,4 +55,11 @@ export interface Location {
 
 	/** (Read) Get all apps that belong to this location. */
 	getApps(): Promise<App[]>;
+
+	/**
+	 * (Read) Update this location's data.
+	 *
+	 * Other locations created from this data will not be updated.
+	 */
+	update(): Promise<this>;
 }

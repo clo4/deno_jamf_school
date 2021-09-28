@@ -49,12 +49,21 @@ export class Location implements models.Location {
 		return this.#data.postalCode;
 	}
 
+	get asmIdentifier() {
+		return this.#data.asmIdentifier;
+	}
+
 	get schoolNumber() {
 		return this.#data.schoolNumber;
 	}
 
 	get city() {
 		return this.#data.city;
+	}
+
+	async update() {
+		this.#data = await this.#api.getLocation(this.#data.id);
+		return this;
 	}
 
 	async getDevices() {
