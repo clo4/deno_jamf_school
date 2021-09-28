@@ -1,0 +1,26 @@
+[
+	{
+		"id": 0,
+		"name": "[redacted]",
+		"isDistrict": false,
+		"street": null,
+		"streetNumber": null,
+		"postalCode": null,
+		"city": null,
+		"source": "[redacted]",
+		"asmIdentifier": null,
+		"schoolNumber": null
+	},
+	{
+		"id": 0,
+		"name": "[redacted]",
+		"isDistrict": false,
+		"street": "[redacted]",
+		"streetNumber": "[redacted]",
+		"postalCode": "[redacted]",
+		"city": "[redacted]",
+		"source": "[redacted]",
+		"asmIdentifier": null,
+		"schoolNumber": "[redacted]"
+	}
+]

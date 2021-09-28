@@ -7,6 +7,8 @@ import validateGetDevices from "./GET_devices.ts";
 import validateGetDevicesGroups from "./GET_devices_groups.ts";
 import validateGetDevicesGroupsId from "./GET_devices_groups_id.ts";
 import validateGetDevicesUdid from "./GET_devices_udid.ts";
+import validateGetLocations from "./GET_locations.ts";
+import validateGetLocationsId from "./GET_locations_id.ts";
 import validateGetUsers from "./GET_users.ts";
 import validateGetUsersGroups from "./GET_users_groups.ts";
 import validateGetUsersGroupsId from "./GET_users_groups_id.ts";
@@ -33,6 +35,8 @@ export const validators = {
 	"GET /devices/:udid": validateGetDevicesUdid,
 	"GET /devices/groups": validateGetDevicesGroups,
 	"GET /devices/groups/:id": validateGetDevicesGroupsId,
+	"GET /locations": validateGetLocations,
+	"GET /locations/:id": validateGetLocationsId,
 	"GET /users": validateGetUsers,
 	"GET /users/:id": validateGetUsersId,
 	"GET /users/groups": validateGetUsersGroups,
