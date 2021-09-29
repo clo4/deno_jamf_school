@@ -82,9 +82,7 @@ Deno.test("schemas/assertValid: GET /users/groups/:id (200 OK)", async () => {
 });
 
 Deno.test("schemas/assertValid: GET /apps (200 OK)", async () => {
-	const json = await readRelativeTextFile(
-		"../example_data/GET_apps__200.json",
-	);
+	const json = await readRelativeTextFile("../example_data/GET_apps__200.json");
 	assertValid("GET /apps", JSON.parse(json));
 });
 
@@ -94,5 +92,19 @@ Deno.test("schemas/assertValid: GET /apps/:id (200 OK, many)", async () => {
 	);
 	for (const json of JSON.parse(text)) {
 		assertValid("GET /apps/:id", json);
+	}
+});
+
+Deno.test("schemas/assertValid: GET /locations (200 OK)", async () => {
+	const json = await readRelativeTextFile("../example_data/GET_locations__200.json");
+	assertValid("GET /locations", JSON.parse(json));
+});
+
+Deno.test("schemas/assertValid: GET /locations/:id (200 OK, many)", async () => {
+	const text = await readRelativeTextFile(
+		"../example_data/many__GET_locations_id__200.json",
+	);
+	for (const json of JSON.parse(text)) {
+		assertValid("GET /locations/:id", json);
 	}
 });

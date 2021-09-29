@@ -132,6 +132,7 @@ export type {
 	Client,
 	Device,
 	DeviceGroup,
+	Location,
 	User,
 	UserGroup,
 } from "./models/mod.ts";

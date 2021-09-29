@@ -97,7 +97,11 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Add support for apps ([#15])** <br>
   This includes `Client.getApps`, `Client.getAppsById`, and `Device.getApps`. See the documentation for more information (the `App` interface).
 
+- **Add support for locations ([#40])** <br>
+  Locations can get the data that belongs to them, and all objects can now get their location.
+
 [#15]: https://github.com/SeparateRecords/deno_jamf_school/pull/15
+[#40]: https://github.com/SeparateRecords/deno_jamf_school/pull/40
 
 <details>
 <summary>Older versions</summary>

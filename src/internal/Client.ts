@@ -5,6 +5,7 @@ import { DeviceGroup, DeviceGroupData } from "./DeviceGroup.ts";
 import { User, UserData } from "./User.ts";
 import { UserGroup, UserGroupData } from "./UserGroup.ts";
 import { App, AppData } from "./App.ts";
+import { Location, LocationData } from "./Location.ts";
 import { suppressAPIError } from "./APIError.ts";
 
 /**
@@ -19,6 +20,7 @@ export type Creator = Pick<
 	| "createUser"
 	| "createUserGroup"
 	| "createApp"
+	| "createLocation"
 >;
 
 /**
@@ -80,6 +82,14 @@ export class Client implements models.Client {
 
 	createApp(data: AppData): models.App {
 		return new App({
+			api: this.#api,
+			client: this,
+			data: data,
+		});
+	}
+
+	createLocation(data: LocationData): models.Location {
+		return new Location({
 			api: this.#api,
 			client: this,
 			data: data,
@@ -310,6 +320,7 @@ export class Client implements models.Client {
 		}
 
 		const found = apps.filter((app) => app.bundleId === bundleId);
+
 		if (found.length === 0) {
 			return null;
 		}
@@ -330,6 +341,7 @@ export class Client implements models.Client {
 		}
 
 		const found = apps.filter((app) => app.name === name);
+
 		if (found.length === 0) {
 			return null;
 		}
@@ -339,5 +351,52 @@ export class Client implements models.Client {
 		}
 
 		return this.createApp(found[0]);
+	}
+
+	async getLocations() {
+		let locations;
+		try {
+			locations = await this.#api.getLocations();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		return locations.map((loc) => this.createLocation(loc));
+	}
+
+	async getLocationById(id: number) {
+		if (!isValidID(id)) {
+			return null;
+		}
+
+		let loc;
+		try {
+			loc = await this.#api.getLocation(id);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		return this.createLocation(loc);
+	}
+
+	async getLocationByName(name: string) {
+		let locations;
+		try {
+			locations = await this.#api.getLocations();
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		const found = locations.filter((loc) => loc.name === name);
+
+		if (found.length === 0) {
+			return null;
+		}
+
+		if (found.length > 1) {
+			throw new Error(`More than one location with the same name (${name})`);
+		}
+
+		return this.createLocation(found[0]);
 	}
 }

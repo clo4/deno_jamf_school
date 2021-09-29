@@ -1,16 +1,17 @@
 import type * as models from "../models/mod.ts";
-import type { BasicObjectInit } from "./Client.ts";
+import type { BasicObjectInit, Creator } from "./Client.ts";
+import { suppressAPIError } from "./APIError.ts";
 
 export type AppData = models.APIData["getApps"][number];
 
 export class App implements models.App {
 	#api: models.API;
-	// #client: Creator;
+	#client: Creator;
 	#data: AppData;
 
 	constructor(init: BasicObjectInit<AppData>) {
 		this.#api = init.api;
-		// this.#client = init.client;
+		this.#client = init.client;
 		this.#data = init.data;
 	}
 
@@ -60,6 +61,16 @@ export class App implements models.App {
 
 	get version() {
 		return this.#data.version;
+	}
+
+	async getLocation() {
+		let locationData;
+		try {
+			locationData = await this.#api.getLocation(this.#data.locationId);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+		return this.#client.createLocation(locationData);
 	}
 
 	async update() {

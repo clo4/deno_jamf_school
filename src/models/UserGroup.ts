@@ -1,4 +1,5 @@
 import type { User } from "./User.ts";
+import type { Location } from "./Location.ts";
 
 /**
  * UserGroup represents a named group of users.
@@ -25,4 +26,7 @@ export interface UserGroup {
 
 	/** (Read) Get all the users in the user group. */
 	getUsers(): Promise<User[]>;
+
+	/** (Read) Get the location this user group belongs to. */
+	getLocation(): Promise<Location | null>;
 }

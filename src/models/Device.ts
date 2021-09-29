@@ -1,6 +1,7 @@
 import type { DeviceGroup } from "./DeviceGroup.ts";
 import type { User } from "./User.ts";
 import type { App } from "./App.ts";
+import type { Location } from "./Location.ts";
 
 /**
  * Device represents a single device.
@@ -141,4 +142,7 @@ export interface Device {
 
 	/** (Read) Get the apps that are assigned to this device. */
 	getApps(): Promise<App[]>;
+
+	/** (Read) Get the location this device belongs to. */
+	getLocation(): Promise<Location | null>;
 }
