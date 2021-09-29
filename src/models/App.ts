@@ -1,5 +1,10 @@
 import type { Location } from "./Location.ts";
 
+/**
+ * App represents an individual application.
+ *
+ * The API does not provide any ways to edit the data on an app.
+ */
 export interface App {
 	/** Discriminator for type checks. */
 	readonly type: "App";
