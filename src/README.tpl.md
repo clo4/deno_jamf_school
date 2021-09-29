@@ -78,7 +78,7 @@ const deviceData = await api.getDevices({ ownerName: "Robert" });
 const devices = deviceData.map((data) => client.createDevice(data));
 
 // Everything is promise-based, so you can do things concurrently.
-await Promise.allSettled((devices) => device.restart());
+await Promise.allSettled(devices.map((device) => device.restart()));
 ```
 
 </details>
