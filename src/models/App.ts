@@ -1,3 +1,4 @@
+import type { Device } from "./Device.ts";
 import type { Location } from "./Location.ts";
 
 /**
@@ -48,6 +49,9 @@ export interface App {
 	 * Other apps created from the same data will not be updated.
 	 */
 	update(): Promise<this>;
+
+	/** (Read) Get all the devices that have this app. */
+	getDevices(): Promise<Device[]>;
 
 	/** (Read) Get the location this app belongs to. */
 	getLocation(): Promise<Location | null>;
