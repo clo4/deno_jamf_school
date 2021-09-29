@@ -320,6 +320,7 @@ export class Client implements models.Client {
 		}
 
 		const found = apps.filter((app) => app.bundleId === bundleId);
+
 		if (found.length === 0) {
 			return null;
 		}
@@ -340,6 +341,7 @@ export class Client implements models.Client {
 		}
 
 		const found = apps.filter((app) => app.name === name);
+
 		if (found.length === 0) {
 			return null;
 		}
@@ -359,7 +361,7 @@ export class Client implements models.Client {
 			return suppressAPIError([], e);
 		}
 
-		return locations.map((app) => this.createLocation(app));
+		return locations.map((loc) => this.createLocation(loc));
 	}
 
 	async getLocationById(id: number) {
@@ -367,14 +369,14 @@ export class Client implements models.Client {
 			return null;
 		}
 
-		let location;
+		let loc;
 		try {
-			location = await this.#api.getLocation(id);
+			loc = await this.#api.getLocation(id);
 		} catch (e: unknown) {
 			return suppressAPIError(null, e);
 		}
 
-		return this.createLocation(location);
+		return this.createLocation(loc);
 	}
 
 	async getLocationByName(name: string) {
@@ -385,10 +387,14 @@ export class Client implements models.Client {
 			return suppressAPIError(null, e);
 		}
 
-		const found = locations.filter((location) => location.name === name);
+		const found = locations.filter((loc) => loc.name === name);
 
-		if (found.length !== 1) {
+		if (found.length === 0) {
 			return null;
+		}
+
+		if (found.length > 1) {
+			throw new Error(`More than one location with the same name (${name})`);
 		}
 
 		return this.createLocation(found[0]);
