@@ -113,6 +113,24 @@ export interface Client {
 	/** (Read) Get a single app by its Jamf School ID. */
 	getAppById(id: number): Promise<App | null>;
 
+	/**
+	 * (Read) Get a single app by its bundle identifier
+	 *
+	 * If no apps with the given bundle ID exist, it returns null.
+	 * If more than one exists, an error is thrown.
+	 *
+	 * For example, `"com.agilebits.onepassword-ios"`
+	 */
+	getAppByBundleId(bundleId: string): Promise<App | null>;
+
+	/**
+	 * (Read) Get a single app by its name.
+	 *
+	 * If no apps with the name exist, it returns null.
+	 * If more than one app exists, an error is thrown.
+	 */
+	getAppByName(name: string): Promise<App | null>;
+
 	/** (Read) Get all locations. */
 	getLocations(): Promise<Location[]>;
 

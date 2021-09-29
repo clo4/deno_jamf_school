@@ -296,7 +296,8 @@ export class Client implements models.Client {
 	}
 
 	async getAppById(id: number) {
-		if (!isValidID(id)) {
+		// 0 is never a valid app ID
+		if (id === 0 || !isValidID(id)) {
 			return null;
 		}
 
@@ -308,6 +309,46 @@ export class Client implements models.Client {
 		}
 
 		return this.createApp(app);
+	}
+
+	async getAppByBundleId(bundleId: string) {
+		let apps;
+		try {
+			apps = await this.#api.getApps();
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		const found = apps.filter((app) => app.bundleId === bundleId);
+		if (found.length === 0) {
+			return null;
+		}
+
+		if (found.length > 1) {
+			throw new Error(`More than one app with the same bundle ID (${bundleId})`);
+		}
+
+		return this.createApp(found[0]);
+	}
+
+	async getAppByName(name: string) {
+		let apps;
+		try {
+			apps = await this.#api.getApps();
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		const found = apps.filter((app) => app.name === name);
+		if (found.length === 0) {
+			return null;
+		}
+
+		if (found.length > 1) {
+			throw new Error(`More than one app with the same name (${name})`);
+		}
+
+		return this.createApp(found[0]);
 	}
 
 	async getLocations() {

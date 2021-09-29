@@ -72,4 +72,9 @@ export class App implements models.App {
 		}
 		return this.#client.createLocation(locationData);
 	}
+
+	async update() {
+		this.#data = await this.#api.getApp(this.#data.id);
+		return this;
+	}
 }
