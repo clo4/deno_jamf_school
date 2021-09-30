@@ -23,6 +23,10 @@ export class Location implements models.Location {
 		return this.#data.name;
 	}
 
+	get type() {
+		return "Location" as const;
+	}
+
 	get name() {
 		return this.#data.name;
 	}
