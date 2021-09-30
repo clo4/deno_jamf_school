@@ -1,6 +1,6 @@
 import type { Schema } from "./scripts/render.ts";
 import * as path from "./scripts/deps/std_path.ts";
-import * as jamf from "./src/mod.ts";
+import { version } from "./src/version.ts";
 
 // This file is configuration for scripts/render.ts and exists purely to
 // separate the logic from any opinions.
@@ -21,11 +21,11 @@ export const config: Schema = {
 		root: path.dirname(path.fromFileUrl(import.meta.url)),
 	},
 	variables: {
-		VERSION: jamf.version,
+		VERSION: version,
 		STD_VERSION: "0.108.0",
-		src: `https://deno.land/x/jamf_school@${jamf.version}`,
+		src: `https://deno.land/x/jamf_school@${version}`,
 		REPO: "https://github.com/SeparateRecords/deno_jamf_school",
-		DOCS: `https://doc.deno.land/https/deno.land/x/jamf_school@${jamf.version}`,
+		DOCS: `https://doc.deno.land/https/deno.land/x/jamf_school@${version}`,
 	},
 };
 
