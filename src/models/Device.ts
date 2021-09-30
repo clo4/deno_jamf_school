@@ -65,12 +65,8 @@ export interface Device {
 	readonly modelName: string;
 
 	/**
-	 * The model identifier is a string that uniquely identifies the specific
-	 * device model (eg. `iPad11,6`).
-	 *
-	 * Search with [your favourite search engine] for "apple model identifier
-	 * list site:github.com" and you'll find many (non-comprehensive) lists for
-	 * different kinds of devices.
+	 * The model identifier is a string that identifies the device model
+	 * (eg. `iPad11,6`). This is an internal identifier used by Apple.
 	 */
 	readonly modelIdentifier: string;
 
@@ -115,13 +111,16 @@ export interface Device {
 	/**
 	 * (Edit) Assign a new owner to this device.
 	 *
-	 * The owner can be set by using an object with an `id` property (number).
+	 * The owner can be set by using a User object (or anything with a numeric
+	 * `id` property).
 	 * ```
-	 * device.setOwner(testAccount)
+	 * const device = await client.getDeviceByName("Test MacBook");
+	 * const user = await client.getUserByName("Test Account");
+	 * device.setOwner(user);
 	 * ```
 	 *
-	 * Alternatively, if you know the ID of the user you want to use, an object
-	 * literal may be more appropriate.
+	 * If you already know the ID of the user you want to use, an object literal
+	 * may be easier than getting the user object.
 	 * ```
 	 * device.setOwner({ id: 4 });
 	 * ```

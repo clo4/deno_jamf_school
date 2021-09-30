@@ -4,7 +4,7 @@ on:
     paths:
       - "**/*.ts"
       - "**/*.js"
-      - "**/*.tpl.md"
+      - "**/*.md"
       - "test_data/*.json"
       - ".github/workflows/*.yml"
 jobs:

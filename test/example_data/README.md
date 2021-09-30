@@ -27,7 +27,7 @@ Get-Content ignore\real.json | deno run scripts\redact.ts > test\example_data\re
 ### JavaScript
 
 ```javascript
-import { redact } from "./scripts/redact.ts";
+import { redact } from "https://deno.land/x/redact_json@0.1.2/mod.ts";
 
 const file = await Deno.readTextFile("ignore/real.json");
 

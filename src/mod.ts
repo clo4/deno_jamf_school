@@ -28,7 +28,8 @@
  * JSON schema to ensure you don't get any unexpected results without knowing.
  *
  * The `Client` and related objects are an optional layer of sugar over an
- * `API` object that abstract away the actual routes and
+ * `API` object that abstract away the complexity and provide convenience
+ * methods.
  *
  * It's modelled after web APIs, so it feels right at home in JavaScript and
  * TypeScript.
@@ -37,7 +38,7 @@
  * token, create a new JS or TS file and write the following.
  *
  * ```
- * import * as jamf from "https://deno.land/x/jamf_school@0.1.0/mod.ts";
+ * import * as jamf from "https://deno.land/x/jamf_school/mod.ts";
  *
  * const client = jamf.createClient({
  *   id: "YOUR_NETWORK_ID",
@@ -46,16 +47,30 @@
  * })
  * ```
  *
- * You can now start calling methods on the `client` object. If your credential
- * were incorrect, awaiting a method will throw an exception.
+ * You can now start calling methods on the `client` object. If the credentials
+ * were incorrect, awaiting a method will throw an error to let you know.
+ *
+ * The library handles failure differently depending on the action being
+ * performed. If the method retrieves objects, it returns null (or an empty
+ * array) if there is a network failure, but throws when an unexpected
+ * condition is encountered. For example, duplicate names will cause a
+ * `Client.get[...]ByName` method to throw, instead of returning null or a single
+ * the value. If the method performs an action, such as `Device.restart`, it
+ * will always throw on failure.
  *
  * @module
  */
 
+// Can't be namespaced because doc.deno.land will always link to another page
 import type { API, Client } from "./models/mod.ts";
-import { API as ImplAPI } from "./internal/API.ts";
-import { Client as ImplClient } from "./internal/Client.ts";
 
+// Never show up in docs, these can be namespaced
+import * as api from "./internal/API.ts";
+import * as client from "./internal/Client.ts";
+
+/**
+ * The minimum required information to use the API.
+ */
 export interface Credentials {
 	/**
 	 * Your Jamf School network ID.
@@ -88,37 +103,82 @@ export interface Credentials {
 }
 
 /**
- * A low-level, type-safe wrapper over the Jamf School API that validates all
- * data it receives.
+ * Create an API object, a low level wrapper over the API that validates the
+ * data returned and gives it back to you directly. Having validation always
+ * guarantees that the data promised is what you get.
  *
- * The only state it has is your network ID and API token, which are immutable
- * once set.
+ * ```
+ * const api = jamf.createAPI({
+ *   id: "YOUR_NETWORK_ID",
+ *   token: "YOUR_API_TOKEN",
+ *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
+ * });
  *
- * To find your network ID:
+ * const app = await api.getApp(23);
+ * console.log(app.name);
+ * ```
  *
- *   Devices > Enroll device(s) > On-device enrollment (iOS & macOS)
- *
- * To create an API token:
- *
- *   Organisation > Settings > API > Add API Key
+ * For information on how to get the necessary credentials, see the
+ * `Credentials` interface.
  */
-export function createAPI(credentials: Credentials): API {
-	return new ImplAPI(credentials);
+export function createAPI(init: Credentials): API {
+	return new api.API(init);
 }
 
 /**
- * Create an API client. Clients are a high level bridge to the API that can
- * query for data and return its representation as an object. Clients don't
- * perform actions on any data as all actions are methods on the returned
- * objects.
+ * Create a Client. Clients make it easier to use the API by modelling
+ * data as objects with methods. The methods are designed to handle common
+ * tasks, such as finding a device with a specific name, or getting all users
+ * that belong to a particular location.
  *
- * `API` and `Client` can interoperate. The 'create*' methods on the client
- * take data returned from an `API` and upgrade it to an object with methods.
+ * ```
+ * const client = jamf.createClient({
+ *   id: "YOUR_NETWORK_ID",
+ *   token: "YOUR_API_TOKEN",
+ *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
+ * });
+ *
+ * // Get an array of `jamf.Location` objects
+ * const locations = await client.getLocations();
+ *
+ * // Concurrently get an array of `jamf.User` objects for each location
+ * const usersByLocation = await Promise.all(
+ *   locations.map((loc) => loc.getUsers())
+ * );
+ * ```
+ *
+ * A `Client` can upgrade raw data returned by an `API` instance using the
+ * "create" methods. You can also reuse the same `API` by supplying it when
+ * creating the client.
+ *
+ * ```
+ * const api = jamf.createAPI({
+ *   id: "YOUR_NETWORK_ID",
+ *   token: "YOUR_API_TOKEN",
+ *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
+ * });
+ *
+ * // The client can be created with an API instead of credentials.
+ * const client = jamf.createClient({ api });
+ *
+ * // The raw data. This may expose more properties than the object does.
+ * const data = await api.getDevice(3);
+ *
+ * // Provides convenience methods for restarting, getting the owner, etc.
+ * const device = client.createDevice(data);
+ *
+ * // They're the same device!
+ * console.assert(data.UDID === device.udid)
+ * ```
+ *
+ * All objects can also be converted back to the JSON that would be used to
+ * create them using `JSON.parse(JSON.stringify(object))`.
+ *
+ * For information on how to get the necessary credentials, see the
+ * `Credentials` interface.
  */
-export function createClient(
-	init: Credentials | { api: API },
-): Client {
-	return new ImplClient({
+export function createClient(init: Credentials | { api: API }): Client {
+	return new client.Client({
 		api: "api" in init ? init.api : createAPI(init),
 	});
 }
@@ -129,6 +189,7 @@ export type {
 	APIGetDevicesOptions,
 	APIRestartDeviceOptions,
 	APIWipeDeviceOptions,
+	App,
 	Client,
 	Device,
 	DeviceGroup,
@@ -137,5 +198,4 @@ export type {
 	UserGroup,
 } from "./models/mod.ts";
 
-// Deno's standard library does the same thing. Good for consistency.
 export { version } from "./version.ts";

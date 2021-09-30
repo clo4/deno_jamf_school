@@ -1,5 +1,27 @@
 import type { ErrorObject, ValidateFunction as Validator } from "./_ajv_jtd.ts";
 
+/**
+ * The schemas module provides data validation for every supported Jamf School
+ * API route.
+ *
+ * AJV is used to generate the validators from JTD schemas, located in
+ * descriptively named files. The validators are compiled ahead of time and
+ * bundled into a single file to reduce the startup time. Tests ensure that
+ * the bundle behaves identically to the unbundled module.
+ *
+ * ```
+ * // Use the bundle instead of mod.ts entrypoint for faster startup.
+ * import * as routes from "https://deno.land/x/jamf_school/schemas/mod.bundle.js"
+ *
+ * const data = { "message": "DeviceWipeScheduled", "device": "[redacted]" };
+ *
+ * // Throws if the data is not a valid response for the route.
+ * routes.assertValid("POST /devices/:udid/wipe", data);
+ * ```
+ *
+ * @module
+ */
+
 // GET
 import validateGetApps from "./GET_apps.ts";
 import validateGetAppsId from "./GET_apps_id.ts";
@@ -27,6 +49,7 @@ import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
 // The name used for the import is completely arbitrary for bundling, but
 // do try to follow the same conventions.
 
+/** A map of route to validator. */
 // deno-fmt-ignore
 export const validators = {
 	"GET /apps": validateGetApps,
@@ -48,12 +71,15 @@ export const validators = {
 
 type Validators = typeof validators;
 type Endpoint = keyof Validators;
+
+/** Given a route, get the type of the data it returns. */
 // deno-fmt-ignore
 export type RouteData<E extends Endpoint> =
 	Validators[E] extends Validator<infer T>
 		? T
 		: never;
 
+/** Validate the data using the validator for the given route */
 export function validate<E extends Endpoint>(
 	key: E,
 	data: unknown,
@@ -61,6 +87,7 @@ export function validate<E extends Endpoint>(
 	return validators[key](data);
 }
 
+/** Assert that the data is valid using the validator for the given route. */
 export function assertValid<E extends Endpoint>(
 	route: E,
 	data: unknown,

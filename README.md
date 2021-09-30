@@ -1,6 +1,6 @@
 # deno_jamf_school
 
-This is an **unofficial API wrapper for Jamf School**. It is written in TypeScript, designed to be used in the Deno runtime, and targeted towards school IT administrators. It aims to be idiomatic, easy to use, safe for production, and well documented.
+This is an **unofficial API wrapper for Jamf School**. It's written in TypeScript, designed for Deno, and targeted towards school IT administrators. It aims to be idiomatic, easy to use, safe for production, and well documented.
 
 The library introduction ([src/README.md](src/README.md)) has usage examples.
 
@@ -8,8 +8,8 @@ The library introduction ([src/README.md](src/README.md)) has usage examples.
 
 The aim for this library is to be usable by any school IT administrator with a passing knowledge of JavaScript and an inclination towards automation. This results in the following design criteria:
 
-- **Simply designed.** Have as little public as possible, with obvious names.
-- **Documented.** Simple english, everything laid out as bare as possible.
+- **Simply designed.** Use obvious names, and have nothing more than necessary.
+- **Documented.** Use simple English, with everything laid out as bare as possible.
 - **Private.** For use in schools, _no data can ever be shared_. This library should be usable with only the bare minimum network permission.
 - **Tested.** Everything that is worth testing should be tested.
 

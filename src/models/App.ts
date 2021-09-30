@@ -34,7 +34,7 @@ export interface App {
 	/** The app's name. */
 	readonly name: string;
 
-	/** Version number of the app. This isn't necessarily SemVer. */
+	/** Version number of the app. This may not follow semantic versioning. */
 	readonly version: string;
 
 	/** A floating-point number representing the price of the app. */
