@@ -39,6 +39,12 @@ export interface User {
 	/** Whether the user is excluded from teacher restrictions. */
 	readonly isExcludedFromRestrictions: boolean;
 
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the user. */
+	toString(): string;
+
 	/**
 	 * (Read) Update this user's data.
 	 *

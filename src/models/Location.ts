@@ -43,6 +43,12 @@ export interface Location {
 	 */
 	readonly schoolNumber: string | null;
 
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the location. */
+	toString(): string;
+
 	/** (Read) Get all devices that belong to this location. */
 	getDevices(): Promise<Device[]>;
 

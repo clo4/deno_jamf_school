@@ -19,6 +19,10 @@ export class UserGroup implements models.UserGroup {
 		return this.#data;
 	}
 
+	toString() {
+		return this.#data.name;
+	}
+
 	get type() {
 		return "UserGroup" as const;
 	}

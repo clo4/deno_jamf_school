@@ -43,6 +43,12 @@ export interface App {
 	/** Whether or not the app is in the trash (deleted). */
 	readonly isTrashed: boolean;
 
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the app. */
+	toString(): string;
+
 	/**
 	 * (Read) Update this apps's data.
 	 *

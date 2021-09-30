@@ -19,6 +19,10 @@ export class User implements models.User {
 		return this.#data;
 	}
 
+	toString() {
+		return this.#data.name;
+	}
+
 	get type() {
 		return "User" as const;
 	}

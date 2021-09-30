@@ -98,6 +98,12 @@ export interface Device {
 	 */
 	readonly batteryCapacity: number;
 
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the device. */
+	toString(): string;
+
 	/**
 	 * (Read) Update this device's data.
 	 *

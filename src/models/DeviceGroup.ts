@@ -46,6 +46,12 @@ export interface DeviceGroup {
 	//  */
 	// readonly isClass: boolean;
 
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the device group. */
+	toString(): string;
+
 	/**
 	 * (Read) Update this device group's data.
 	 *

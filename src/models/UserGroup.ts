@@ -17,6 +17,12 @@ export interface UserGroup {
 	/** A description of the user group (may be empty) */
 	readonly description: string;
 
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the user group. */
+	toString(): string;
+
 	/**
 	 * (Read) Update this user group's data.
 	 *
