@@ -104,9 +104,8 @@ export interface Credentials {
 
 /**
  * Create an API object, a low level wrapper over the API that validates the
- * data returned and gives it back to you directly. The validation guarantees
- * that you get no less data than promised, but allows for additional data to
- * be returned.
+ * data returned and gives it back to you directly. Having validation always
+ * guarantees that the data promised is what you get.
  *
  * ```
  * const api = jamf.createAPI({
@@ -165,7 +164,7 @@ export function createAPI(init: Credentials): API {
  * // The raw data. This may expose more properties than the object does.
  * const data = await api.getDevice(3);
  *
- * // Provodes convenience methods for restarting, getting the owner, etc.
+ * // Provides convenience methods for restarting, getting the owner, etc.
  * const device = client.createDevice(data);
  *
  * // They're the same device!

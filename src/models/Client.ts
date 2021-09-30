@@ -8,13 +8,13 @@ import type { App } from "./App.ts";
 
 /**
  * A high-level abstraction over the Jamf School API that allows you to reason
- * about data as objects with methods.
+ * about it as returning objects with methods, instead of raw data.
  *
  * As the implementations of these objects are not public, instance checks must
  * be done using the `type` property on each object.
  *
  * Lower-level actions can be done using an `API` object. This data can be
- * upgraded to an object using one of the create-methods on the `Client`.
+ * upgraded to an object using one of the "create" methods on your `Client`.
  */
 export interface Client {
 	/** Discriminator for type checks. */

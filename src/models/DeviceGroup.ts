@@ -23,13 +23,14 @@ export interface DeviceGroup {
 	/** Additional relevant information. This may be empty. */
 	readonly information: string;
 
-	/** The URL used for the device group image, null if not set. */
+	/** The URL used for the device group image, or null if not set. */
 	readonly imageUrl: string | null;
 
 	/**
 	 * Whether the group is static (false) or smart (true).
 	 *
-	 * Smart groups select their members based on filters.
+	 * Smart groups select their members based on filters, whereas static group
+	 * members must be manually assigned.
 	 */
 	readonly isSmartGroup: boolean;
 
@@ -52,20 +53,7 @@ export interface DeviceGroup {
 	 */
 	update(): Promise<this>;
 
-	/**
-	 * (Read) Get all the devices in the device group.
-	 *
-	 * Note that if you have an array of device groups, it is _far_ more efficient
-	 * to call the following:
-	 * ```
-	 * await client.getDevicesInGroups(array)
-	 * ```
-	 * Don't map over an array of device groups - filter them and use the method
-	 * shown above. If you see this pattern in your code, it can be replaced.
-	 * ```
-	 * await Promise.all(array.map((group) => group.getDevices()))
-	 * ```
-	 */
+	/** (Read) Get all the devices in the device group. */
 	getDevices(): Promise<Device[]>;
 
 	/** (Read) Get the location this device group belongs to. */

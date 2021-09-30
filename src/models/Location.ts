@@ -6,12 +6,11 @@ import type { App } from "./App.ts";
 
 /**
  * Location represents a physical site. All data in Jamf School must be
- * assigned to a location.
+ * assigned to a location. Locations are able to get the data that is assigned
+ * to them.
  *
- * Locations are able to get the data that is assigned to them.
- *
- * Many of the properties are nullable because the web data entry form only
- * requires a name.
+ * Many of the properties are nullable because the only required field when
+ * creating a location is its name.
  */
 export interface Location {
 	/** The ID of this location, starting from zero. */
@@ -38,7 +37,10 @@ export interface Location {
 	/** The ID this location is assigned in Apple School Manager. */
 	readonly asmIdentifier: string | null;
 
-	/** The number assigned to this school. */
+	/**
+	 * The number assigned to this school. This data is arbitrary and may not
+	 * necessarily be a numeric string.
+	 */
 	readonly schoolNumber: string | null;
 
 	/** (Read) Get all devices that belong to this location. */
