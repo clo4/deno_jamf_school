@@ -199,5 +199,4 @@ export type {
 	UserGroup,
 } from "./models/mod.ts";
 
-// deno.land/std follows this pattern
 export { version } from "./version.ts";
