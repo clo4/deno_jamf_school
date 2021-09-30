@@ -63,6 +63,27 @@ export class App implements models.App {
 		return this.#data.version;
 	}
 
+	async getDevices() {
+		let devices;
+		try {
+			devices = await this.#api.getDevices({
+				includeApps: true,
+			});
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		// The data returned from GET /devices?includeApps=1 doesn't include the
+		// app ID, but does include the bundle ID. That's probably unique enough.
+		const found = devices.filter((device) => {
+			return device.apps!.some((app) => {
+				return app.identifier === this.#data.bundleId;
+			});
+		});
+
+		return found.map((device) => this.#client.createDevice(device));
+	}
+
 	async getLocation() {
 		let locationData;
 		try {

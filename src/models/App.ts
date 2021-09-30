@@ -1,5 +1,11 @@
+import type { Device } from "./Device.ts";
 import type { Location } from "./Location.ts";
 
+/**
+ * App represents an individual application.
+ *
+ * The API does not provide any ways to edit the data on an app.
+ */
 export interface App {
 	/** Discriminator for type checks. */
 	readonly type: "App";
@@ -43,6 +49,9 @@ export interface App {
 	 * Other apps created from the same data will not be updated.
 	 */
 	update(): Promise<this>;
+
+	/** (Read) Get all the devices that have this app. */
+	getDevices(): Promise<Device[]>;
 
 	/** (Read) Get the location this app belongs to. */
 	getLocation(): Promise<Location | null>;
