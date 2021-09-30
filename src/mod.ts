@@ -54,7 +54,7 @@
  * performed. If the method retrieves objects, it returns null (or an empty
  * array) if there is a network failure, but throws when an unexpected
  * condition is encountered. For example, duplicate names will cause a
- * `Foo.getBarByName` method to throw, instead of returning null or a single
+ * `Client.get[...]ByName` method to throw, instead of returning null or a single
  * the value. If the method performs an action, such as `Device.restart`, it
  * will always throw on failure.
  *
@@ -68,6 +68,9 @@ import type { API, Client } from "./models/mod.ts";
 import * as api from "./internal/API.ts";
 import * as client from "./internal/Client.ts";
 
+/**
+ * The minimum required information to use the API.
+ */
 export interface Credentials {
 	/**
 	 * Your Jamf School network ID.
@@ -115,6 +118,9 @@ export interface Credentials {
  * const app = await api.getApp(23);
  * console.log(app.name);
  * ```
+ *
+ * For information on how to get the necessary credentials, see the
+ * `Credentials` interface.
  */
 export function createAPI(init: Credentials): API {
 	return new api.API(init);
@@ -133,8 +139,11 @@ export function createAPI(init: Credentials): API {
  *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
  * });
  *
+ * // Get an array of `jamf.Location` objects
  * const locations = await client.getLocations();
- * await usersByLocation = await Promise.all(
+ *
+ * // Concurrently get an array of `jamf.User` objects for each location
+ * const usersByLocation = await Promise.all(
  *   locations.map((loc) => loc.getUsers())
  * );
  * ```
@@ -165,6 +174,9 @@ export function createAPI(init: Credentials): API {
  *
  * All objects can also be converted back to the JSON that would be used to
  * create them using `JSON.parse(JSON.stringify(object))`.
+ *
+ * For information on how to get the necessary credentials, see the
+ * `Credentials` interface.
  */
 export function createClient(init: Credentials | { api: API }): Client {
 	return new client.Client({
@@ -178,6 +190,7 @@ export type {
 	APIGetDevicesOptions,
 	APIRestartDeviceOptions,
 	APIWipeDeviceOptions,
+	App,
 	Client,
 	Device,
 	DeviceGroup,

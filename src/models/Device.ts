@@ -65,12 +65,8 @@ export interface Device {
 	readonly modelName: string;
 
 	/**
-	 * The model identifier is a string that uniquely identifies the specific
-	 * device model (eg. `iPad11,6`).
-	 *
-	 * Search with [your favourite search engine] for "apple model identifier
-	 * list site:github.com" and you'll find many (non-comprehensive) lists for
-	 * different kinds of devices.
+	 * The model identifier is a string that identifies the device model
+	 * (eg. `iPad11,6`). This is an internal identifier used by Apple.
 	 */
 	readonly modelIdentifier: string;
 
