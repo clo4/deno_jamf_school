@@ -2,8 +2,6 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
-// The data could be from either API.getDevice or API.getDevices
-// and for some reason they both return different data?????? ffs
 export type LocationData = models.APIData["getLocation"];
 
 export class Location implements models.Location {
