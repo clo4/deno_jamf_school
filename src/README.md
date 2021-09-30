@@ -3,7 +3,7 @@
 
 # Jamf School API for Deno
 
-An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to feel natural for anyone with basic web development experience to pick it up, and to be simple enough that usage examples and editor suggestions are enough to start using it.
+An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to feel natural for anyone with basic web development experience to pick it up, and to be safe enough to trust in production.
 
 If something doesn't work as expected or you just want some help, please [raise an issue on GitHub][issues] so we can improve the library and documentation for everyone!
 
@@ -19,7 +19,7 @@ Currently, only a limited (mostly read-only) subset of API features are supporte
 - Designed for modern JavaScript
 - A low-level API wrapper and a higher-level object-oriented interface
 - Data validation means you always get the data you're promised
-- Comprehensive documentation
+- Comprehensive documentation and easy-to-follow example
 - Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
 
 ## Usage
