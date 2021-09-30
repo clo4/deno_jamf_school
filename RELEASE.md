@@ -56,7 +56,7 @@ Don't continue if the tests fail.
 
 ## 6. Create a pull request
 
-Use the version as the title, eg. '0.2.0', '0.3.0'
+Use the version as the title, eg. 'Version 0.2.0', 'Version 0.3.0'
 
 If CI fails, fix it.
 
