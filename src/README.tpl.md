@@ -97,8 +97,12 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Add support for locations ([#40])** <br>
   Locations can get the data that belongs to them, and all objects can now get their location.
 
+- **Specify the behaviour of toString and toJSON on models ([#49])** <br>
+  These methods can now be used reliably now that their behaviour is consistent and obvious.
+
 [#15]: $REPO/pull/15
 [#40]: $REPO/pull/40
+[#49]: $REPO/pull/49
 
 <details>
 <summary>Older versions</summary>

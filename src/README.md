@@ -100,8 +100,12 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Add support for locations ([#40])** <br>
   Locations can get the data that belongs to them, and all objects can now get their location.
 
+- **Specify the behaviour of toString and toJSON on models ([#49])** <br>
+  These methods can now be used reliably now that their behaviour is consistent and obvious.
+
 [#15]: https://github.com/SeparateRecords/deno_jamf_school/pull/15
 [#40]: https://github.com/SeparateRecords/deno_jamf_school/pull/40
+[#49]: https://github.com/SeparateRecords/deno_jamf_school/pull/49
 
 <details>
 <summary>Older versions</summary>
