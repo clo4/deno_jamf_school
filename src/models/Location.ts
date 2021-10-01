@@ -13,6 +13,9 @@ import type { App } from "./App.ts";
  * creating a location is its name.
  */
 export interface Location {
+	/** Discriminator for type checks. */
+	readonly type: "Location";
+
 	/** The ID of this location, starting from zero. */
 	readonly id: number;
 
