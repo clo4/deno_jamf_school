@@ -20,6 +20,9 @@ export type UserData = {
 	notes: string;
 	exclude: boolean;
 	modified: string;
+	vpp: {
+		status: string;
+	}[];
 };
 
 export const userDataSchema: JTDSchemaType<UserData> = {
@@ -41,6 +44,12 @@ export const userDataSchema: JTDSchemaType<UserData> = {
 		notes: { type: "string" },
 		exclude: { type: "boolean" },
 		modified: { type: "string" },
+		vpp: {
+			elements: {
+				properties: {
+					status: { type: "string" },
+				},
+			},
+		},
 	},
-	additionalProperties: true,
 };
