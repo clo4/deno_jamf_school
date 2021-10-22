@@ -11,7 +11,7 @@ export interface DeviceGroup {
 	/** The Jamf-assigned ID of the device group. */
 	readonly id: number;
 
-	/** The device group's name. */
+	/** The name of the device group. */
 	readonly name: string;
 
 	/**

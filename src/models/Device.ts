@@ -26,7 +26,7 @@ export interface Device {
 	 */
 	readonly serialNumber: string;
 
-	/** The device name. */
+	/** The name of the device. */
 	readonly name: string;
 
 	/**

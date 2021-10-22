@@ -31,7 +31,7 @@ export interface App {
 	/** The URL of the icon of the app. */
 	readonly icon: string;
 
-	/** The app's name. */
+	/** The name of the app. */
 	readonly name: string;
 
 	/** Version number of the app. This may not follow semantic versioning. */
