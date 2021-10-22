@@ -7,15 +7,25 @@ const readRelativeTextFile = relativeTextFileReader(import.meta.url);
 
 const client = jamf.createClient({ id: "", token: "", url: "" });
 
+const data = JSON.parse(
+	await readRelativeTextFile(
+		"../example_data/GET_devices_groups__200.json",
+	),
+);
+assertValid("GET /devices/groups", data);
+
 Deno.test({
 	name: "DeviceGroup.toJSON() is the same as the data used to create it",
-	async fn() {
-		const data = JSON.parse(
-			await readRelativeTextFile("../example_data/GET_devices_groups__200.json"),
-		);
-		assertValid("GET /devices/groups", data);
+	fn() {
+		const group = client.createDeviceGroup(data.deviceGroups[0]);
+		assertEquals(group.toJSON(), data.deviceGroups[0]);
+	},
+});
 
-		const device = client.createDeviceGroup(data.deviceGroups[0]);
-		assertEquals(device.toJSON(), data.deviceGroups[0]);
+Deno.test({
+	name: "DeviceGroup.toString() is the same as DeviceGroup.name",
+	fn() {
+		const group = client.createDeviceGroup(data.deviceGroups[0]);
+		assertEquals(group.toString(), group.name);
 	},
 });
