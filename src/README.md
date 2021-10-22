@@ -81,6 +81,7 @@ const deviceData = await api.getDevices({ ownerName: "Robert" });
 const devices = deviceData.map((data) => client.createDevice(data));
 
 // Everything is promise-based, so you can do things concurrently.
+// Methods that perform actions (like restart) will reject on failure.
 await Promise.allSettled(devices.map((device) => device.restart()));
 ```
 
@@ -100,7 +101,7 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Add support for locations ([#40])** <br>
   Locations can get the data that belongs to them, and all objects can now get their location.
 
-- **Specify the behaviour of toString and toJSON on models ([#49])** <br>
+- **Specify the behaviour of toString and toJSON methods ([#49])** <br>
   These methods can now be used reliably now that their behaviour is consistent and obvious.
 
 [#15]: https://github.com/SeparateRecords/deno_jamf_school/pull/15
