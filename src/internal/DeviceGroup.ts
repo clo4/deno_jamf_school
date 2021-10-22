@@ -16,7 +16,7 @@ export class DeviceGroup implements models.DeviceGroup {
 	}
 
 	toString() {
-		return `${this.#data.name} (${this.#data.members})`;
+		return this.#data.name;
 	}
 
 	toJSON() {

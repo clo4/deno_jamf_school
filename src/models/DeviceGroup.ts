@@ -11,7 +11,7 @@ export interface DeviceGroup {
 	/** The Jamf-assigned ID of the device group. */
 	readonly id: number;
 
-	/** The device group's name. */
+	/** The name of the device group. */
 	readonly name: string;
 
 	/**
@@ -45,6 +45,12 @@ export interface DeviceGroup {
 	//  * https://github.com/SeparateRecords/deno_jamf_school/issues/new
 	//  */
 	// readonly isClass: boolean;
+
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the device group. */
+	toString(): string;
 
 	/**
 	 * (Read) Update this device group's data.

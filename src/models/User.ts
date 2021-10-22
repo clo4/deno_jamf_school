@@ -21,7 +21,7 @@ export interface User {
 	/** The user's domain, if they were imported from a LDAP server. */
 	readonly domain: string;
 
-	/** The user's full name. */
+	/** The full name of the user. */
 	readonly name: string;
 
 	/** The user's first name.*/
@@ -38,6 +38,12 @@ export interface User {
 
 	/** Whether the user is excluded from teacher restrictions. */
 	readonly isExcludedFromRestrictions: boolean;
+
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The full name of the user. */
+	toString(): string;
 
 	/**
 	 * (Read) Update this user's data.

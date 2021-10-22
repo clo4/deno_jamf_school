@@ -16,7 +16,7 @@ export class App implements models.App {
 	}
 
 	toString() {
-		return `${this.name} (${this.bundleId})`;
+		return this.name;
 	}
 
 	toJSON() {

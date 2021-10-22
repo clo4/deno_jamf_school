@@ -19,7 +19,7 @@ export class Device implements models.Device {
 	}
 
 	toString() {
-		return `${this.#data.model.name} of ${this.#data.owner.name}`;
+		return this.#data.name;
 	}
 
 	toJSON() {

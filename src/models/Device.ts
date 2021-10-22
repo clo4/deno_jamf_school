@@ -26,7 +26,7 @@ export interface Device {
 	 */
 	readonly serialNumber: string;
 
-	/** The device name. */
+	/** The name of the device. */
 	readonly name: string;
 
 	/**
@@ -97,6 +97,12 @@ export interface Device {
 	 * NOTE: I know nothing about electricity. If this is wrong, let me know!
 	 */
 	readonly batteryCapacity: number;
+
+	/** Return the data used to create this object. */
+	toJSON(): unknown;
+
+	/** The name of the device. */
+	toString(): string;
 
 	/**
 	 * (Read) Update this device's data.
