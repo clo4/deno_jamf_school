@@ -2,7 +2,7 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
-export type UserData = models.APIData["getUsers"][number];
+export type UserData = models.APIData["getUser"];
 
 export class User implements models.User {
 	#api: models.API;
