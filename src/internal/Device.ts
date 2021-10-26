@@ -95,6 +95,10 @@ export class Device implements models.Device {
 		return this.#data.availableCapacity;
 	}
 
+	get enrollment() {
+		return this.#data.enrollType;
+	}
+
 	async update() {
 		const devices = await this.#api.getDevices({
 			serialNumber: this.#data.serialNumber,

@@ -77,6 +77,18 @@ export interface Device {
 	readonly batteryPercentage: number;
 
 	/**
+	 * The type of enrollment used for this device.
+	 *
+	 * "DEP" means "Device Enrollment Program", which is an older name for
+	 * Automated Device Enrollment. Devices purchased from a reseller use this
+	 * kind of enrollment.
+	 *
+	 * "AC2" is "Apple Configurator 2", which is Apple's software used to enroll
+	 * devices that were not purchased from a device reseller.
+	 */
+	readonly enrollment: "dep" | "depPending" | "ac2" | "ac2Pending" | "manual";
+
+	/**
 	 * The total capacity of the battery in watt-hours (Wh).
 	 *
 	 * Jamf does not report the battery volatage or milliamp-hours.
@@ -117,18 +129,22 @@ export interface Device {
 	/**
 	 * (Edit) Assign a new owner to this device.
 	 *
-	 * The owner can be set by using a User object (or anything with a numeric
-	 * `id` property).
+	 * The owner can be set by using a User object.
 	 * ```
-	 * const device = await client.getDeviceByName("Test MacBook");
-	 * const user = await client.getUserByName("Test Account");
-	 * device.setOwner(user);
+	 * const [device, user] = await Promise.all([
+	 *   client.getDeviceByName("Test MacBook"),
+	 *   client.getUserByName("Test Account"),
+	 * ])
+	 * if (user === null || device === null) {
+	 *   Deno.exit(1);
+	 * }
+	 * await device!.setOwner(user!);
 	 * ```
 	 *
 	 * If you already know the ID of the user you want to use, an object literal
 	 * may be easier than getting the user object.
 	 * ```
-	 * device.setOwner({ id: 4 });
+	 * await device.setOwner({ id: 4 });
 	 * ```
 	 */
 	setOwner(user: { id: number }): Promise<this>;

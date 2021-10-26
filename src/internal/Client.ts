@@ -107,6 +107,28 @@ export class Client implements models.Client {
 		return users.map((user) => this.createUser(user));
 	}
 
+	async getUserByName(name: string) {
+		let allUsers;
+		try {
+			allUsers = await this.#api.getUsers();
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		const users = allUsers.filter((group) => group.name === name);
+
+		if (users.length === 0) {
+			return null;
+		}
+
+		// More than one user with the same name is a failure case.
+		if (users.length > 1) {
+			throw new Error(`Multiple users exist with the same name (${name})`);
+		}
+
+		return this.createUser(users[0]);
+	}
+
 	async getUserById(id: number) {
 		// 0 is a valid ID but never has a user associated with it
 		if (!isValidID(id) || id === 0) {
