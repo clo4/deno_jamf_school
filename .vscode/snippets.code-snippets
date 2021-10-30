@@ -1,0 +1,54 @@
+{
+	// Place your deno_jamf_school workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Implement model": {
+		"scope": "typescript",
+		"prefix": "impl",
+		"description": "Implement a model as a concrete class",
+		"body": [
+			"import type * as models from \"../models/mod.ts\";",
+			"import type { BasicObjectInit, Creator } from \"../Client.ts\";",
+			"import { suppressAPIError } from \"./APIError.ts\";",
+			"",
+			"export type ${TM_FILENAME_BASE}Data = models.APIData[\"get${TM_FILENAME_BASE}\"];",
+			"",
+			"export class $TM_FILENAME_BASE implements models.$TM_FILENAME_BASE {",
+			"\t#api: models.API;",
+			"\t#client: Creator;",
+			"\t#data: ${TM_FILENAME_BASE}Data;",
+			"",
+			"\tconstructor(init: BasicObjectInit<${TM_FILENAME_BASE}Data>) {",
+			"\t\tthis.#api = init.api;",
+			"\t\tthis.#client = init.client;",
+			"\t\tthis.#data = init.data;",
+			"\t}",
+			"",
+			"\ttoString() {",
+			"\t\treturn this.#data.name;",
+			"\t}",
+			"",
+			"\ttoJSON() {",
+			"\t\treturn this.#data;",
+			"\t}",
+			"",
+			"\tget type() {",
+			"\t\treturn \"$TM_FILENAME_BASE\" as const",
+			"\t}",
+			"}"
+		]
+	}
+}
