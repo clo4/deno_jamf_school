@@ -1,1 +1,1 @@
-export * from "https://raw.githubusercontent.com/SeparateRecords/apple_device_identifiers/fbd07920788d0541c571674dc8913b78f6c881b9/mod.ts";
+export * from "https://raw.githubusercontent.com/SeparateRecords/apple_device_identifiers/76c548ca78a2307039741246c999547da383ae14/mod.ts";

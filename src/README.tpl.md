@@ -88,6 +88,21 @@ await Promise.allSettled(devices.map((device) => device.restart()));
 
 Each entry explains what changed and links to a pull request that has more details.
 
+### Version 0.3.1
+
+<!-- deno-fmt-ignore -->
+
+- **Add `Device.enrollment` ([#53])** <br>
+  It's an object instead of a string. See the docs for more information.
+
+- **Add `Client.getUserByName` ([#53])** <br>
+  Returns null if there are no users with the name, fails if multiple users have it.
+
+[#53]: $REPO/pull/53
+
+<details>
+<summary>Older versions</summary>
+
 ### Version 0.3.0
 
 <!-- deno-fmt-ignore -->
@@ -104,9 +119,6 @@ Each entry explains what changed and links to a pull request that has more detai
 [#15]: $REPO/pull/15
 [#40]: $REPO/pull/40
 [#49]: $REPO/pull/49
-
-<details>
-<summary>Older versions</summary>
 
 ### Version 0.2.1
 

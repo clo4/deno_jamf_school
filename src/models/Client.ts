@@ -69,6 +69,9 @@ export interface Client {
 	/** (Read) Get a single user by their ID. */
 	getUserById(id: number): Promise<User | null>;
 
+	/** (Read) Get a single user by name. */
+	getUserByName(name: string): Promise<User | null>;
+
 	/** (Read) Get all users. */
 	getUsers(): Promise<User[]>;
 
@@ -91,10 +94,9 @@ export interface Client {
 	getDevices(): Promise<Device[]>;
 
 	/**
-	 * (Read) Get all devices in the given groups.
+	 * (Read) Get all devices in the given groups, without duplicates.
 	 *
-	 * This is a far more efficient method than calling `getDevices` on
-	 * each `DeviceGroup` and checking for uniqueness.
+	 * If a device is in more than one of the groups, it is only included once.
 	 */
 	getDevicesInGroups(deviceGroups: DeviceGroup[]): Promise<Device[]>;
 
