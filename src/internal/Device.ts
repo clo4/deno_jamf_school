@@ -3,8 +3,36 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
-// The data could be from either API.getDevice or API.getDevices
-// and for some reason they both return different data?????? ffs
+type Enrollment =
+	| "ac2"
+	| "ac2Pending"
+	| "dep"
+	| "depPending"
+	| "manual";
+
+type EnrollmentObject =
+	| { readonly type: "ac2" | "dep"; readonly pending: boolean }
+	| { readonly type: "manual" };
+
+function enrollmentToObject(enrollment: Enrollment): EnrollmentObject {
+	switch (enrollment) {
+		case "dep":
+			return { type: "dep", pending: false };
+		case "ac2":
+			return { type: "ac2", pending: false };
+		case "depPending":
+			return { type: "dep", pending: true };
+		case "ac2Pending":
+			return { type: "ac2", pending: true };
+		case "manual":
+			return { type: "manual" };
+		default:
+			throw new Error("Unreachable");
+	}
+}
+
+// /devices and /devices/:udid both return subtly different data, but /devices
+// is the more sane of the two routes.
 export type DeviceData = models.APIData["getDevices"][number];
 
 export class Device implements models.Device {
@@ -96,7 +124,7 @@ export class Device implements models.Device {
 	}
 
 	get enrollment() {
-		return this.#data.enrollType;
+		return enrollmentToObject(this.#data.enrollType);
 	}
 
 	async update() {

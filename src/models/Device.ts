@@ -79,14 +79,16 @@ export interface Device {
 	/**
 	 * The type of enrollment used for this device.
 	 *
-	 * "DEP" means "Device Enrollment Program", which is an older name for
+	 * "dep" is short for "Device Enrollment Program", which is an older name for
 	 * Automated Device Enrollment. Devices purchased from a reseller use this
 	 * kind of enrollment.
 	 *
-	 * "AC2" is "Apple Configurator 2", which is Apple's software used to enroll
+	 * "ac2" is "Apple Configurator 2", which is Apple's software used to enroll
 	 * devices that were not purchased from a device reseller.
 	 */
-	readonly enrollment: "dep" | "depPending" | "ac2" | "ac2Pending" | "manual";
+	readonly enrollment:
+		| { readonly type: "dep" | "ac2"; readonly pending: boolean }
+		| { readonly type: "manual" };
 
 	/**
 	 * The total capacity of the battery in watt-hours (Wh).
