@@ -94,10 +94,9 @@ export interface Client {
 	getDevices(): Promise<Device[]>;
 
 	/**
-	 * (Read) Get all devices in the given groups.
+	 * (Read) Get all devices in the given groups, without duplicates.
 	 *
-	 * There are no duplicates, such as if a device is in more than one of the
-	 * groups.
+	 * If a device is in more than one of the groups, it is only included once.
 	 */
 	getDevicesInGroups(deviceGroups: DeviceGroup[]): Promise<Device[]>;
 
