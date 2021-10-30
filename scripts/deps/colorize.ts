@@ -1,5 +1,5 @@
 import { tagApply } from "https://crux.land/tag_apply@1.0.0";
-import * as colors from "https://deno.land/std@0.108.0/fmt/colors.ts";
+import * as colors from "https://deno.land/std@0.113.0/fmt/colors.ts";
 
 type Colors = typeof colors;
 type ColorsItems = keyof Colors;
