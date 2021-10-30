@@ -140,7 +140,7 @@ export interface Device {
 	 * if (user === null || device === null) {
 	 *   Deno.exit(1);
 	 * }
-	 * await device!.setOwner(user!);
+	 * await device.setOwner(user);
 	 * ```
 	 *
 	 * If you already know the ID of the user you want to use, an object literal
@@ -148,6 +148,8 @@ export interface Device {
 	 * ```
 	 * await device.setOwner({ id: 4 });
 	 * ```
+	 *
+	 * To remove the owner, try `Device.removeOwner`.
 	 */
 	setOwner(user: { id: number }): Promise<this>;
 
