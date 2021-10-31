@@ -35,7 +35,7 @@ All library source code lives in this directory. This is the directory published
 
 All schema files to validate API data are located here.
 
-The file `mod.bundle.js` is created automatically by the bundle script, and exists to Make importing the library faster. See #7 for more information.
+The file `mod.bundle.js` is created automatically by the bundle script, and exists to make importing the library faster. See #7 for more information.
 
 ### [src / models](src/models)
 
