@@ -1,2 +1,2 @@
 /** The version of the library. */
-export const version = "0.3.0";
+export const version = "0.3.1";
