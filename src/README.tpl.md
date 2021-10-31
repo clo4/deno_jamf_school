@@ -88,7 +88,7 @@ await Promise.allSettled(devices.map((device) => device.restart()));
 
 Each entry explains what changed and links to a pull request that has more details.
 
-### Version 0.3.1
+### Version 0.3.2
 
 <!-- deno-fmt-ignore -->
 
