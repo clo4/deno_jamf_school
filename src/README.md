@@ -95,6 +95,16 @@ Each entry explains what changed and links to a pull request that has more detai
 
 <!-- deno-fmt-ignore -->
 
+- **Improve implementation of `Device.enrollment` ([#56])** <br>
+  This should be marginally faster. The "manual" type now also includes a `pending` property (currently always `false`).
+
+<details>
+<summary>Older versions</summary>
+
+### Version 0.3.1
+
+<!-- deno-fmt-ignore -->
+
 - **Add `Device.enrollment` ([#53])** <br>
   It's an object instead of a string. See the docs for more information.
 
@@ -102,9 +112,6 @@ Each entry explains what changed and links to a pull request that has more detai
   Returns null if there are no users with the name, fails if multiple users have it.
 
 [#53]: https://github.com/SeparateRecords/deno_jamf_school/pull/53
-
-<details>
-<summary>Older versions</summary>
 
 ### Version 0.3.0
 
