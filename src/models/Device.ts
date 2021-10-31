@@ -85,10 +85,16 @@ export interface Device {
 	 *
 	 * "ac2" is "Apple Configurator 2", which is Apple's software used to enroll
 	 * devices that were not purchased from a device reseller.
+	 *
+	 * "manual" is used for devices that have been enrolled by manually, either
+	 * using the "On-device enrollment" portal or by installing the management
+	 * profile. Currently, if the `type` is "manual", pending is guaranteed to be
+	 * false.
 	 */
-	readonly enrollment:
-		| { readonly type: "dep" | "ac2"; readonly pending: boolean }
-		| { readonly type: "manual" };
+	readonly enrollment: {
+		readonly type: "dep" | "ac2" | "manual";
+		readonly pending: boolean;
+	};
 
 	/**
 	 * The total capacity of the battery in watt-hours (Wh).

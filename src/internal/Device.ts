@@ -3,33 +3,13 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
-type Enrollment =
-	| "ac2"
-	| "ac2Pending"
-	| "dep"
-	| "depPending"
-	| "manual";
-
-type EnrollmentObject =
-	| { readonly type: "ac2" | "dep"; readonly pending: boolean }
-	| { readonly type: "manual" };
-
-function enrollmentToObject(enrollment: Enrollment): EnrollmentObject {
-	switch (enrollment) {
-		case "dep":
-			return { type: "dep", pending: false };
-		case "ac2":
-			return { type: "ac2", pending: false };
-		case "depPending":
-			return { type: "dep", pending: true };
-		case "ac2Pending":
-			return { type: "ac2", pending: true };
-		case "manual":
-			return { type: "manual" };
-		default:
-			throw new Error("Unreachable");
-	}
-}
+const enrollment = {
+	"ac2": { type: "ac2", pending: false } as const,
+	"dep": { type: "dep", pending: false } as const,
+	"ac2Pending": { type: "ac2", pending: true } as const,
+	"depPending": { type: "dep", pending: true } as const,
+	"manual": { type: "manual", pending: false } as const,
+} as const;
 
 // /devices and /devices/:udid both return subtly different data, but /devices
 // is the more sane of the two routes.
@@ -124,7 +104,7 @@ export class Device implements models.Device {
 	}
 
 	get enrollment() {
-		return enrollmentToObject(this.#data.enrollType);
+		return enrollment[this.#data.enrollType];
 	}
 
 	async update() {

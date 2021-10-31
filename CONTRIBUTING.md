@@ -16,17 +16,21 @@ All source code is located under the `src` directory. This is the directory that
 
 While this project follows most of the conventions of a modern Deno/TypeScript project, there are a few notable differences in structure that are important to be aware of.
 
+### Spelling
+
+Use American spellings. For example, "color" instead of "colour", "enroll" instead of "enrol".
+
+This helps keep the documentation and symbol naming consistent and predictable. The lion's share of English speakers are American, and likely the majority of Jamf School users are too.
+
 ### Formatting
 
-Instead of `deno fmt`, this project uses `dprint`. dprint is the backend for Deno formatter, and supports configuration - most of the settings from Deno are kept the same. Your platform's package manager probably lists it, but if not, compiling it from source isn't too hard (cargo install dprint).
-
-Before committing, run `dprint fmt`.
+Before committing, run `deno fmt --config deno.jsonc`. **Make sure to set the config file.**
 
 ### Indentation
 
 Please use tabs. Spaces are fine, and in fact for the first 90 commits, I was also using spaces. However, tabs allow you to configure the width in your editor to be just right for you. If that's two spaces, great! If that's 200 spaces, well- sure, you can do that. Dunno why you would, but you can.
 
-> **Pro tip:** On GitHub, append `?ts=4` to the URL to set the tab width to 4. It makes viewing code with tabs bearable if you hate 8-wide tabs, like me.
+On GitHub, you can change hard-tab width in your "Appearance" settings.
 
 ### Naming: What words should I use?
 
