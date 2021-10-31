@@ -12,7 +12,7 @@ Currently, only a limited (mostly read-only) subset of API features are supporte
 **[Here's the documentation for the latest release.][docs]**
 
 [issues]: https://github.com/SeparateRecords/deno_jamf_school/issues
-[docs]: https://doc.deno.land/https/deno.land/x/jamf_school@0.3.1/mod.ts
+[docs]: https://doc.deno.land/https/deno.land/x/jamf_school@0.3.2/mod.ts
 
 ## Features
 
@@ -24,7 +24,7 @@ Currently, only a limited (mostly read-only) subset of API features are supporte
 
 ## Usage
 
-[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.3.1/mod.ts#Credentials). You'll have to replace the token, ID, and URL in the examples.
+[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.3.2/mod.ts#Credentials). You'll have to replace the token, ID, and URL in the examples.
 
 This example will print the name of each registered device.
 
@@ -33,7 +33,7 @@ This example will print the name of each registered device.
 <!-- Using JS as the language for the more reliable syntax highlighting -->
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@0.3.1/mod.ts";
+import * as jamf from "https://deno.land/x/jamf_school@0.3.2/mod.ts";
 
 const client = jamf.createClient({
   id: "YOUR_NETWORK_ID",
@@ -62,7 +62,7 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 Restart all devices owned by anyone named "Robert".
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@0.3.1/mod.ts";
+import * as jamf from "https://deno.land/x/jamf_school@0.3.2/mod.ts";
 
 // The client can be instantiated with an API instead of credentials.
 const api = jamf.createAPI({
@@ -91,6 +91,16 @@ await Promise.allSettled(devices.map((device) => device.restart()));
 
 Each entry explains what changed and links to a pull request that has more details.
 
+### Version 0.3.2
+
+<!-- deno-fmt-ignore -->
+
+- **Improve implementation of `Device.enrollment` ([#56])** <br>
+  This should be marginally faster. The "manual" type now also includes a `pending` property (currently always `false`).
+
+<details>
+<summary>Older versions</summary>
+
 ### Version 0.3.1
 
 <!-- deno-fmt-ignore -->
@@ -102,9 +112,6 @@ Each entry explains what changed and links to a pull request that has more detai
   Returns null if there are no users with the name, fails if multiple users have it.
 
 [#53]: https://github.com/SeparateRecords/deno_jamf_school/pull/53
-
-<details>
-<summary>Older versions</summary>
 
 ### Version 0.3.0
 

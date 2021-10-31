@@ -88,6 +88,16 @@ await Promise.allSettled(devices.map((device) => device.restart()));
 
 Each entry explains what changed and links to a pull request that has more details.
 
+### Version 0.3.2
+
+<!-- deno-fmt-ignore -->
+
+- **Improve implementation of `Device.enrollment` ([#56])** <br>
+  This should be marginally faster. The "manual" type now also includes a `pending` property (currently always `false`).
+
+<details>
+<summary>Older versions</summary>
+
 ### Version 0.3.1
 
 <!-- deno-fmt-ignore -->
@@ -99,9 +109,6 @@ Each entry explains what changed and links to a pull request that has more detai
   Returns null if there are no users with the name, fails if multiple users have it.
 
 [#53]: $REPO/pull/53
-
-<details>
-<summary>Older versions</summary>
 
 ### Version 0.3.0
 
