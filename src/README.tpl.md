@@ -88,6 +88,24 @@ await Promise.allSettled(devices.map((device) => device.restart()));
 
 Each entry explains what changed and links to a pull request that has more details.
 
+### Version 0.4.0
+
+<!-- deno-fmt-ignore -->
+
+- **Add user edit methods ([#58])** <br>
+  Update multiple properties using an `API`, or more easily with a `User` object. See the documentation for more information.
+
+- **Rename `API.assignDeviceOwner` ([#58])** <br>
+  Now it's more consistent: `API.setDeviceOwner`
+
+- **Add `API.getUserByUsername` ([#58])** <br>
+  Usernames are inherently unique, so this makes it a reliable way to fetch users.
+
+[#58]: $REPO/pull/58
+
+<details>
+<summary>Older versions</summary>
+
 ### Version 0.3.2
 
 <!-- deno-fmt-ignore -->
@@ -95,8 +113,7 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Improve implementation of `Device.enrollment` ([#56])** <br>
   This should be marginally faster. The "manual" type now also includes a `pending` property (currently always `false`).
 
-<details>
-<summary>Older versions</summary>
+[#56]: $REPO/pull/56
 
 ### Version 0.3.1
 
