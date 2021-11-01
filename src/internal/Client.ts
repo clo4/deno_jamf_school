@@ -224,7 +224,7 @@ export class Client implements models.Client {
 		return devices.map((device) => this.createDevice(device));
 	}
 
-	async getDevicesInGroups(deviceGroups: DeviceGroup[]) {
+	async getDevicesInGroups(deviceGroups: { id: number }[]) {
 		const groupIds = deviceGroups.map((group) => group.id);
 
 		let devices;
