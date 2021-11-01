@@ -154,14 +154,14 @@ export class User implements models.User {
 		return this;
 	}
 
-	async setTeacherGroups(groups: { id: number }[]) {
+	async setClasses(groups: { id: number }[]) {
 		this.#api.updateUser(this.id, {
 			teacher: groups.map((group) => group.id),
 		});
 		return this;
 	}
 
-	async setChildUsers(users: { id: number }[]) {
+	async setChildren(users: { id: number }[]) {
 		this.#api.updateUser(this.id, {
 			children: users.map(user => user.id)
 		})
