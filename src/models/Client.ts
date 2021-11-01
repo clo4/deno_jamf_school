@@ -72,6 +72,9 @@ export interface Client {
 	/** (Read) Get a single user by name. */
 	getUserByName(name: string): Promise<User | null>;
 
+	/** (Read) Get a single user by username. */
+	getUserByUsername(username: string): Promise<User | null>;
+
 	/** (Read) Get all users. */
 	getUsers(): Promise<User[]>;
 
