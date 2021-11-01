@@ -304,18 +304,19 @@ export interface APIGetDevicesOptions {
 	isOwned?: boolean;
 
 	/**
+	 * NOTE: Due to buggy API behaviour, it is better to filter the returned
+	 * array instead of using this option.
+	 *
+	 * ```
+	 * const devices = await api.getDevices();
+	 * const managed = devices.filter((device) => device.isManaged);
+	 * ```
+	 *
 	 * Select based on each device's management status. If this option is
 	 * omitted, both managed and unmanaged device will be returned.
 	 *
 	 * Management relates to whether a device has checked in with Jamf School
 	 * in the past 7 days, regardless of if it is supervised.
-	 *
-	 * NOTE: Due to buggy API behaviour, it is better to filter the returned
-	 * array instead of using this option.
-	 * ```
-	 * const devices = await api.getDevices();
-	 * const managed = devices.filter((device) => device.isManaged);
-	 * ```
 	 */
 	isManaged?: boolean;
 
