@@ -33,7 +33,7 @@ export interface API {
 	 * (Edit) Assign a new owner to a device. Using ID 0 will remove
 	 * the owner without setting a new one.
 	 */
-	assignDeviceOwner(
+	setDeviceOwner(
 		udid: string,
 		userId: number,
 	): Promise<RouteData<"PUT /devices/:udid/owner">>;
@@ -154,11 +154,8 @@ export interface API {
 	// 	data: APIUserData,
 	// ): Promise<RouteData<"POST /users">>;
 
-	// /** (Edit) Update an existing user's details. */
-	// updateUser(
-	// 	id: number,
-	// 	data: Partial<APIUserData>,
-	// ): Promise<RouteData<"PUT /users/:id">>;
+	/** (Edit) Update an existing user's details. */
+	updateUser(id: number, data: APIUserData): Promise<RouteData<"PUT /users/:id">>;
 
 	// /** (Delete) Move an existing user to the trash. */
 	// trashUser(
@@ -434,12 +431,12 @@ interface APIMoveDevicesInit {
 	onlyDevice?: boolean;
 }
 
-interface APIUserData {
+export interface APIUserData {
 	/** The user's username. This must be unique. */
-	username: string;
+	username?: string;
 
 	/** The password used to sign in to the Jamf School account. */
-	password: string;
+	password?: string;
 
 	/** Whether or not to store the password. */
 	storePassword?: boolean;
@@ -448,20 +445,20 @@ interface APIUserData {
 	domain?: string;
 
 	/** User's email address. This must be unique. */
-	email: string;
+	email?: string;
 
 	/** User's first name. */
-	firstName: string;
+	firstName?: string;
 
 	/** User's surname. */
-	lastName: string;
+	lastName?: string;
 
 	/**
 	 * A list of user group names or IDs the user will belong to.
 	 * If the name doesn't belong to an existing group, a group with that
 	 * name will be created.
 	 */
-	memberOf: (string | number)[];
+	memberOf?: (string | number)[];
 
 	/**
 	 * A list of user groups that this user can manage in the Jamf Teacher

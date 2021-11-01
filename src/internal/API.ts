@@ -285,7 +285,7 @@ export class API implements models.API {
 	// 	return data;
 	// }
 
-	async assignDeviceOwner(
+	async setDeviceOwner(
 		udid: string,
 		userId: number,
 	): Promise<RouteData<"PUT /devices/:udid/owner">> {
@@ -342,13 +342,17 @@ export class API implements models.API {
 	// 	throw NOT_IMPLEMENTED;
 	// }
 
-	// async updateUser(
-	// 	id: number,
-	// 	data: Partial<models.APIUserData>,
-	// ): Promise<RouteData<"PUT /users/:id">> {
-	// 	assertValidID(id);
-	// 	throw NOT_IMPLEMENTED;
-	// }
+	async updateUser(
+		id: number,
+		data: models.APIUserData,
+	): Promise<RouteData<"PUT /users/:id">> {
+		assertValidID(id);
+		const json = await this.http.put(`users/${id}`, {
+			json: data,
+		}).json();
+		schemas.assertValid("PUT /users/:id", json);
+		return json;
+	}
 
 	// async trashUser(
 	// 	id: number,
