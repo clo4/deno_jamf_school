@@ -44,7 +44,8 @@ export function isValidID(id: number): boolean {
 }
 
 /** Checks if a number is a valid ID, and throws if it isn't. */
-function assertValidID(id: number): void {
+function assertValidID(id: number | undefined): void {
+	if (id === undefined) return;
 	assert(isValidID(id), `Invalid ID: must be a positive integer.`);
 }
 
@@ -347,6 +348,10 @@ export class API implements models.API {
 		data: models.APIUserData,
 	): Promise<RouteData<"PUT /users/:id">> {
 		assertValidID(id);
+		assertValidID(data.locationId);
+		data.teacher?.forEach((id) => assertValidID(id));
+		data.children?.forEach((id) => assertValidID(id));
+		data.memberOf?.forEach((id) => typeof id === "number" && assertValidID(id));
 		const json = await this.http.put(`users/${id}`, {
 			json: data,
 		}).json();
