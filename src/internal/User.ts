@@ -163,8 +163,8 @@ export class User implements models.User {
 
 	async setChildren(users: { id: number }[]) {
 		await this.#api.updateUser(this.id, {
-			children: users.map(user => user.id)
-		})
+			children: users.map((user) => user.id),
+		});
 		return this;
 	}
 }
