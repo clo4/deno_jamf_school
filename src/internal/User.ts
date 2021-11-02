@@ -113,56 +113,56 @@ export class User implements models.User {
 	}
 
 	async setUsername(username: string) {
-		this.#api.updateUser(this.id, { username });
+		await this.#api.updateUser(this.id, { username });
 		return this;
 	}
 
 	async setDomain(domain: string) {
-		this.#api.updateUser(this.id, { domain });
+		await this.#api.updateUser(this.id, { domain });
 		return this;
 	}
 
 	async setFirstName(name: string) {
-		this.#api.updateUser(this.id, { firstName: name });
+		await this.#api.updateUser(this.id, { firstName: name });
 		return this;
 	}
 
 	async setLastName(name: string) {
-		this.#api.updateUser(this.id, { lastName: name });
+		await this.#api.updateUser(this.id, { lastName: name });
 		return this;
 	}
 
 	async setPassword(password: string) {
-		this.#api.updateUser(this.id, { password });
+		await this.#api.updateUser(this.id, { password });
 		return this;
 	}
 
 	async setEmail(email: string) {
-		this.#api.updateUser(this.id, { email });
+		await this.#api.updateUser(this.id, { email });
 		return this;
 	}
 
 	async setGroups(groups: { id: number }[]) {
-		this.#api.updateUser(this.id, {
+		await this.#api.updateUser(this.id, {
 			memberOf: groups.map((group) => group.id),
 		});
 		return this;
 	}
 
 	async setLocation(location: { id: number }) {
-		this.#api.updateUser(this.id, { locationId: location.id });
+		await this.#api.updateUser(this.id, { locationId: location.id });
 		return this;
 	}
 
 	async setClasses(groups: { id: number }[]) {
-		this.#api.updateUser(this.id, {
+		await this.#api.updateUser(this.id, {
 			teacher: groups.map((group) => group.id),
 		});
 		return this;
 	}
 
 	async setChildren(users: { id: number }[]) {
-		this.#api.updateUser(this.id, {
+		await this.#api.updateUser(this.id, {
 			children: users.map(user => user.id)
 		})
 		return this;
