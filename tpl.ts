@@ -25,6 +25,11 @@ export const config: Schema = {
 		src: `https://deno.land/x/jamf_school@${version}`,
 		REPO: "https://github.com/SeparateRecords/deno_jamf_school",
 		DOCS: `https://doc.deno.land/https/deno.land/x/jamf_school@${version}`,
+		// Pre-made links for issues 0 to 100
+		...Array(100).fill(null).reduce((acc, _, i) =>{
+			acc[i] = `[#${i}](https://github.com/SeparateRecords/deno_jamf_school/issues/${i})`;
+			return acc;
+		}, {}),
 	},
 };
 
