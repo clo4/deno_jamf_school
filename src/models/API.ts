@@ -141,6 +141,12 @@ export interface API {
 	/** (Read) Get all device groups. */
 	getDeviceGroups(): Promise<RouteData<"GET /devices/groups">["deviceGroups"]>;
 
+	/** (Edit) Update an existing device group's details. */
+	updateDeviceGroup(
+		id: number,
+		options: APIDeviceGroupData,
+	): Promise<RouteData<"PUT /devices/groups/:id">>;
+
 	/** (Read) Get a single user by their ID. */
 	getUser(id: number): Promise<RouteData<"GET /users/:id">["user"]>;
 
@@ -433,6 +439,17 @@ interface APIMoveDevicesInit {
 	 * moving the device and its owner.
 	 */
 	onlyDevice?: boolean;
+}
+
+export interface APIDeviceGroupData {
+	/** The name of the device group. */
+	name?: string;
+
+	/** The description of the device group. */
+	description?: string;
+
+	/** Whether the device group is shared. */
+	shared?: boolean;
 }
 
 export interface APIUserData {

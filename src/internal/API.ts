@@ -221,6 +221,18 @@ export class API implements models.API {
 		return data.deviceGroups;
 	}
 
+	async updateDeviceGroup(
+		id: number,
+		data: models.APIDeviceGroupData,
+	): Promise<RouteData<"PUT /devices/groups/:id">> {
+		assertValidID(id);
+		const json = await this.http.put(`devices/groups/${id}`, {
+			json: data,
+		}).json();
+		schemas.assertValid("PUT /devices/groups/:id", json);
+		return json;
+	}
+
 	async restartDevice(
 		udid: string,
 		options?: models.APIRestartDeviceOptions,
