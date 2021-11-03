@@ -2,6 +2,8 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
+type ID<T> = { id: T };
+
 export type UserData = models.APIData["getUser"];
 
 export class User implements models.User {
@@ -118,5 +120,61 @@ export class User implements models.User {
 			return suppressAPIError(null, e);
 		}
 		return this.#client.createLocation(locationData);
+	}
+
+	async setUsername(username: string) {
+		await this.#api.updateUser(this.id, { username });
+		return this;
+	}
+
+	async setDomain(domain: string) {
+		await this.#api.updateUser(this.id, { domain });
+		return this;
+	}
+
+	async setFirstName(name: string) {
+		await this.#api.updateUser(this.id, { firstName: name });
+		return this;
+	}
+
+	async setLastName(name: string) {
+		await this.#api.updateUser(this.id, { lastName: name });
+		return this;
+	}
+
+	async setPassword(password: string) {
+		await this.#api.updateUser(this.id, { password });
+		return this;
+	}
+
+	async setEmail(email: string) {
+		await this.#api.updateUser(this.id, { email });
+		return this;
+	}
+
+	async setGroups(groups: { id: number }[]) {
+		await this.#api.updateUser(this.id, {
+			memberOf: groups.map((group) => group.id),
+		});
+		return this;
+	}
+
+	async setLocation(location: { id: number }) {
+		await this.#api.updateUser(this.id, { locationId: location.id });
+		return this;
+	}
+
+	async setClasses(groups: { id: number }[]) {
+		await this.#api.updateUser(this.id, {
+			teacher: groups.map((group) => group.id),
+		});
+		return this;
+	}
+
+	async setChildren(users: { id: number }[]) {
+		await this.#api.updateUser(this.id, {
+			children: users.map((user) => user.id),
+		});
+		return this;
 	}
 }

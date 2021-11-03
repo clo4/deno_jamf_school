@@ -60,4 +60,84 @@ export interface User {
 
 	/** (Read) Get the location this user belongs to. */
 	getLocation(): Promise<Location | null>;
+
+	/**
+	 * (Edit) Set this user's username.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setUsername(username: string): Promise<this>;
+
+	/**
+	 * (Edit) Set this user's LDAP domain.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setDomain(domain: string): Promise<this>;
+
+	/**
+	 * (Edit) Set this user's first name.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setFirstName(firstName: string): Promise<this>;
+
+	/**
+	 * (Edit) Set this user's last name.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setLastName(lastName: string): Promise<this>;
+
+	/**
+	 * (Edit) Set this user's Jamf School login password.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setPassword(password: string): Promise<this>;
+
+	/**
+	 * (Edit) Set this user's email address.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setEmail(email: string): Promise<this>;
+
+	/**
+	 * (Edit) Set the groups this user is in.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setGroups(groups: { id: number }[]): Promise<this>;
+
+	/**
+	 * (Edit) Set this user's location.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setLocation(location: { id: number }): Promise<this>;
+
+	/**
+	 * (Edit) Set the groups this user can teach.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setClasses(groups: { id: number }[]): Promise<this>;
+
+	/**
+	 * (Edit) Set this user's children.
+	 *
+	 * This method will not update the user object. To update the object, call
+	 * `User.update()`.
+	 */
+	setChildren(children: { id: number }[]): Promise<this>;
 }

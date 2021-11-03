@@ -152,14 +152,14 @@ export class Device implements models.Device {
 			"Using ID 0 would remove the owner. If this is intentional, use `Device.removeOwner()`",
 		);
 		if (user.id !== this.#data.owner.id) {
-			await this.#api.assignDeviceOwner(this.udid, user.id);
+			await this.#api.setDeviceOwner(this.udid, user.id);
 		}
 		return this;
 	}
 
 	async removeOwner() {
 		if (this.#data.owner.id !== 0) {
-			await this.#api.assignDeviceOwner(this.udid, 0);
+			await this.#api.setDeviceOwner(this.udid, 0);
 		}
 		return this;
 	}
