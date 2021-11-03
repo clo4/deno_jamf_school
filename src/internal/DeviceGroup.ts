@@ -91,4 +91,14 @@ export class DeviceGroup implements models.DeviceGroup {
 		}
 		return this.#client.createLocation(locationData);
 	}
+
+	async setName(name: string) {
+		await this.#api.updateDeviceGroup(this.id, { name });
+		return this;
+	}
+
+	async setDescription(text: string) {
+		await this.#api.updateDeviceGroup(this.id, { description: text });
+		return this;
+	}
 }

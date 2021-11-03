@@ -64,4 +64,20 @@ export interface DeviceGroup {
 
 	/** (Read) Get the location this device group belongs to. */
 	getLocation(): Promise<Location | null>;
+
+	/**
+	 * (Edit) Set this device group's name.
+	 *
+	 * This method will not update the object. To update it, call
+	 * `DeviceGroup.update()`.
+	 */
+	setName(name: string): Promise<this>;
+
+	/**
+	 * (Edit) Set this device group's description.
+	 *
+	 * This method will not update the object. To update it, call
+	 * `DeviceGroup.update()`.
+	 */
+	setDescription(text: string): Promise<this>;
 }
