@@ -38,9 +38,11 @@ export class UserGroup implements models.UserGroup {
 	get id() {
 		return this.#data.id;
 	}
+
 	get name() {
 		return this.#data.name;
 	}
+
 	get description() {
 		return this.#data.description;
 	}
