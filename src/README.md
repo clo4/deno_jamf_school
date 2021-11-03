@@ -107,8 +107,8 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Allow `Client.getDevicesInGroups` to be called with object literals ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   The only property of the `DeviceGroup` objects used was `id`, and this update is aiming to make this style general.
 
-- **Improve how objects are displayed by console methods** <br>
-  This is done by overriding the `[Symbol.for("Deno.customInspect")]()` implementation. However, this does result in broken indentation.
+- **Improve how objects are displayed by console methods ([#60](https://github.com/SeparateRecords/deno_jamf_school/issues/60))** <br>
+  Due to limitations with the implementation of `Deno.inspect`, indentation doesn't work properly.
 
 ### Version 0.3.2
 
