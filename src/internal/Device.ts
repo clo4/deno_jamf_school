@@ -34,6 +34,16 @@ export class Device implements models.Device {
 		return this.#data;
 	}
 
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			udid: this.udid,
+			serialNumber: this.serialNumber,
+			name: this.name,
+			os: this.os,
+		}, { colors: !Deno.noColor });
+		return `${this.type} ${props}`;
+	}
+
 	get type() {
 		return "Device" as const;
 	}

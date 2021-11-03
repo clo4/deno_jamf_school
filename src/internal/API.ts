@@ -80,9 +80,11 @@ type APIConstructorInit = {
 
 export class API implements models.API {
 	readonly http: typeof ky;
+	readonly url: string;
 
 	constructor({ id, token, url }: APIConstructorInit) {
 		const auth = base64.encode(`${id}:${token}`);
+		this.url = url;
 
 		this.http = ky.create({
 			headers: {
@@ -111,6 +113,15 @@ export class API implements models.API {
 				],
 			},
 		});
+	}
+
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			id: "[hidden]",
+			token: "[hidden]",
+			url: this.url,
+		}, { colors: !Deno.noColor });
+		return `${this.type} ${props}`;
 	}
 
 	get type() {

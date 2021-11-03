@@ -25,6 +25,16 @@ export class User implements models.User {
 		return this.#data.name;
 	}
 
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			name: this.name,
+			id: this.id,
+			username: this.username,
+			email: this.email,
+		}, { colors: !Deno.noColor });
+		return `${this.type} ${props}`;
+	}
+
 	get type() {
 		return "User" as const;
 	}

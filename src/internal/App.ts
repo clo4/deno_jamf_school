@@ -23,6 +23,16 @@ export class App implements models.App {
 		return this.#data;
 	}
 
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			name: this.name,
+			id: this.id,
+			bundleId: this.bundleId,
+			version: this.version,
+		}, { colors: !Deno.noColor });
+		return `${this.type} ${props}`;
+	}
+
 	get type() {
 		return "App" as const;
 	}

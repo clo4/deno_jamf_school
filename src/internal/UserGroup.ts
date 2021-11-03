@@ -23,6 +23,14 @@ export class UserGroup implements models.UserGroup {
 		return this.#data.name;
 	}
 
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			name: this.name,
+			id: this.id,
+		}, { colors: !Deno.noColor });
+		return `${this.type} ${props}`;
+	}
+
 	get type() {
 		return "UserGroup" as const;
 	}
@@ -30,9 +38,11 @@ export class UserGroup implements models.UserGroup {
 	get id() {
 		return this.#data.id;
 	}
+
 	get name() {
 		return this.#data.name;
 	}
+
 	get description() {
 		return this.#data.description;
 	}

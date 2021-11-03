@@ -18,6 +18,9 @@ export interface API {
 	/** Discriminator for type checks. */
 	readonly type: "API";
 
+	/** The URL that this API object will use as a base. */
+	readonly url: string;
+
 	/** (Read) Get a single device by its UDID. */
 	getDevice(
 		udid: string,
