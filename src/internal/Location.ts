@@ -23,6 +23,15 @@ export class Location implements models.Location {
 		return this.#data.name;
 	}
 
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			name: this.name,
+			id: this.id,
+		}, { colors: !Deno.noColor });
+		const className = this.constructor.name;
+		return `${className} ${props}`;
+	}
+
 	get type() {
 		return "Location" as const;
 	}

@@ -23,6 +23,14 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data;
 	}
 
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			name: this.name,
+			id: this.id,
+		}, { colors: !Deno.noColor });
+		return `${this.type} ${props}`;
+	}
+
 	get type() {
 		return "DeviceGroup" as const;
 	}
