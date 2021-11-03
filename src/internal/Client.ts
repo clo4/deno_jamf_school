@@ -44,6 +44,13 @@ export class Client implements models.Client {
 		this.#api = api;
 	}
 
+	[Symbol.for("Deno.customInspect")]() {
+		const props = Deno.inspect({
+			api: this.#api,
+		}, { colors: !Deno.noColor });
+		return `${this.type} ${props}`;
+	}
+
 	get type() {
 		return "Client" as const;
 	}
