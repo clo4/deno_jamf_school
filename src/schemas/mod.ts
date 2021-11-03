@@ -42,6 +42,7 @@ import validatePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
 
 // PUT
 import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
+import validatePutDevicesGroupsId from "./PUT_devices_groups_id.ts";
 import validatePutUsersId from "./PUT_users_id.ts";
 
 // The naming scheme here consistently maps between the file name and the
@@ -68,6 +69,7 @@ export const validators = {
 	"POST /devices/:udid/restart": validatePostDevicesUdidRestart,
 	"POST /devices/:udid/wipe": validatePostDevicesUdidWipe,
 	"PUT /devices/:udid/owner": validatePutDevicesUdidOwner,
+	"PUT /devices/groups/:id": validatePutDevicesGroupsId,
 	"PUT /users/:id": validatePutUsersId,
 } as const;
 
