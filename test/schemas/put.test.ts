@@ -23,3 +23,11 @@ Deno.test("schemas/assertValid: PUT /users/:id (200 OK)", async () => {
 	);
 	assertValid("PUT /users/:id", JSON.parse(json));
 });
+
+Deno.test("schemas/assertValid: PUT /users/groups/:id (200 OK)", async () => {
+	const json = await readRelativeTextFile(
+		"../example_data/PUT_users_groups_id__200.json",
+	);
+	assertValid("PUT /users/groups/:id", JSON.parse(json));
+});
+

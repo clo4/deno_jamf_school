@@ -44,6 +44,7 @@ import validatePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
 import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
 import validatePutDevicesGroupsId from "./PUT_devices_groups_id.ts";
 import validatePutUsersId from "./PUT_users_id.ts";
+import validatePutUsersGroupsId from "./PUT_users_groups_id.ts";
 
 // The naming scheme here consistently maps between the file name and the
 // route identifier. spaces and colons are removed, slashes are replaced with
@@ -71,6 +72,7 @@ export const validators = {
 	"PUT /devices/:udid/owner": validatePutDevicesUdidOwner,
 	"PUT /devices/groups/:id": validatePutDevicesGroupsId,
 	"PUT /users/:id": validatePutUsersId,
+	"PUT /users/groups/:id": validatePutUsersGroupsId,
 } as const;
 
 type Validators = typeof validators;
