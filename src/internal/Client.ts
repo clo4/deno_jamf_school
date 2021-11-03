@@ -129,6 +129,29 @@ export class Client implements models.Client {
 		return this.createUser(users[0]);
 	}
 
+	async getUserByUsername(username: string) {
+		let allUsers;
+		try {
+			allUsers = await this.#api.getUsers();
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		const users = allUsers.filter((group) => group.username === username);
+
+		if (users.length === 0) {
+			return null;
+		}
+
+		// More than one user with the same name is a failure case.
+		// Mutliple users with the same username should be impossible.
+		if (users.length > 1) {
+			throw new Error(`Multiple users exist with the same username (${username})`);
+		}
+
+		return this.createUser(users[0]);
+	}
+
 	async getUserById(id: number) {
 		// 0 is a valid ID but never has a user associated with it
 		if (!isValidID(id) || id === 0) {
@@ -201,7 +224,7 @@ export class Client implements models.Client {
 		return devices.map((device) => this.createDevice(device));
 	}
 
-	async getDevicesInGroups(deviceGroups: DeviceGroup[]) {
+	async getDevicesInGroups(deviceGroups: { id: number }[]) {
 		const groupIds = deviceGroups.map((group) => group.id);
 
 		let devices;

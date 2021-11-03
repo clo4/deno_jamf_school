@@ -72,6 +72,9 @@ export interface Client {
 	/** (Read) Get a single user by name. */
 	getUserByName(name: string): Promise<User | null>;
 
+	/** (Read) Get a single user by username. */
+	getUserByUsername(username: string): Promise<User | null>;
+
 	/** (Read) Get all users. */
 	getUsers(): Promise<User[]>;
 
@@ -97,8 +100,29 @@ export interface Client {
 	 * (Read) Get all devices in the given groups, without duplicates.
 	 *
 	 * If a device is in more than one of the groups, it is only included once.
+	 *
+	 * ```
+	 * const groups = await Promise.all([
+	 *   client.getDeviceGroupById(2),
+	 *   client.getDeviceGroupById(3),
+	 *   client.getDeviceGroupById(4),
+	 * ]);
+	 *
+	 * const devices = await client.getDevicesInGroups(groups);
+	 * ```
+	 *
+	 * If you already know the IDs of the groups to use, you can skip requesting
+	 * the device group objects by using object literals.
+	 *
+	 * ```
+	 * const devices = await client.getDevicesInGroups([
+	 *   { id: 2 },
+	 *   { id: 3 },
+	 *   { id: 4 },
+	 * ])
+	 * ```
 	 */
-	getDevicesInGroups(deviceGroups: DeviceGroup[]): Promise<Device[]>;
+	getDevicesInGroups(deviceGroups: { id: number }[]): Promise<Device[]>;
 
 	/** (Read) Get a single device group by its ID. */
 	getDeviceGroupById(id: number): Promise<DeviceGroup | null>;

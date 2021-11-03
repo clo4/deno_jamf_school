@@ -91,11 +91,27 @@ await Promise.allSettled(devices.map((device) => device.restart()));
 
 Each entry explains what changed and links to a pull request that has more details.
 
+### Version 0.4.0
+
+<!-- deno-fmt-ignore -->
+
+- **Add user edit methods ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
+  Update multiple properties using an `API`, or more easily with a `User` object. See the documentation for more information.
+
+- **Rename `API.assignDeviceOwner` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
+  Now it's more consistent: `API.setDeviceOwner`
+
+- **Add `Client.getUserByUsername` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
+  Usernames are inherently unique, so this makes it a reliable way to fetch users.
+
+- **Allow `Client.getDevicesInGroups` to be called with object literals ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
+  The only property of the `DeviceGroup` objects used was `id`, and this update is aiming to make this style general.
+
 ### Version 0.3.2
 
 <!-- deno-fmt-ignore -->
 
-- **Improve implementation of `Device.enrollment` ([#56])** <br>
+- **Improve implementation of `Device.enrollment` ([#56](https://github.com/SeparateRecords/deno_jamf_school/issues/56))** <br>
   This should be marginally faster. The "manual" type now also includes a `pending` property (currently always `false`).
 
 <details>
@@ -105,70 +121,55 @@ Each entry explains what changed and links to a pull request that has more detai
 
 <!-- deno-fmt-ignore -->
 
-- **Add `Device.enrollment` ([#53])** <br>
+- **Add `Device.enrollment` ([#53](https://github.com/SeparateRecords/deno_jamf_school/issues/53))** <br>
   It's an object instead of a string. See the docs for more information.
 
-- **Add `Client.getUserByName` ([#53])** <br>
+- **Add `Client.getUserByName` ([#53](https://github.com/SeparateRecords/deno_jamf_school/issues/53))** <br>
   Returns null if there are no users with the name, fails if multiple users have it.
-
-[#53]: https://github.com/SeparateRecords/deno_jamf_school/pull/53
 
 ### Version 0.3.0
 
 <!-- deno-fmt-ignore -->
 
-- **Add support for apps ([#15])** <br>
+- **Add support for apps ([#15](https://github.com/SeparateRecords/deno_jamf_school/issues/15))** <br>
   This includes `Client.getApps`, `Client.getAppsById`, and `Device.getApps`. See the documentation for more information (the `App` interface).
 
-- **Add support for locations ([#40])** <br>
+- **Add support for locations ([#40](https://github.com/SeparateRecords/deno_jamf_school/issues/40))** <br>
   Locations can get the data that belongs to them, and all objects can now get their location.
 
-- **Specify the behaviour of toString and toJSON methods ([#49])** <br>
+- **Specify the behaviour of toString and toJSON methods ([#49](https://github.com/SeparateRecords/deno_jamf_school/issues/49))** <br>
   These methods can now be used reliably now that their behaviour is consistent and obvious.
-
-[#15]: https://github.com/SeparateRecords/deno_jamf_school/pull/15
-[#40]: https://github.com/SeparateRecords/deno_jamf_school/pull/40
-[#49]: https://github.com/SeparateRecords/deno_jamf_school/pull/49
 
 ### Version 0.2.1
 
 <!-- deno-fmt-ignore -->
 
-- **Suggest identifiers for APIGetDevicesOptions.modelIdentifier ([#34])** <br>
+- **Suggest identifiers for APIGetDevicesOptions.modelIdentifier ([#34](https://github.com/SeparateRecords/deno_jamf_school/issues/34))** <br>
   This uses the list curated in [SeparateRecords/apple_device_identifiers] to suggest strings, and still allows any string to be assigned to the property.
 
 [SeparateRecords/apple_device_identifiers]: https://github.com/SeparateRecords/apple_device_identifiers
-[#34]: https://github.com/SeparateRecords/deno_jamf_school/pull/34
 
 ### Version 0.2.0
 
 <!-- deno-fmt-ignore -->
 
-- **Breaking: Changed how clients are instantiated with an API ([#8])** <br>
+- **Breaking: Changed how clients are instantiated with an API ([#8](https://github.com/SeparateRecords/deno_jamf_school/issues/8))** <br>
   The `API` object must now be passed in as an `api` property on an object.
 
-- **Added methods to set device ownership ([#10], [#16])** <br>
+- **Added methods to set device ownership ([#10](https://github.com/SeparateRecords/deno_jamf_school/issues/10), [#16](https://github.com/SeparateRecords/deno_jamf_school/issues/16))** <br>
   `API.assignDeviceOwner` and `Device.setOwner`. The documentation contains examples.
 
-- **Various schema improvements and corrections ([#10], [#20])** <br>
+- **Various schema improvements and corrections ([#10](https://github.com/SeparateRecords/deno_jamf_school/issues/10), [#20](https://github.com/SeparateRecords/deno_jamf_school/issues/20))** <br>
   More data is now included. To the best of my knowledge, the current schemas are complete.
 
-- **Schemas don't fail when additional properties are returned ([#19])** <br>
+- **Schemas don't fail when additional properties are returned ([#19](https://github.com/SeparateRecords/deno_jamf_school/issues/19))** <br>
   Release builds of schemas are now resilient against additional properties being added, but will still fail if any required properties are omitted.
 
-- **Handle authentication errors with a better message ([#24])** <br>
+- **Handle authentication errors with a better message ([#24](https://github.com/SeparateRecords/deno_jamf_school/issues/24))** <br>
   Previously, authentication errors were lumped in with other errors, which made them confusing to read.
 
-- **Changed how data is validated ([#7])** <br>
+- **Changed how data is validated ([#7](https://github.com/SeparateRecords/deno_jamf_school/issues/7))** <br>
   Technical change, but a good increase in real-world performance.
-
-[#24]: https://github.com/SeparateRecords/deno_jamf_school/pull/24
-[#20]: https://github.com/SeparateRecords/deno_jamf_school/pull/20
-[#19]: https://github.com/SeparateRecords/deno_jamf_school/pull/19
-[#16]: https://github.com/SeparateRecords/deno_jamf_school/pull/16
-[#10]: https://github.com/SeparateRecords/deno_jamf_school/pull/10
-[#8]: https://github.com/SeparateRecords/deno_jamf_school/pull/8
-[#7]: https://github.com/SeparateRecords/deno_jamf_school/pull/7
 
 ### Version 0.1.0
 

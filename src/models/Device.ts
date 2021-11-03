@@ -137,6 +137,9 @@ export interface Device {
 	/**
 	 * (Edit) Assign a new owner to this device.
 	 *
+	 * This method will not update the device object. To update the object, call
+	 * `Device.update()`.
+	 *
 	 * The owner can be set by using a User object.
 	 * ```
 	 * const [device, user] = await Promise.all([
@@ -159,7 +162,12 @@ export interface Device {
 	 */
 	setOwner(user: { id: number }): Promise<this>;
 
-	/** (Edit) Remove this device's owner. */
+	/**
+	 * (Edit) Remove this device's owner.
+	 *
+	 * This method will not update the device object. To update the object, call
+	 * `Device.update()`.
+	 */
 	removeOwner(): Promise<this>;
 
 	/** (Read) Get the device's groups. */
