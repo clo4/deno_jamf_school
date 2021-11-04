@@ -17,6 +17,13 @@ Deno.test("schemas/assertValid: PUT /devices/groups/:id (200 OK)", async () => {
 	assertValid("PUT /devices/groups/:id", JSON.parse(json));
 });
 
+Deno.test("schemas/assertValid: PUT /devices/migrate (200 OK)", async () => {
+	const json = await readRelativeTextFile(
+		"../example_data/PUT_devices_migrate__200.json",
+	);
+	assertValid("PUT /devices/migrate", JSON.parse(json));
+});
+
 Deno.test("schemas/assertValid: PUT /users/:id (200 OK)", async () => {
 	const json = await readRelativeTextFile(
 		"../example_data/PUT_users_id__200.json",

@@ -147,15 +147,18 @@ export class Location implements models.Location {
 	}
 
 	async moveDevices(devices: { udid: string }[]) {
-		assert(devices.length > 0);
+		if (devices.length === 0) {
+			return this;
+		}
+
 		const udids = devices.map((device) => device.udid);
-		const chunks = chunk(udids, 20);
-		const promises = chunks.map((chunk) =>
-			this.#api.moveDevices(this.id, {
-				udids: chunk,
-			})
+		const unique = [...new Set(udids)];
+		const chunks = chunk(unique, 20);
+		const promises = chunks.map(
+			(arr) => this.#api.moveDevices(this.id, { udids: arr }),
 		);
 		await Promise.all(promises);
+
 		return this;
 	}
 }

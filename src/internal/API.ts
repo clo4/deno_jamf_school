@@ -334,15 +334,15 @@ export class API implements models.API {
 		locationId: number,
 		data: models.APIMoveDevicesData,
 	): Promise<RouteData<"PUT /devices/migrate">> {
-		assertValidID(init.locationId);
+		assertValidID(locationId);
 		assert(data.udids.length > 0);
 		assert(data.udids.length <= 20);
+		data.udids.forEach((udid) => assertValidUDID(udid));
 		const payload = {
 			locationId,
 			udids: data.udids,
 			onlyDevice: data.onlyDevice,
 		};
-		data.udids.forEach((udid) => assertValidUDID(udid));
 		const json = await this.http.put(`devices/migrate`, {
 			json: payload,
 		}).json();

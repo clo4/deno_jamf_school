@@ -46,7 +46,7 @@ import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
 import validatePutDevicesGroupsId from "./PUT_devices_groups_id.ts";
 import validatePutUsersId from "./PUT_users_id.ts";
 import validatePutUsersGroupsId from "./PUT_users_groups_id.ts";
-import validatePutDevicesMigrate from "./PUT_devices_migrate.ts"
+import validatePutDevicesMigrate from "./PUT_devices_migrate.ts";
 // The naming scheme here consistently maps between the file name and the
 // route identifier. spaces and colons are removed, slashes are replaced with
 // underscores, capitalization is kept the same, ".ts" is appended.
