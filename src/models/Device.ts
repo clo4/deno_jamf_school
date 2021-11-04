@@ -170,6 +170,22 @@ export interface Device {
 	 */
 	removeOwner(): Promise<this>;
 
+	/**
+	 * (Add) Set this device's description.
+	 *
+	 * This method will not update the object. To update it, call
+	 * `Device.update()`.
+	 */
+	setDescription(text: string): Promise<this>;
+
+	/**
+	 * (Add) Set this device's asset tag.
+	 *
+	 * This method will not update the object. To update it, call
+	 * `Device.update()`.
+	 */
+	setAssetTag(text: string): Promise<this>;
+
 	/** (Read) Get the device's groups. */
 	getGroups(): Promise<DeviceGroup[]>;
 

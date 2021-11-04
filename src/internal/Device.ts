@@ -219,4 +219,14 @@ export class Device implements models.Device {
 		}
 		return this.#client.createLocation(locationData);
 	}
+
+	async setAssetTag(text: string) {
+		await this.#api.updateDevice(this.udid, { assetTag: text });
+		return this;
+	}
+
+	async setDescription(text: string) {
+		await this.#api.updateDevice(this.udid, { assetTag: text });
+		return this;
+	}
 }
