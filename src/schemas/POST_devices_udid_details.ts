@@ -1,14 +1,14 @@
 import ajv, { JTDSchemaType } from "./_ajv_jtd.ts";
 
 type ResponseData = {
+	code: number;
 	message: string;
-	device: string;
 };
 
 const responseSchema: JTDSchemaType<ResponseData> = {
 	properties: {
+		code: { type: "int32" },
 		message: { type: "string" },
-		device: { type: "string" },
 	},
 };
 

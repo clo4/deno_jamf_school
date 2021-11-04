@@ -171,12 +171,12 @@ export interface Device {
 	removeOwner(): Promise<this>;
 
 	/**
-	 * (Add) Set this device's description.
+	 * (Add) Set this device's notes.
 	 *
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
 	 */
-	setDescription(text: string): Promise<this>;
+	setNotes(text: string): Promise<this>;
 
 	/**
 	 * (Add) Set this device's asset tag.

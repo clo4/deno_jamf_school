@@ -402,7 +402,7 @@ export class API implements models.API {
 		data: models.APIDeviceData,
 	): Promise<RouteData<"POST /devices/:udid/details">> {
 		assertValidUDID(udid);
-		const json = await this.http.put(`devices/${udid}/details`, {
+		const json = await this.http.post(`devices/${udid}/details`, {
 			json: data,
 		}).json();
 		schemas.assertValid("POST /devices/:udid/details", json);

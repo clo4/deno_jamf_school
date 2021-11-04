@@ -30,4 +30,3 @@ Deno.test("schemas/assertValid: PUT /users/groups/:id (200 OK)", async () => {
 	);
 	assertValid("PUT /users/groups/:id", JSON.parse(json));
 });
-

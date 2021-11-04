@@ -225,8 +225,8 @@ export class Device implements models.Device {
 		return this;
 	}
 
-	async setDescription(text: string) {
-		await this.#api.updateDevice(this.udid, { assetTag: text });
+	async setNotes(text: string) {
+		await this.#api.updateDevice(this.udid, { notes: text });
 		return this;
 	}
 }
