@@ -2,6 +2,32 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
+function convertStatusToACL(status: boolean | null): "allow" | "deny" | "inherit" {
+	switch (status) {
+		case true:
+			return "allow";
+		case false:
+			return "deny";
+		case null:
+			return "inherit";
+		default:
+			throw new Error("unreachable");
+	}
+}
+
+function convertACLToStatus(acl: "allow" | "deny" | "inherit"): boolean | null {
+	switch (acl) {
+		case "allow":
+			return true;
+		case "deny":
+			return false;
+		case "inherit":
+			return null;
+		default:
+			throw new Error("unreachable");
+	}
+}
+
 export type UserGroupData = models.APIData["getUserGroups"][number];
 
 export class UserGroup implements models.UserGroup {
@@ -47,6 +73,14 @@ export class UserGroup implements models.UserGroup {
 		return this.#data.description;
 	}
 
+	get isParentGroup() {
+		return convertACLToStatus(this.#data.acl.parent)
+	}
+
+	get isTeacherGroup() {
+		return convertACLToStatus(this.#data.acl.teacher)
+	}
+
 	async update() {
 		this.#data = await this.#api.getUserGroup(this.#data.id);
 		return this;
@@ -75,5 +109,33 @@ export class UserGroup implements models.UserGroup {
 			return suppressAPIError(null, e);
 		}
 		return this.#client.createLocation(locationData);
+	}
+
+	async setName(name: string) {
+		await this.#api.updateUserGroup(this.id, { name });
+		return this;
+	}
+
+	async setDescription(text: string) {
+		await this.#api.updateUserGroup(this.id, { description: text });
+		return this;
+	}
+
+	async setParentGroup(status: boolean | null) {
+		await this.#api.updateUserGroup(this.id, {
+			acl: {
+				parent: convertStatusToACL(status),
+			},
+		});
+		return this;
+	}
+
+	async setTeacherGroup(status: boolean | null) {
+		await this.#api.updateUserGroup(this.id, {
+			acl: {
+				teacher: convertStatusToACL(status),
+			},
+		});
+		return this;
 	}
 }

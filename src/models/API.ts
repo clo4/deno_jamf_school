@@ -141,6 +141,18 @@ export interface API {
 	/** (Read) Get all device groups. */
 	getDeviceGroups(): Promise<RouteData<"GET /devices/groups">["deviceGroups"]>;
 
+	/** (Edit) Update an existing device group's details. */
+	updateDeviceGroup(
+		id: number,
+		options: APIDeviceGroupData,
+	): Promise<RouteData<"PUT /devices/groups/:id">>;
+
+	/** (Edit) Update an existing user group's details. */
+	updateUserGroup(
+		id: number,
+		options: APIUserGroupData,
+	): Promise<RouteData<"PUT /users/groups/:id">>;
+
 	/** (Read) Get a single user by their ID. */
 	getUser(id: number): Promise<RouteData<"GET /users/:id">["user"]>;
 
@@ -433,6 +445,42 @@ interface APIMoveDevicesInit {
 	 * moving the device and its owner.
 	 */
 	onlyDevice?: boolean;
+}
+
+export interface APIUserGroupData {
+	/** The name of the user group. */
+	name?: string;
+
+	/** The name of the user group. */
+	description?: string;
+
+	/** The permissions of this group's members. */
+	acl?: {
+		selfService?: "allow" | "deny" | "inherit";
+		selfServiceInfo?: "allow" | "deny" | "inherit";
+		selfServiceLocation?: "allow" | "deny" | "inherit";
+		selfServiceClearPasscode?: "allow" | "deny" | "inherit";
+		selfServiceLock?: "allow" | "deny" | "inherit";
+		selfServiceWipe?: "allow" | "deny" | "inherit";
+		selfServiceUnenroll?: "allow" | "deny" | "inherit";
+
+		/** Set whether users in this group are teachers (allow) or not (deny) */
+		teacher?: "allow" | "deny" | "inherit";
+
+		/** Set whether users in this group are parents (allow) or not (deny) */
+		parent?: "allow" | "deny" | "inherit";
+	};
+}
+
+export interface APIDeviceGroupData {
+	/** The name of the device group. */
+	name?: string;
+
+	/** The description of the device group. */
+	description?: string;
+
+	/** Whether the device group is shared. */
+	shared?: boolean;
 }
 
 export interface APIUserData {

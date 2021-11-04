@@ -95,8 +95,8 @@ Each entry explains what changed and links to a pull request that has more detai
 
 <!-- deno-fmt-ignore -->
 
-- **Add user edit methods ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
-  Update multiple properties using an `API`, or more easily with a `User` object. See the documentation for more information.
+- **Add User/UserGroup/DeviceGroup edit methods ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58), [#61](https://github.com/SeparateRecords/deno_jamf_school/issues/61))** <br>
+  Update multiple properties using an `API`, or more easily with the respective objects' `set` methods.
 
 - **Rename `API.assignDeviceOwner` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   Now it's more consistent: `API.setDeviceOwner`
