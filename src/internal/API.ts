@@ -397,6 +397,18 @@ export class API implements models.API {
 		return json;
 	}
 
+	async updateDevice(
+		udid: string,
+		data: models.APIDeviceData,
+	): Promise<RouteData<"POST /devices/:udid/details">> {
+		assertValidUDID(udid);
+		const json = await this.http.put(`devices/${udid}/details`, {
+			json: data,
+		}).json();
+		schemas.assertValid("POST /devices/:udid/details", json);
+		return json;
+	}
+
 	// async trashUser(
 	// 	id: number,
 	// ): Promise<RouteData<"DELETE /users/:id">> {

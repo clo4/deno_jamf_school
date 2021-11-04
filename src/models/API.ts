@@ -147,6 +147,12 @@ export interface API {
 		options: APIDeviceGroupData,
 	): Promise<RouteData<"PUT /devices/groups/:id">>;
 
+	/** (Edit) Update an existing device group's details. */
+	updateDevice(
+		udid: string,
+		options: APIDeviceData,
+	): Promise<RouteData<"POST /devices/:udid/details">>;
+
 	/** (Edit) Update an existing user group's details. */
 	updateUserGroup(
 		id: number,
@@ -470,6 +476,14 @@ export interface APIUserGroupData {
 		/** Set whether users in this group are parents (allow) or not (deny) */
 		parent?: "allow" | "deny" | "inherit";
 	};
+}
+
+export interface APIDeviceData {
+	/** The device's notes. */
+	notes?: string;
+
+	/** The device's asset tag. */
+	assetTag?: string;
 }
 
 export interface APIDeviceGroupData {
