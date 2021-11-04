@@ -73,4 +73,7 @@ export interface Location {
 	 * Other locations created from this data will not be updated.
 	 */
 	update(): Promise<this>;
+
+	/** (Edit) Move devices from their current location to this location. */
+	moveDevices(devices: { udid: string }[]): Promise<this>;
 }

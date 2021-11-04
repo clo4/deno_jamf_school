@@ -189,6 +189,7 @@ export type {
 	APIDeviceGroupData,
 	APIGetDeviceOptions,
 	APIGetDevicesOptions,
+	APIMoveDevicesData,
 	APIRestartDeviceOptions,
 	APIUserData,
 	APIUserGroupData,

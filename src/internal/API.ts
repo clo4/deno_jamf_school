@@ -330,13 +330,25 @@ export class API implements models.API {
 	// 	throw NOT_IMPLEMENTED;
 	// }
 
-	// async moveDevices(
-	// 	init: models.APIMoveDevicesInit,
-	// ): Promise<RouteData<"PUT /devices/migrate">> {
-	// 	assertValidID(init.locationId);
-	// 	init.udids.forEach((udid) => assertValidUDID(udid));
-	// 	throw NOT_IMPLEMENTED;
-	// }
+	async moveDevices(
+		locationId: number,
+		data: models.APIMoveDevicesData,
+	): Promise<RouteData<"PUT /devices/migrate">> {
+		assertValidID(init.locationId);
+		assert(data.udids.length > 0);
+		assert(data.udids.length <= 20);
+		const payload = {
+			locationId,
+			udids: data.udids,
+			onlyDevice: data.onlyDevice,
+		};
+		data.udids.forEach((udid) => assertValidUDID(udid));
+		const json = await this.http.put(`devices/migrate`, {
+			json: payload,
+		}).json();
+		schemas.assertValid("PUT /devices/migrate", json);
+		return json;
+	}
 
 	// async clearDeviceActivationLock(
 	// 	udid: string,

@@ -51,14 +51,15 @@ export interface API {
 	// 	init: APIMoveDeviceInit,
 	// ): Promise<RouteData<"PUT /devices/:udid/migrate">>;
 
-	// /**
-	//  * (Edit) Move a collection of devices to a new location.
-	//  *
-	//  * The device owners will also be moved if `onlyDevice` is not `true`.
-	//  */
-	// moveDevices(
-	// 	init: APIMoveDevicesInit,
-	// ): Promise<RouteData<"PUT /devices/migrate">>;
+	/**
+	 * (Edit) Move a collection of devices to a new location.
+	 *
+	 * The device owners will also be moved if `onlyDevice` is not `true`.
+	 */
+	moveDevices(
+		locationId: number,
+		init: APIMoveDevicesData,
+	): Promise<RouteData<"PUT /devices/migrate">>;
 
 	// /**
 	//  * (Add) Clear the device's activation lock.
@@ -433,19 +434,14 @@ interface APIMoveDeviceInit {
 	onlyDevice?: boolean;
 }
 
-interface APIMoveDevicesInit {
+// This is not the same as the JSON that will be sent, unlike the other APIFooData interfaces
+export interface APIMoveDevicesData {
 	/**
-	 * The array of devices to move. This array must not be empty
-	 * and may only contain a maximum of 20 items.
+	 * The array of devices to move. This array must not be empty and may only
+	 * contain a maximum of 20 items (this will be enforced when called).
 	 */
 	udids: string[];
-	/**
-	 * The ID of the location to move the devices to.
-	 *
-	 * Note that unless `onlyDevice` is set to true, the devices' owners
-	 * will be moved to this location as well.
-	 */
-	locationId: number;
+
 	/**
 	 * Specify whether to only move the device to the location, instead of
 	 * moving the device and its owner.
