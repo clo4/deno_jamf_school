@@ -185,9 +185,13 @@ export function createClient(init: Credentials | { api: API }): Client {
 
 export type {
 	API,
+	APIDeviceData,
+	APIDeviceGroupData,
 	APIGetDeviceOptions,
 	APIGetDevicesOptions,
 	APIRestartDeviceOptions,
+	APIUserData,
+	APIUserGroupData,
 	APIWipeDeviceOptions,
 	App,
 	Client,

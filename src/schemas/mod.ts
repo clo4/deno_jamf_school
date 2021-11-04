@@ -39,6 +39,7 @@ import validateGetUsersId from "./GET_users_id.ts";
 // POST
 import validatePostDevicesUdidRestart from "./POST_devices_udid_restart.ts";
 import validatePostDevicesUdidWipe from "./POST_devices_udid_wipe.ts";
+import validatePostDevicesUdidDetails from "./POST_devices_udid_details.ts";
 
 // PUT
 import validatePutDevicesUdidOwner from "./PUT_devices_udid_owner.ts";
@@ -67,6 +68,7 @@ export const validators = {
 	"GET /users/:id": validateGetUsersId,
 	"GET /users/groups": validateGetUsersGroups,
 	"GET /users/groups/:id": validateGetUsersGroupsId,
+	"POST /devices/:udid/details": validatePostDevicesUdidDetails,
 	"POST /devices/:udid/restart": validatePostDevicesUdidRestart,
 	"POST /devices/:udid/wipe": validatePostDevicesUdidWipe,
 	"PUT /devices/:udid/owner": validatePutDevicesUdidOwner,

@@ -31,6 +31,12 @@ Deno.test("schemas/assertValid: POST /devices/:udid/wipe (200 OK)", async () => 
 	assertValid("POST /devices/:udid/wipe", JSON.parse(json));
 });
 
+Deno.test("schemas/assertValid: POST /devices/:udid/details (200 OK)", async () => {
+	const json = await readRelativeTextFile(
+		"../example_data/POST_devices_udid_details__200.json",
+	);
+	assertValid("POST /devices/:udid/details", JSON.parse(json));
+});
 // Deno.test("schemas/assertValid: POST /devices/:udid/restart (200 OK)", async () => {
 // 	const json = await readRelativeTextFile(
 // 		"../example_data/POST_devices_udid_restart__200.json",

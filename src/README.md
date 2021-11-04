@@ -95,26 +95,26 @@ Each entry explains what changed and links to a pull request that has more detai
 
 <!-- deno-fmt-ignore -->
 
-- **Add User/UserGroup/DeviceGroup edit methods ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58), [#61](https://github.com/SeparateRecords/deno_jamf_school/issues/61))** <br>
+- **Added methods to edit a User/UserGroup/Device/DeviceGroup ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58), [#61](https://github.com/SeparateRecords/deno_jamf_school/issues/61), [#62](https://github.com/SeparateRecords/deno_jamf_school/issues/62))** <br>
   Update multiple properties using an `API`, or more easily with the respective objects' `set` methods.
 
-- **Rename `API.assignDeviceOwner` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
+- **Renamed `API.assignDeviceOwner` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   Now it's more consistent: `API.setDeviceOwner`
 
-- **Add `Client.getUserByUsername` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
+- **Added `Client.getUserByUsername` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   Usernames are inherently unique, so this makes it a reliable way to fetch users.
 
-- **Allow `Client.getDevicesInGroups` to be called with object literals ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
+- **Relaxed signature of `Client.getDevicesInGroups` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   The only property of the `DeviceGroup` objects used was `id`, and this update is aiming to make this style general.
 
-- **Improve how objects are displayed by console methods ([#60](https://github.com/SeparateRecords/deno_jamf_school/issues/60))** <br>
+- **Improved how objects are displayed in the console ([#60](https://github.com/SeparateRecords/deno_jamf_school/issues/60))** <br>
   Due to limitations with the implementation of `Deno.inspect`, indentation doesn't work properly.
 
 ### Version 0.3.2
 
 <!-- deno-fmt-ignore -->
 
-- **Improve implementation of `Device.enrollment` ([#56](https://github.com/SeparateRecords/deno_jamf_school/issues/56))** <br>
+- **Improved the implementation of `Device.enrollment` ([#56](https://github.com/SeparateRecords/deno_jamf_school/issues/56))** <br>
   This should be marginally faster. The "manual" type now also includes a `pending` property (currently always `false`).
 
 <details>
@@ -134,13 +134,13 @@ Each entry explains what changed and links to a pull request that has more detai
 
 <!-- deno-fmt-ignore -->
 
-- **Add support for apps ([#15](https://github.com/SeparateRecords/deno_jamf_school/issues/15))** <br>
+- **Added support for apps ([#15](https://github.com/SeparateRecords/deno_jamf_school/issues/15))** <br>
   This includes `Client.getApps`, `Client.getAppsById`, and `Device.getApps`. See the documentation for more information (the `App` interface).
 
-- **Add support for locations ([#40](https://github.com/SeparateRecords/deno_jamf_school/issues/40))** <br>
+- **Added support for locations ([#40](https://github.com/SeparateRecords/deno_jamf_school/issues/40))** <br>
   Locations can get the data that belongs to them, and all objects can now get their location.
 
-- **Specify the behaviour of toString and toJSON methods ([#49](https://github.com/SeparateRecords/deno_jamf_school/issues/49))** <br>
+- **Specified the behaviour of toString and toJSON methods ([#49](https://github.com/SeparateRecords/deno_jamf_school/issues/49))** <br>
   These methods can now be used reliably now that their behaviour is consistent and obvious.
 
 ### Version 0.2.1

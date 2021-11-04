@@ -74,11 +74,11 @@ export class UserGroup implements models.UserGroup {
 	}
 
 	get isParentGroup() {
-		return convertACLToStatus(this.#data.acl.parent)
+		return convertACLToStatus(this.#data.acl.parent);
 	}
 
 	get isTeacherGroup() {
-		return convertACLToStatus(this.#data.acl.teacher)
+		return convertACLToStatus(this.#data.acl.teacher);
 	}
 
 	async update() {
