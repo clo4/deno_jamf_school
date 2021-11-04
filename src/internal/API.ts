@@ -373,11 +373,27 @@ export class API implements models.API {
 		data.locationId && assertValidID(data.locationId);
 		data.teacher?.forEach((id) => assertValidID(id));
 		data.children?.forEach((id) => assertValidID(id));
-		data.memberOf?.forEach((id) => typeof id === "number" && assertValidID(id));
+		data.memberOf?.forEach((id) => {
+			if (typeof id === "number") {
+				assertValidID(id);
+			}
+		});
 		const json = await this.http.put(`users/${id}`, {
 			json: data,
 		}).json();
 		schemas.assertValid("PUT /users/:id", json);
+		return json;
+	}
+
+	async updateUserGroup(
+		id: number,
+		data: models.APIUserGroupData,
+	): Promise<RouteData<"PUT /users/groups/:id">> {
+		assertValidID(id);
+		const json = await this.http.put(`users/groups/${id}`, {
+			json: data,
+		}).json();
+		schemas.assertValid("PUT /users/groups/:id", json);
 		return json;
 	}
 
