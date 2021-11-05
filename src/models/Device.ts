@@ -202,7 +202,8 @@ export interface Device {
 	getLocation(): Promise<Location | null>;
 
 	/**
-	 * (Edit) Set this device's location.
+	 * (Edit) Set this device's location. Moving a device will also move its
+	 * owner and the other devices they own.
 	 *
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
