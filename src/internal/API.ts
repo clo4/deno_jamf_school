@@ -321,27 +321,37 @@ export class API implements models.API {
 		return data;
 	}
 
-	// async moveDevice(
-	// 	udid: string,
-	// 	init: models.APIMoveDeviceInit,
-	// ): Promise<RouteData<"PUT /devices/:udid/migrate">> {
-	// 	assertValidUDID(udid);
-	// 	assertValidID(init.locationId);
-	// 	throw NOT_IMPLEMENTED;
-	// }
-
-	async moveDevices(
+	async moveDevice(
+		udid: string,
 		locationId: number,
-		data: models.APIMoveDevicesData,
-	): Promise<RouteData<"PUT /devices/migrate">> {
+		options?: models.APIMoveDeviceOptions,
+	): Promise<RouteData<"PUT /devices/:udid/migrate">> {
+		assertValidUDID(udid);
 		assertValidID(locationId);
-		assert(data.udids.length > 0);
-		assert(data.udids.length <= 20);
-		data.udids.forEach((udid) => assertValidUDID(udid));
 		const payload = {
 			locationId,
-			udids: data.udids,
-			onlyDevice: data.onlyDevice,
+			onlyDevice: options?.onlyDevice,
+		};
+		const json = await this.http.put(`devices/${udid}/migrate`, {
+			json: payload,
+		}).json();
+		schemas.assertValid("PUT /devices/:udid/migrate", json);
+		return json;
+	}
+
+	async moveDevices(
+		devices: string[],
+		locationId: number,
+		options?: models.APIMoveDevicesOptions,
+	): Promise<RouteData<"PUT /devices/migrate">> {
+		assertValidID(locationId);
+		assert(devices.length > 0);
+		assert(devices.length <= 20);
+		devices.forEach((udid) => assertValidUDID(udid));
+		const payload = {
+			locationId,
+			udids: devices,
+			onlyDevice: options?.onlyDevice,
 		};
 		const json = await this.http.put(`devices/migrate`, {
 			json: payload,
@@ -382,7 +392,6 @@ export class API implements models.API {
 		data: models.APIUserData,
 	): Promise<RouteData<"PUT /users/:id">> {
 		assertValidID(id);
-		data.locationId && assertValidID(data.locationId);
 		data.teacher?.forEach((id) => assertValidID(id));
 		data.children?.forEach((id) => assertValidID(id));
 		data.memberOf?.forEach((id) => {
@@ -436,14 +445,23 @@ export class API implements models.API {
 	// 	throw NOT_IMPLEMENTED;
 	// }
 
-	// 	async moveUser(
-	// 		id: number,
-	// 		init: models.APIMoveUserInit,
-	// 	): Promise<RouteData<"PUT /users/:id/migrate">> {
-	// 		assertValidID(id);
-	// 		assertValidID(init.locationId);
-	// 		throw NOT_IMPLEMENTED;
-	// 	}
+	async moveUser(
+		userId: number,
+		locationId: number,
+		options?: models.APIMoveUserOptions,
+	): Promise<RouteData<"PUT /users/:id/migrate">> {
+		assertValidID(userId);
+		assertValidID(locationId);
+		const payload = {
+			locationId,
+			onlyUser: options?.onlyUser,
+		};
+		const json = await this.http.put(`users/${userId}/migrate`, {
+			json: payload,
+		}).json();
+		schemas.assertValid("PUT /users/:id/migrate", json);
+		return json;
+	}
 
 	async getApps(): Promise<RouteData<"GET /apps">["apps"]> {
 		const data = await this.http.get(`apps`).json();

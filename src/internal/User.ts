@@ -157,11 +157,6 @@ export class User implements models.User {
 		return this;
 	}
 
-	async setLocation(location: { id: number }) {
-		await this.#api.updateUser(this.id, { locationId: location.id });
-		return this;
-	}
-
 	async setClasses(groups: { id: number }[]) {
 		await this.#api.updateUser(this.id, {
 			teacher: groups.map((group) => group.id),
@@ -173,6 +168,11 @@ export class User implements models.User {
 		await this.#api.updateUser(this.id, {
 			children: users.map((user) => user.id),
 		});
+		return this;
+	}
+
+	async setLocation(location: { id: number }) {
+		await this.#api.moveUser(this.id, location.id);
 		return this;
 	}
 }

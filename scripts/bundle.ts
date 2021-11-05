@@ -105,7 +105,14 @@ await Promise.all([
 			const outFilePath = path.join(buildDir, outFileName);
 
 			console.debug(`Writing code for '${key}' to ${repo(outFilePath)}`);
-			await Deno.writeTextFile(outFilePath, src, { create: false });
+			try {
+				await Deno.writeTextFile(outFilePath, src, { create: false });
+			} catch (e: unknown) {
+				const inputFilePath = repo(path.join(schemasDir, outFileName));
+				console.error(`Unable to write ${repo(outFilePath)}`);
+				console.debug(`Does ${inputFilePath} exist?`);
+				throw e;
+			}
 			console.debug(`Finished writing ${repo(outFilePath)}`);
 		},
 	),
