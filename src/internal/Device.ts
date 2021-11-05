@@ -229,4 +229,9 @@ export class Device implements models.Device {
 		await this.#api.updateDevice(this.udid, { notes: text });
 		return this;
 	}
+
+	async setLocation(location: { id: number }) {
+		await this.#api.moveDevice(this.udid, location.id);
+		return this;
+	}
 }

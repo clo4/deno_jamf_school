@@ -41,24 +41,31 @@ export interface API {
 		userId: number,
 	): Promise<RouteData<"PUT /devices/:udid/owner">>;
 
-	// /**
-	//  * (Edit) Move the device and its owner to a new location.
-	//  *
-	//  * The device owner will also be moved if `onlyDevice` is not `true`.
-	//  */
-	// moveDevice(
-	// 	udid: string,
-	// 	init: APIMoveDeviceInit,
-	// ): Promise<RouteData<"PUT /devices/:udid/migrate">>;
+	/**
+	 * (Edit) Move the device and its owner to a new location.
+	 *
+	 * The device owner will also be moved if `onlyDevice` is not `true`.
+	 */
+	moveDevice(
+		udid: string,
+		locationId: number,
+		options?: APIMoveDeviceOptions,
+	): Promise<RouteData<"PUT /devices/:udid/migrate">>;
 
-	// /**
-	//  * (Edit) Move a collection of devices to a new location.
-	//  *
-	//  * The device owners will also be moved if `onlyDevice` is not `true`.
-	//  */
-	// moveDevices(
-	// 	init: APIMoveDevicesInit,
-	// ): Promise<RouteData<"PUT /devices/migrate">>;
+	/**
+	 * (Edit) Move a collection of devices to a new location.
+	 *
+	 * The device owners and any other devices they own will also be moved if
+	 * the `onlyDevice` option is not `true`.
+	 *
+	 * The `devices` array must have at least one item and at most 20. UDIDs
+	 * will not be deduplicated in this method.
+	 */
+	moveDevices(
+		devices: string[],
+		locationId: number,
+		options?: APIMoveDevicesOptions,
+	): Promise<RouteData<"PUT /devices/migrate">>;
 
 	// /**
 	//  * (Add) Clear the device's activation lock.
@@ -189,11 +196,12 @@ export interface API {
 	// 	password: string,
 	// ): Promise<RouteData<"PUT /users/:id/password">>;
 
-	// /** (Edit) Move the user and their devices to a new location. */
-	// moveUser(
-	// 	id: number,
-	// 	init: APIMoveUserInit,
-	// ): Promise<RouteData<"PUT /users/:id/migrate">>;
+	/** (Edit) Move the user and their devices to a new location. */
+	moveUser(
+		userId: number,
+		locationId: number,
+		options?: APIMoveUserOptions,
+	): Promise<RouteData<"PUT /users/:id/migrate">>;
 
 	/** (Read) Get a single user group by their ID. */
 	getUserGroup(
@@ -418,14 +426,7 @@ interface APIUpdateDeviceCellularPlanInit {
 	requiresNetworkTether?: boolean;
 }
 
-interface APIMoveDeviceInit {
-	/**
-	 * The ID of the location to move the device to.
-	 *
-	 * Note that unless `onlyDevice` is set to true, the device's owner
-	 * will be moved to this location as well.
-	 */
-	locationId: number;
+export interface APIMoveDeviceOptions {
 	/**
 	 * Specify whether to only move the device to the location, instead of
 	 * moving the device and its owner.
@@ -433,19 +434,8 @@ interface APIMoveDeviceInit {
 	onlyDevice?: boolean;
 }
 
-interface APIMoveDevicesInit {
-	/**
-	 * The array of devices to move. This array must not be empty
-	 * and may only contain a maximum of 20 items.
-	 */
-	udids: string[];
-	/**
-	 * The ID of the location to move the devices to.
-	 *
-	 * Note that unless `onlyDevice` is set to true, the devices' owners
-	 * will be moved to this location as well.
-	 */
-	locationId: number;
+// This is not the same as the JSON that will be sent, unlike the other APIFooData interfaces
+export interface APIMoveDevicesOptions {
 	/**
 	 * Specify whether to only move the device to the location, instead of
 	 * moving the device and its owner.
@@ -543,9 +533,6 @@ export interface APIUserData {
 	 * teacher.
 	 */
 	exclude?: boolean;
-
-	/** The ID of the location to assign the user to. */
-	locationId?: number;
 }
 
 interface APIUserDataBulkUpdate extends APIUserData {
@@ -555,11 +542,12 @@ interface APIUserDataBulkUpdate extends APIUserData {
 	 * user.
 	 */
 	action?: "auto" | "delete";
+
+	/** The ID of the location to assign the user to. */
+	locationId?: number;
 }
 
-interface APIMoveUserInit {
-	/** ID of the location to move the user to. */
-	locationId: number;
+export interface APIMoveUserOptions {
 	/** Whether to only move the user, instead of the user and their devices. */
 	onlyUser?: boolean;
 }

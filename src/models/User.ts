@@ -118,7 +118,8 @@ export interface User {
 	setGroups(groups: { id: number }[]): Promise<this>;
 
 	/**
-	 * (Edit) Set this user's location.
+	 * (Edit) Set this user's location. Moving a user will also move all the
+	 * devices they own.
 	 *
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.

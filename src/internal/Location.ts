@@ -1,3 +1,4 @@
+import { chunk } from "../deps/std_collections_chunk.ts";
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
@@ -142,5 +143,21 @@ export class Location implements models.Location {
 		const myApps = apps.filter((app) => app.locationId === this.#data.id);
 
 		return myApps.map((app) => this.#client.createApp(app));
+	}
+
+	async moveDevices(devices: { udid: string }[]) {
+		if (devices.length === 0) {
+			return this;
+		}
+
+		const udids = devices.map((device) => device.udid);
+		const unique = [...new Set(udids)];
+		const chunks = chunk(unique, 20);
+		const promises = chunks.map(
+			(arr) => this.#api.moveDevices(arr, this.id),
+		);
+		await Promise.all(promises);
+
+		return this;
 	}
 }

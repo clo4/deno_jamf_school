@@ -200,4 +200,13 @@ export interface Device {
 
 	/** (Read) Get the location this device belongs to. */
 	getLocation(): Promise<Location | null>;
+
+	/**
+	 * (Edit) Set this device's location. Moving a device will also move its
+	 * owner and the other devices they own.
+	 *
+	 * This method will not update the object. To update it, call
+	 * `Device.update()`.
+	 */
+	setLocation(location: { id: number }): Promise<this>;
 }
