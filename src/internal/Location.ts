@@ -182,5 +182,6 @@ export class Location implements models.Location {
 		const unique = [...new Set(ids)];
 
 		await Promise.all(unique.map((id) => this.#api.moveUser(id, this.id)));
+		return this;
 	}
 }
