@@ -38,7 +38,7 @@ Deno.test({
 	name: "api.moveDevices: rejects empty array",
 	async fn() {
 		mockFetch.mock("PUT@/devices/migrate", () => response);
-		assertThrowsAsync(async () => {
+		await assertThrowsAsync(async () => {
 			await api.moveDevices([], 0);
 		});
 		mockFetch.reset();
@@ -49,7 +49,7 @@ Deno.test({
 	name: "api.moveDevices: rejects array with more than 20 items",
 	async fn() {
 		mockFetch.mock("PUT@/devices/migrate", () => response);
-		assertThrowsAsync(async () => {
+		await assertThrowsAsync(async () => {
 			// deno-fmt-ignore
 			await api.moveDevices([
 				"-", "-", "-", "-", "-", "-", "-", "-", "-", "-",

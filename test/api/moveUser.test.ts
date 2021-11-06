@@ -1,6 +1,6 @@
 import * as jamf from "../../src/mod.ts";
 import validatePutUsersidMigrate from "../../src/schemas/PUT_users_id_migrate.ts";
-import { assert, assertEquals } from "../deps/std_testing_asserts.ts";
+import { assertEquals } from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as mockFetch from "../deps/mock_fetch.ts";
 
