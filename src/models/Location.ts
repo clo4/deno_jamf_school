@@ -75,11 +75,18 @@ export interface Location {
 	update(): Promise<this>;
 
 	/**
-	 * (Edit) Move devices from their current location to this location.
+	 * (Edit) Move devices to this location.
 	 *
 	 * This will also move the device's owner and any other devices they own.
 	 *
 	 * Devices already in this location will not be affected.
 	 */
 	moveDevices(devices: { udid: string }[]): Promise<this>;
+
+	/**
+	 * (Edit) Move users and their devices to this location.
+	 *
+	 * Users already in this location will not be affected.
+	 */
+	moveUsers(users: { id: number }[]): Promise<this>;
 }

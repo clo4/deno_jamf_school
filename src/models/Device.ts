@@ -76,6 +76,12 @@ export interface Device {
 	/** The remaining charge as a percentage (number between 0 and 1) */
 	readonly batteryPercentage: number;
 
+	/** The ID of this device's location. */
+	readonly locationId: number;
+
+	/** The ID of this device's owner. */
+	readonly ownerId: number;
+
 	/**
 	 * The type of enrollment used for this device.
 	 *
