@@ -104,6 +104,9 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Added `locationId` & `ownerId` property to relevant objects ($66)** <br>
   Makes it easier to use the objects and allows for better optimization.
 
+- **Added `DeviceGroup.restartDevices()` & `Location.restartDevices()` ($70)** <br>
+  These methods make simple restart-scripts much easier to write, but they don't provide detailed results (failure to restart will not result in an exception).
+
 - **Renamed `API.assignDeviceOwner` ($58)** <br>
   Now it's more consistent: `API.setDeviceOwner`
 
@@ -130,10 +133,10 @@ Each entry explains what changed and links to a pull request that has more detai
 
 <!-- deno-fmt-ignore -->
 
-- **Add `Device.enrollment` ($53)** <br>
+- **Added `Device.enrollment` ($53)** <br>
   It's an object instead of a string. See the docs for more information.
 
-- **Add `Client.getUserByName` ($53)** <br>
+- **Added `Client.getUserByName` ($53)** <br>
   Returns null if there are no users with the name, fails if multiple users have it.
 
 ### Version 0.3.0

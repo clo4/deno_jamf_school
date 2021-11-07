@@ -98,11 +98,15 @@ export class DeviceGroup implements models.DeviceGroup {
 
 	async setName(name: string) {
 		await this.#api.updateDeviceGroup(this.id, { name });
-		return;
 	}
 
 	async setDescription(text: string) {
 		await this.#api.updateDeviceGroup(this.id, { description: text });
-		return;
+	}
+
+	async restartDevices() {
+		const devices = await this.#api.getDevices({ groupIds: [this.id] });
+		const promises = devices.map((device) => this.#api.restartDevice(device.UDID));
+		await Promise.all(promises);
 	}
 }

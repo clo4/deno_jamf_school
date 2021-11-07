@@ -83,4 +83,11 @@ export interface DeviceGroup {
 	 * `DeviceGroup.update()`.
 	 */
 	setDescription(text: string): Promise<void>;
+
+	/**
+	 * (Read, Add) Restart all the devices in this device group.
+	 *
+	 * Note that failing to restart a device will not throw an exception.
+	 */
+	restartDevices(): Promise<void>;
 }
