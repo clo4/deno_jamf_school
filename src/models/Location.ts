@@ -80,6 +80,8 @@ export interface Location {
 	 * This will also move the device's owner and any other devices they own.
 	 *
 	 * Devices already in this location will not be affected.
+	 *
+	 * Note that failing to move a device is not a failure case.
 	 */
 	moveDevices(devices: { udid: string }[]): Promise<this>;
 
@@ -87,6 +89,8 @@ export interface Location {
 	 * (Edit) Move users and their devices to this location.
 	 *
 	 * Users already in this location will not be affected.
+	 *
+	 * Note that failing to move a user is not a failure case.
 	 */
 	moveUsers(users: { id: number }[]): Promise<this>;
 }
