@@ -92,4 +92,11 @@ export interface Location {
 	 * Note that failing to move a user will not throw an exception.
 	 */
 	moveUsers(users: { id: number }[]): Promise<void>;
+
+	/**
+	 * (Read, Add) Restart all the devices in this location.
+	 *
+	 * Note that failing to restart a device will not throw an exception.
+	 */
+	restartDevices(): Promise<void>;
 }

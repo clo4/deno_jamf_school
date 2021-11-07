@@ -165,8 +165,6 @@ export class Location implements models.Location {
 		const chunks = chunk(unique, 20);
 		const promises = chunks.map((arr) => this.#api.moveDevices(arr, this.id));
 		await Promise.allSettled(promises);
-
-		return;
 	}
 
 	async moveUsers(users: { id: number; locationId?: number }[]) {
@@ -181,7 +179,11 @@ export class Location implements models.Location {
 		const unique = [...new Set(ids)];
 		const promises = unique.map((id) => this.#api.moveUser(id, this.id));
 		await Promise.allSettled(promises);
+	}
 
-		return;
+	async restartDevices() {
+		const devices = await this.#api.getDevices({ locationId: this.id });
+		const promises = devices.map((device) => this.#api.restartDevice(device.UDID));
+		await Promise.allSettled(promises);
 	}
 }
