@@ -87,7 +87,7 @@ export class UserGroup implements models.UserGroup {
 
 	async update() {
 		this.#data = await this.#api.getUserGroup(this.#data.id);
-		return this;
+		return;
 	}
 
 	async getUsers(): Promise<models.User[]> {
@@ -117,12 +117,12 @@ export class UserGroup implements models.UserGroup {
 
 	async setName(name: string) {
 		await this.#api.updateUserGroup(this.id, { name });
-		return this;
+		return;
 	}
 
 	async setDescription(text: string) {
 		await this.#api.updateUserGroup(this.id, { description: text });
-		return this;
+		return;
 	}
 
 	async setParentGroup(status: boolean | null) {
@@ -131,7 +131,7 @@ export class UserGroup implements models.UserGroup {
 				parent: convertStatusToACL(status),
 			},
 		});
-		return this;
+		return;
 	}
 
 	async setTeacherGroup(status: boolean | null) {
@@ -140,6 +140,6 @@ export class UserGroup implements models.UserGroup {
 				teacher: convertStatusToACL(status),
 			},
 		});
-		return this;
+		return;
 	}
 }

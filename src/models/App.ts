@@ -57,7 +57,7 @@ export interface App {
 	 *
 	 * Other apps created from the same data will not be updated.
 	 */
-	update(): Promise<this>;
+	update(): Promise<void>;
 
 	/** (Read) Get all the devices that have this app. */
 	getDevices(): Promise<Device[]>;

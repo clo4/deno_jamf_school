@@ -53,7 +53,7 @@ export interface User {
 	 *
 	 * Other users created from the same data will not be updated.
 	 */
-	update(): Promise<this>;
+	update(): Promise<void>;
 
 	/** (Read) Get all the devices assigned to this user. */
 	getDevices(): Promise<Device[]>;
@@ -70,7 +70,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setUsername(username: string): Promise<this>;
+	setUsername(username: string): Promise<void>;
 
 	/**
 	 * (Edit) Set this user's LDAP domain.
@@ -78,7 +78,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setDomain(domain: string): Promise<this>;
+	setDomain(domain: string): Promise<void>;
 
 	/**
 	 * (Edit) Set this user's first name.
@@ -86,7 +86,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setFirstName(firstName: string): Promise<this>;
+	setFirstName(firstName: string): Promise<void>;
 
 	/**
 	 * (Edit) Set this user's last name.
@@ -94,7 +94,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setLastName(lastName: string): Promise<this>;
+	setLastName(lastName: string): Promise<void>;
 
 	/**
 	 * (Edit) Set this user's Jamf School login password.
@@ -102,7 +102,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setPassword(password: string): Promise<this>;
+	setPassword(password: string): Promise<void>;
 
 	/**
 	 * (Edit) Set this user's email address.
@@ -110,7 +110,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setEmail(email: string): Promise<this>;
+	setEmail(email: string): Promise<void>;
 
 	/**
 	 * (Edit) Set the groups this user is in.
@@ -118,7 +118,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setGroups(groups: { id: number }[]): Promise<this>;
+	setGroups(groups: { id: number }[]): Promise<void>;
 
 	/**
 	 * (Edit) Set this user's location. Moving a user will also move all the
@@ -127,7 +127,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setLocation(location: { id: number }): Promise<this>;
+	setLocation(location: { id: number }): Promise<void>;
 
 	/**
 	 * (Edit) Set the groups this user can teach.
@@ -135,7 +135,7 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setClasses(groups: { id: number }[]): Promise<this>;
+	setClasses(groups: { id: number }[]): Promise<void>;
 
 	/**
 	 * (Edit) Set this user's children.
@@ -143,5 +143,5 @@ export interface User {
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
 	 */
-	setChildren(children: { id: number }[]): Promise<this>;
+	setChildren(children: { id: number }[]): Promise<void>;
 }

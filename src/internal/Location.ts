@@ -75,7 +75,7 @@ export class Location implements models.Location {
 
 	async update() {
 		this.#data = await this.#api.getLocation(this.#data.id);
-		return this;
+		return;
 	}
 
 	async getDevices() {
@@ -156,7 +156,7 @@ export class Location implements models.Location {
 		// It's possible that after the filter there wouldn't be any devices left, so
 		// it's cheaper to skip the network entirely and return now.
 		if (udids.length === 0) {
-			return this;
+			return;
 		}
 
 		// Endpoint doesn't accept more than 20 devices per request, so chunking the
@@ -166,7 +166,7 @@ export class Location implements models.Location {
 		const promises = chunks.map((arr) => this.#api.moveDevices(arr, this.id));
 		await Promise.allSettled(promises);
 
-		return this;
+		return;
 	}
 
 	async moveUsers(users: { id: number; locationId?: number }[]) {
@@ -175,13 +175,13 @@ export class Location implements models.Location {
 			.map((user) => user.id);
 
 		if (ids.length === 0) {
-			return this;
+			return;
 		}
 
 		const unique = [...new Set(ids)];
 		const promises = unique.map((id) => this.#api.moveUser(id, this.id));
 		await Promise.allSettled(promises);
 
-		return this;
+		return;
 	}
 }

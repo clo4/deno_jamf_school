@@ -37,7 +37,7 @@ export interface UserGroup {
 	 *
 	 * Other user groups created from the same data will not be updated.
 	 */
-	update(): Promise<this>;
+	update(): Promise<void>;
 
 	/** (Read) Get all the users in the user group. */
 	getUsers(): Promise<User[]>;
@@ -51,7 +51,7 @@ export interface UserGroup {
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
 	 */
-	setName(name: string): Promise<this>;
+	setName(name: string): Promise<void>;
 
 	/**
 	 * (Edit) Set this user group's description.
@@ -59,7 +59,7 @@ export interface UserGroup {
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
 	 */
-	setDescription(text: string): Promise<this>;
+	setDescription(text: string): Promise<void>;
 
 	/**
 	 * (Edit) Set whether the users in this group are parents.
@@ -71,7 +71,7 @@ export interface UserGroup {
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
 	 */
-	setParentGroup(status: boolean | null): Promise<this>;
+	setParentGroup(status: boolean | null): Promise<void>;
 
 	/**
 	 * (Edit) Set whether the users in this group are teachers.
@@ -83,5 +83,5 @@ export interface UserGroup {
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
 	 */
-	setTeacherGroup(status: boolean | null): Promise<this>;
+	setTeacherGroup(status: boolean | null): Promise<void>;
 }
