@@ -98,11 +98,14 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Added methods to edit a User/UserGroup/Device/DeviceGroup ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58), [#61](https://github.com/SeparateRecords/deno_jamf_school/issues/61), [#62](https://github.com/SeparateRecords/deno_jamf_school/issues/62))** <br>
   Update multiple properties using an `API`, or more easily with the respective objects' `set` methods.
 
-- **Added methods to set User/Device locations ([#63](https://github.com/SeparateRecords/deno_jamf_school/issues/63))** <br>
-  Move individual users and devices, or move in bulk with `Location.moveDevices`. Search the docs for 'move' or 'location'.
+- **Added methods to set User/Device locations ([#63](https://github.com/SeparateRecords/deno_jamf_school/issues/63), [#66](https://github.com/SeparateRecords/deno_jamf_school/issues/66))** <br>
+  Move individual users and devices, or move in bulk with `Location` objects. Search the docs for 'move' or 'location'.
 
 - **Added `Client.getUserByUsername` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   Usernames are inherently unique, so this makes it a reliable way to fetch users.
+
+- **Added `locationId` & `ownerId` property to relevant objects ([#66](https://github.com/SeparateRecords/deno_jamf_school/issues/66))** <br>
+  Makes it easier to use the objects and allows for better optimization.
 
 - **Renamed `API.assignDeviceOwner` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   Now it's more consistent: `API.setDeviceOwner`
@@ -111,7 +114,7 @@ Each entry explains what changed and links to a pull request that has more detai
   The only property of the `DeviceGroup` objects used was `id`, and this update is aiming to make this style general.
 
 - **Improved how objects are displayed in the console ([#60](https://github.com/SeparateRecords/deno_jamf_school/issues/60))** <br>
-  Due to limitations with the implementation of `Deno.inspect`, indentation doesn't work properly.
+  `console.log(someDevices)` no longer results in `Device {}`! Indentation doesn't work properly due to some internal Deno stuff.
 
 ### Version 0.3.2
 
