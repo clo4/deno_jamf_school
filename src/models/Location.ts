@@ -75,13 +75,12 @@ export interface Location {
 	update(): Promise<this>;
 
 	/**
-	 * (Edit) Move devices to this location.
-	 *
-	 * This will also move the device's owner and any other devices they own.
+	 * (Edit) Move devices to this location. This will also move the device's
+	 * owner and any other devices they own.
 	 *
 	 * Devices already in this location will not be affected.
 	 *
-	 * Note that failing to move a device is not a failure case.
+	 * Note that failing to move a device will not throw an exception.
 	 */
 	moveDevices(devices: { udid: string }[]): Promise<this>;
 
@@ -90,7 +89,7 @@ export interface Location {
 	 *
 	 * Users already in this location will not be affected.
 	 *
-	 * Note that failing to move a user is not a failure case.
+	 * Note that failing to move a user will not throw an exception.
 	 */
 	moveUsers(users: { id: number }[]): Promise<this>;
 }
