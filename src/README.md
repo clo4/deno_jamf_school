@@ -116,6 +116,9 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Improved how objects are displayed in the console ([#60](https://github.com/SeparateRecords/deno_jamf_school/issues/60))** <br>
   `console.log(someDevices)` no longer results in `Device {}`! Indentation doesn't work properly due to some internal Deno stuff.
 
+- **Breaking: Methods that returned `Promise<this>` now return `Promise<void>` ([#68](https://github.com/SeparateRecords/deno_jamf_school/issues/68))** <br>
+  Returning `this` is unexpected and encourages worse code than returning nothing at all.
+
 ### Version 0.3.2
 
 <!-- deno-fmt-ignore -->
