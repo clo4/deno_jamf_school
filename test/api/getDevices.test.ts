@@ -32,7 +32,7 @@ const response = new Response(jsonString, {
 });
 
 Deno.test({
-	name: "api/getDevices: accepts valid data",
+	name: "api.getDevices: accepts valid data",
 	async fn() {
 		mockFetch.mock("GET@/devices", () => response);
 		// This will throw if it doesn't work
@@ -43,7 +43,7 @@ Deno.test({
 });
 
 Deno.test({
-	name: "api/getDevices: ?includeApps works around buggy API behaviour",
+	name: "api.getDevices: ?includeApps works around buggy API behaviour",
 	async fn() {
 		mockFetch.mock("GET@/devices", (req) => {
 			const params = new URL(req.url).searchParams;
@@ -64,7 +64,7 @@ Deno.test({
 });
 
 Deno.test({
-	name: "api/getDevices: remaps parameters to their correct names/values",
+	name: "api.getDevices: remaps parameters to their correct names/values",
 	async fn() {
 		mockFetch.mock("GET@/devices", (req) => {
 			const params = new URL(req.url).searchParams;
@@ -106,7 +106,7 @@ Deno.test({
 });
 
 Deno.test({
-	name: "api/getDevices: throws when given unexpected data",
+	name: "api.getDevices: throws when given unexpected data",
 	async fn() {
 		mockFetch.mock("GET@/devices", () => {
 			return new Response(`{"code":200,"count":0,"devices":[{"UDID":7}]}`);
@@ -120,7 +120,7 @@ Deno.test({
 });
 
 Deno.test({
-	name: "api/getDevices: sets request Accept header",
+	name: "api.getDevices: sets request Accept header",
 	async fn() {
 		let didTest = false;
 		mockFetch.mock("GET@/devices", (request) => {
