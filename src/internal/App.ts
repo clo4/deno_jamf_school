@@ -73,6 +73,10 @@ export class App implements models.App {
 		return this.#data.version;
 	}
 
+	get locationId() {
+		return this.#data.locationId;
+	}
+
 	async getDevices() {
 		let devices;
 		try {

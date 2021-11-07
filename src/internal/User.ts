@@ -77,6 +77,10 @@ export class User implements models.User {
 		return this.#data.exclude;
 	}
 
+	get locationId() {
+		return this.#data.locationId;
+	}
+
 	async update() {
 		// This shouldn't be wrapped in try/catch because its failure is an error
 		// the user should know about.

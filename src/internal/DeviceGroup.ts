@@ -59,6 +59,10 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data.imageUrl;
 	}
 
+	get locationId() {
+		return this.#data.locationId;
+	}
+
 	// get isShared() {
 	// 	return this.data.shared;
 	// }

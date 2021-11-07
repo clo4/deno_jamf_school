@@ -34,6 +34,9 @@ export interface DeviceGroup {
 	 */
 	readonly isSmartGroup: boolean;
 
+	/** The ID of this device group's location. */
+	readonly locationId: number;
+
 	// /**
 	//  * _If you know what this is, please raise an issue to tell me._
 	//  * https://github.com/SeparateRecords/deno_jamf_school/issues/new
