@@ -108,7 +108,7 @@ Each entry explains what changed and links to a pull request that has more detai
   Makes it easier to use the objects and allows for better optimization.
 
 - **Added `DeviceGroup.restartDevices()` & `Location.restartDevices()` ([#70](https://github.com/SeparateRecords/deno_jamf_school/issues/70))** <br>
-  These methods make simple restart-scripts much easier to write, but they don't provide detailed results (failure will not result in an exception).
+  These methods make simple restart-scripts much easier to write, but they don't provide detailed results (failure to restart will not result in an exception).
 
 - **Renamed `API.assignDeviceOwner` ([#58](https://github.com/SeparateRecords/deno_jamf_school/issues/58))** <br>
   Now it's more consistent: `API.setDeviceOwner`
