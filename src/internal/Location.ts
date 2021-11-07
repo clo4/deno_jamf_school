@@ -145,18 +145,42 @@ export class Location implements models.Location {
 		return myApps.map((app) => this.#client.createApp(app));
 	}
 
-	async moveDevices(devices: { udid: string }[]) {
-		if (devices.length === 0) {
+	async moveDevices(devices: { udid: string; locationId?: number }[]) {
+		// This signature in the model doesn't specify locationId, but if the object
+		// *does* have it, we can optimize this further by filtering out the devices
+		// that wouldn't be moved
+		const udids = devices
+			.filter((device) => device.locationId !== this.id)
+			.map((device) => device.udid);
+
+		// It's possible that after the filter there wouldn't be any devices left, so
+		// it's cheaper to skip the network entirely and return now.
+		if (udids.length === 0) {
 			return this;
 		}
 
-		const udids = devices.map((device) => device.udid);
+		// Endpoint doesn't accept more than 20 devices per request, so chunking the
+		// array into groups of 20 and requesting in parallel is an easy workaround.
 		const unique = [...new Set(udids)];
 		const chunks = chunk(unique, 20);
-		const promises = chunks.map(
-			(arr) => this.#api.moveDevices(arr, this.id),
-		);
-		await Promise.all(promises);
+		const promises = chunks.map((arr) => this.#api.moveDevices(arr, this.id));
+		await Promise.allSettled(promises);
+
+		return this;
+	}
+
+	async moveUsers(users: { id: number; locationId?: number }[]) {
+		const ids = users
+			.filter((user) => user.locationId !== this.id)
+			.map((user) => user.id);
+
+		if (ids.length === 0) {
+			return this;
+		}
+
+		const unique = [...new Set(ids)];
+		const promises = unique.map((id) => this.#api.moveUser(id, this.id));
+		await Promise.allSettled(promises);
 
 		return this;
 	}

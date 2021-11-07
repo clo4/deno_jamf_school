@@ -43,6 +43,9 @@ export interface App {
 	/** Whether or not the app is in the trash (deleted). */
 	readonly isTrashed: boolean;
 
+	/** The ID of this app's location. */
+	readonly locationId: number;
+
 	/** Return the data used to create this object. */
 	toJSON(): unknown;
 

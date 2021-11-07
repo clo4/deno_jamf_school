@@ -39,6 +39,9 @@ export interface User {
 	/** Whether the user is excluded from teacher restrictions. */
 	readonly isExcludedFromRestrictions: boolean;
 
+	/** The ID of this user's location. */
+	readonly locationId: number;
+
 	/** Return the data used to create this object. */
 	toJSON(): unknown;
 

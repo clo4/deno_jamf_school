@@ -23,6 +23,9 @@ export interface UserGroup {
 	/** Whether the users in this group are teachers. */
 	readonly isTeacherGroup: boolean | null;
 
+	/** The ID of this user group's location. */
+	readonly locationId: number;
+
 	/** Return the data used to create this object. */
 	toJSON(): unknown;
 

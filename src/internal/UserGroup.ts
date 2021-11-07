@@ -81,6 +81,10 @@ export class UserGroup implements models.UserGroup {
 		return convertACLToStatus(this.#data.acl.teacher);
 	}
 
+	get locationId() {
+		return this.#data.locationId;
+	}
+
 	async update() {
 		this.#data = await this.#api.getUserGroup(this.#data.id);
 		return this;

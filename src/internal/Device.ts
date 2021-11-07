@@ -117,6 +117,14 @@ export class Device implements models.Device {
 		return enrollment[this.#data.enrollType];
 	}
 
+	get locationId() {
+		return this.#data.locationId;
+	}
+
+	get ownerId() {
+		return this.#data.owner.id;
+	}
+
 	async update() {
 		const devices = await this.#api.getDevices({
 			serialNumber: this.#data.serialNumber,
