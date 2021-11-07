@@ -161,7 +161,7 @@ export class Location implements models.Location {
 
 		// Endpoint doesn't accept more than 20 devices per request, so chunking the
 		// array into groups of 20 and requesting in parallel is an easy workaround.
-		const unique = [...new Set(udids)]
+		const unique = [...new Set(udids)];
 		const chunks = chunk(unique, 20);
 		const promises = chunks.map((arr) => this.#api.moveDevices(arr, this.id));
 		await Promise.allSettled(promises);
@@ -178,7 +178,7 @@ export class Location implements models.Location {
 			return this;
 		}
 
-		const unique = [...new Set(ids)]
+		const unique = [...new Set(ids)];
 		const promises = unique.map((id) => this.#api.moveUser(id, this.id));
 		await Promise.allSettled(promises);
 
