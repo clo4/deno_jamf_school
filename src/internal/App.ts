@@ -110,6 +110,6 @@ export class App implements models.App {
 
 	async update() {
 		this.#data = await this.#api.getApp(this.#data.id);
-		return this;
+		return;
 	}
 }

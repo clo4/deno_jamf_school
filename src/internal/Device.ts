@@ -136,7 +136,7 @@ export class Device implements models.Device {
 
 		this.#data = devices[0];
 
-		return this;
+		return;
 	}
 
 	async getOwner() {
@@ -162,14 +162,14 @@ export class Device implements models.Device {
 		if (user.id !== this.#data.owner.id) {
 			await this.#api.setDeviceOwner(this.udid, user.id);
 		}
-		return this;
+		return;
 	}
 
 	async removeOwner() {
 		if (this.#data.owner.id !== 0) {
 			await this.#api.setDeviceOwner(this.udid, 0);
 		}
-		return this;
+		return;
 	}
 
 	async getGroups(): Promise<models.DeviceGroup[]> {
@@ -189,12 +189,12 @@ export class Device implements models.Device {
 
 	async restart() {
 		await this.#api.restartDevice(this.#data.UDID);
-		return this;
+		return;
 	}
 
 	async wipe() {
 		await this.#api.wipeDevice(this.#data.UDID);
-		return this;
+		return;
 	}
 
 	async getApps() {
@@ -230,16 +230,16 @@ export class Device implements models.Device {
 
 	async setAssetTag(text: string) {
 		await this.#api.updateDevice(this.udid, { assetTag: text });
-		return this;
+		return;
 	}
 
 	async setNotes(text: string) {
 		await this.#api.updateDevice(this.udid, { notes: text });
-		return this;
+		return;
 	}
 
 	async setLocation(location: { id: number }) {
 		await this.#api.moveDevice(this.udid, location.id);
-		return this;
+		return;
 	}
 }

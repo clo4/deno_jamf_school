@@ -85,7 +85,7 @@ export class User implements models.User {
 		// This shouldn't be wrapped in try/catch because its failure is an error
 		// the user should know about.
 		this.#data = await this.#api.getUser(this.#data.id);
-		return this;
+		return;
 	}
 
 	async getDevices(): Promise<models.Device[]> {
@@ -126,57 +126,57 @@ export class User implements models.User {
 
 	async setUsername(username: string) {
 		await this.#api.updateUser(this.id, { username });
-		return this;
+		return;
 	}
 
 	async setDomain(domain: string) {
 		await this.#api.updateUser(this.id, { domain });
-		return this;
+		return;
 	}
 
 	async setFirstName(name: string) {
 		await this.#api.updateUser(this.id, { firstName: name });
-		return this;
+		return;
 	}
 
 	async setLastName(name: string) {
 		await this.#api.updateUser(this.id, { lastName: name });
-		return this;
+		return;
 	}
 
 	async setPassword(password: string) {
 		await this.#api.updateUser(this.id, { password });
-		return this;
+		return;
 	}
 
 	async setEmail(email: string) {
 		await this.#api.updateUser(this.id, { email });
-		return this;
+		return;
 	}
 
 	async setGroups(groups: { id: number }[]) {
 		await this.#api.updateUser(this.id, {
 			memberOf: groups.map((group) => group.id),
 		});
-		return this;
+		return;
 	}
 
 	async setClasses(groups: { id: number }[]) {
 		await this.#api.updateUser(this.id, {
 			teacher: groups.map((group) => group.id),
 		});
-		return this;
+		return;
 	}
 
 	async setChildren(users: { id: number }[]) {
 		await this.#api.updateUser(this.id, {
 			children: users.map((user) => user.id),
 		});
-		return this;
+		return;
 	}
 
 	async setLocation(location: { id: number }) {
 		await this.#api.moveUser(this.id, location.id);
-		return this;
+		return;
 	}
 }

@@ -60,7 +60,7 @@ export interface DeviceGroup {
 	 *
 	 * Other device groups created from the same data will not be updated.
 	 */
-	update(): Promise<this>;
+	update(): Promise<void>;
 
 	/** (Read) Get all the devices in the device group. */
 	getDevices(): Promise<Device[]>;
@@ -74,7 +74,7 @@ export interface DeviceGroup {
 	 * This method will not update the object. To update it, call
 	 * `DeviceGroup.update()`.
 	 */
-	setName(name: string): Promise<this>;
+	setName(name: string): Promise<void>;
 
 	/**
 	 * (Edit) Set this device group's description.
@@ -82,5 +82,5 @@ export interface DeviceGroup {
 	 * This method will not update the object. To update it, call
 	 * `DeviceGroup.update()`.
 	 */
-	setDescription(text: string): Promise<this>;
+	setDescription(text: string): Promise<void>;
 }

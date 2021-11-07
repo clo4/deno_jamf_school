@@ -72,7 +72,7 @@ export class DeviceGroup implements models.DeviceGroup {
 
 	async update() {
 		this.#data = await this.#api.getDeviceGroup(this.#data.id);
-		return this;
+		return;
 	}
 
 	async getDevices(): Promise<models.Device[]> {
@@ -98,11 +98,11 @@ export class DeviceGroup implements models.DeviceGroup {
 
 	async setName(name: string) {
 		await this.#api.updateDeviceGroup(this.id, { name });
-		return this;
+		return;
 	}
 
 	async setDescription(text: string) {
 		await this.#api.updateDeviceGroup(this.id, { description: text });
-		return this;
+		return;
 	}
 }

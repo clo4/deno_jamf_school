@@ -135,7 +135,7 @@ export interface Device {
 	 *
 	 * Other devices created from the same data will not be updated.
 	 */
-	update(): Promise<this>;
+	update(): Promise<void>;
 
 	/** (Read) Get the device's owner, if any. */
 	getOwner(): Promise<User | null>;
@@ -166,7 +166,7 @@ export interface Device {
 	 *
 	 * To remove the owner, try `Device.removeOwner`.
 	 */
-	setOwner(user: { id: number }): Promise<this>;
+	setOwner(user: { id: number }): Promise<void>;
 
 	/**
 	 * (Edit) Remove this device's owner.
@@ -174,7 +174,7 @@ export interface Device {
 	 * This method will not update the device object. To update the object, call
 	 * `Device.update()`.
 	 */
-	removeOwner(): Promise<this>;
+	removeOwner(): Promise<void>;
 
 	/**
 	 * (Add) Set this device's notes.
@@ -182,7 +182,7 @@ export interface Device {
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
 	 */
-	setNotes(text: string): Promise<this>;
+	setNotes(text: string): Promise<void>;
 
 	/**
 	 * (Add) Set this device's asset tag.
@@ -190,16 +190,16 @@ export interface Device {
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
 	 */
-	setAssetTag(text: string): Promise<this>;
+	setAssetTag(text: string): Promise<void>;
 
 	/** (Read) Get the device's groups. */
 	getGroups(): Promise<DeviceGroup[]>;
 
 	/** (Add) Schedule a restart. */
-	restart(): Promise<this>;
+	restart(): Promise<void>;
 
 	/** (Add) Schedule a complete wipe. */
-	wipe(): Promise<this>;
+	wipe(): Promise<void>;
 
 	/** (Read) Get the apps that are assigned to this device. */
 	getApps(): Promise<App[]>;
@@ -214,5 +214,5 @@ export interface Device {
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
 	 */
-	setLocation(location: { id: number }): Promise<this>;
+	setLocation(location: { id: number }): Promise<void>;
 }
