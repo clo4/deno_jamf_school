@@ -1,5 +1,5 @@
 import * as jamf from "../../src/mod.ts";
-import validatePutUsersId from "../../src/schemas/PUT_users_id.ts";
+import validatePutDevicesUdidOwner from "../../src/schemas/PUT_devices_udid_owner.ts";
 import { assertEquals } from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as mockFetch from "../deps/mock_fetch.ts";
@@ -16,11 +16,11 @@ const api = jamf.createAPI({
 mockFetch.install(); // we don't need to uninstall, all fetches should be mocked
 
 const jsonString = await readRelativeTextFile(
-	"../example_data/PUT_users_id__200.json",
+	"../example_data/PUT_devices_udid_owner__200.json",
 );
 const jsonObject = JSON.parse(jsonString);
-validatePutUsersId(jsonObject) ?? (() => {
-	throw Error("Invalid data: ../example_data/PUT_users_id__200.json");
+validatePutDevicesUdidOwner(jsonObject) ?? (() => {
+	throw Error("Invalid data: ../example_data/PUT_devices_udid_owner__200.json");
 })();
 
 const response = new Response(jsonString, {
@@ -31,42 +31,16 @@ const response = new Response(jsonString, {
 });
 
 Deno.test({
-	name: "api.updateUser: remaps parameters to their correct names/values",
+	name: "api.setDeviceOwner: remaps parameters to their correct names/values",
 	async fn() {
 		// In this case, there is no renaming, but this may change in the future
-		mockFetch.mock("PUT@/users/:id", async (req, { id }) => {
+		mockFetch.mock("PUT@/devices/:udid/owner", async (req, { udid }) => {
 			const json = await req.json();
-			assertEquals(id, "123");
-			assertEquals(json, {
-				username: "test",
-				password: "test",
-				storePassword: true,
-				domain: "ad",
-				email: "user@example.com",
-				firstName: "test",
-				lastName: "test",
-				memberOf: [1, 2, "test"],
-				teacher: [0, 1],
-				children: [0, 1],
-				notes: "test",
-				exclude: true,
-			});
+			assertEquals(udid, "c0ffee");
+			assertEquals(json, { user: 123 });
 			return response;
 		});
-		await api.updateUser(123, {
-			username: "test",
-			password: "test",
-			storePassword: true,
-			domain: "ad",
-			email: "user@example.com",
-			firstName: "test",
-			lastName: "test",
-			memberOf: [1, 2, "test"],
-			teacher: [0, 1],
-			children: [0, 1],
-			notes: "test",
-			exclude: true,
-		});
+		await api.setDeviceOwner("c0ffee", 123);
 		mockFetch.reset();
 	},
 });

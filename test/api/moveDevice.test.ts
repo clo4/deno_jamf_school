@@ -33,13 +33,14 @@ const response = new Response(jsonString, {
 Deno.test({
 	name: "api.moveDevice: remaps parameters to their correct names/values",
 	async fn() {
-		mockFetch.mock("PUT@/devices/:udid/migrate", async (req) => {
+		mockFetch.mock("PUT@/devices/:udid/migrate", async (req, { udid }) => {
 			const json = await req.json();
+			assertEquals(udid, "c0ffee")
 			assertEquals(json.locationId, 0);
 			assert(!("onlyDevice" in json));
 			return response;
 		});
-		await api.moveDevice("-", 0);
+		await api.moveDevice("c0ffee", 0);
 
 		mockFetch.mock("PUT@/devices/:udid/migrate", async (req) => {
 			const json = await req.json();

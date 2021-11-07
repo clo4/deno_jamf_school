@@ -33,24 +33,27 @@ const response = new Response(jsonString, {
 Deno.test({
 	name: "api.moveUser: remaps parameters to their correct names/values",
 	async fn() {
-		mockFetch.mock("PUT@/users/:id/migrate", async (req) => {
+		mockFetch.mock("PUT@/users/:id/migrate", async (req, { id }) => {
 			const json = await req.json();
+			assertEquals(id, "123")
 			assertEquals(json, {
-				locationId: 0,
+				locationId: 456,
 			});
 			return response;
 		});
-		await api.moveUser(0, 0);
+		await api.moveUser(123, 456);
 
-		mockFetch.mock("PUT@/users/:id/migrate", async (req) => {
+		mockFetch.reset()
+		mockFetch.mock("PUT@/users/:id/migrate", async (req, { id }) => {
 			const json = await req.json();
+			assertEquals(id, "123")
 			assertEquals(json, {
-				locationId: 0,
+				locationId: 456,
 				onlyUser: true,
 			});
 			return response;
 		});
-		await api.moveUser(0, 0, { onlyUser: true });
+		await api.moveUser(123, 456, { onlyUser: true });
 		mockFetch.reset();
 	},
 });
