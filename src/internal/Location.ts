@@ -75,7 +75,6 @@ export class Location implements models.Location {
 
 	async update() {
 		this.#data = await this.#api.getLocation(this.#data.id);
-		return;
 	}
 
 	async getDevices() {
