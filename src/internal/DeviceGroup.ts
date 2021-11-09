@@ -72,7 +72,6 @@ export class DeviceGroup implements models.DeviceGroup {
 
 	async update() {
 		this.#data = await this.#api.getDeviceGroup(this.#data.id);
-		return;
 	}
 
 	async getDevices(): Promise<models.Device[]> {
