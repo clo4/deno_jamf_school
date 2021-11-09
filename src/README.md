@@ -91,6 +91,13 @@ await Promise.allSettled(devices.map((device) => device.restart()));
 
 Each entry explains what changed and links to a pull request that has more details.
 
+### Version 0.4.1
+
+<!-- deno-fmt-ignore -->
+
+- **Added `User.restartDevices()` ([#73](https://github.com/SeparateRecords/deno_jamf_school/issues/73))** <br>
+  Users contain devices, so this makes the API more consistent.
+
 ### Version 0.4.0
 
 <!-- deno-fmt-ignore -->
@@ -122,15 +129,15 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Breaking: Methods that returned `Promise<this>` now return `Promise<void>` ([#68](https://github.com/SeparateRecords/deno_jamf_school/issues/68))** <br>
   Returning `this` is unexpected and encourages worse code than returning nothing at all.
 
+<details>
+<summary>Older versions</summary>
+
 ### Version 0.3.2
 
 <!-- deno-fmt-ignore -->
 
 - **Improved the implementation of `Device.enrollment` ([#56](https://github.com/SeparateRecords/deno_jamf_school/issues/56))** <br>
   This should be marginally faster. The "manual" type now also includes a `pending` property (currently always `false`).
-
-<details>
-<summary>Older versions</summary>
 
 ### Version 0.3.1
 
