@@ -146,7 +146,7 @@ export interface User {
 	setChildren(children: { id: number }[]): Promise<void>;
 
 	/**
-	 * (Read, Add) Restart all this user's devices.
+	 * (Read, Add) Restart all of this user's devices.
 	 *
 	 * Note that failing to restart a device will not throw an exception.
 	 */
