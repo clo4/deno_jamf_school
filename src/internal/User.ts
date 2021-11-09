@@ -179,4 +179,10 @@ export class User implements models.User {
 		await this.#api.moveUser(this.id, location.id);
 		return;
 	}
+
+	async restartDevices() {
+		const devices = await this.#api.getDevices({ ownerId: this.id });
+		const promises = devices.map((device) => this.#api.restartDevice(device.UDID));
+		await Promise.all(promises);
+	}
 }
