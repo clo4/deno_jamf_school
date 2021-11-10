@@ -50,34 +50,33 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 ```
 
 <details>
-<summary>Show a more complex example</summary>
+<summary>Show another example</summary>
 <br>
 
-Restart all devices owned by anyone named "Robert".
+Restart all devices owned by the user "SeparateRecords".
 
 ```javascript
 import * as jamf from "$src/mod.ts";
 
-// The client can be instantiated with an API instead of credentials.
-const api = jamf.createAPI({
+const client = jamf.createClient({
 	id: "YOUR_NETWORK_ID",
 	token: "YOUR_API_TOKEN",
 	url: "https://YOUR_SCHOOL.jamfcloud.com/api",
 });
 
-const client = jamf.createClient({ api });
+const user = await client.getUserByUsername("SeparateRecords");
 
-// Using the API directly gives you control over exactly what requests
-// are made. All the data returned is validated, of course.
-const deviceData = await api.getDevices({ ownerName: "Robert" });
+if (user === null) {
+	console.error("No user named SeparateRecords");
+	Deno.exit(1);
+}
 
-// If you have a client, objects can be created from API data directly.
-const devices = deviceData.map((data) => client.createDevice(data));
-
-// Everything is promise-based, so you can do things concurrently.
-// Methods that perform actions (like restart) will reject on failure.
-await Promise.allSettled(devices.map((device) => device.restart()));
+// This will fail if it can't fetch the devices,
+// but won't fail if they can't be restarted.
+await user.restartDevices();
 ```
+
+The `restartDevices` method also exists on [`Location`]($DOCS/mod.ts#Location) and [`DeviceGroup`]($DOCS/mod.ts#DeviceGroup) as a convenience for calling `getDevices` and restarting them in parallel. See the implementation in the relevant file in [./internal](./internal).
 
 </details>
 
