@@ -3,16 +3,13 @@
 
 # Jamf School API for Deno
 
-An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to feel natural for anyone with basic web development experience to pick it up, and to be safe enough to trust in production.
+An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to be easy for IT professionals with JavaScript experience to learn, and to be safe enough to trust in production.
 
-If something doesn't work as expected or you just want some help, please [raise an issue on GitHub][issues] so we can improve the library and documentation for everyone!
+If something doesn't work as expected or you just want some help, please [raise an issue on GitHub](https://github.com/SeparateRecords/deno_jamf_school/issues). Bad documentation is a bug!
 
-Currently, only a limited (mostly read-only) subset of API features are supported.
+Currently, only a subset of API features are supported.
 
-**[Here's the documentation for the latest release.][docs]**
-
-[issues]: https://github.com/SeparateRecords/deno_jamf_school/issues
-[docs]: https://doc.deno.land/https/deno.land/x/jamf_school@0.4.0/mod.ts
+**[Here's the documentation for the latest release.](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts)**
 
 ## Features
 
@@ -24,7 +21,7 @@ Currently, only a limited (mostly read-only) subset of API features are supporte
 
 ## Usage
 
-[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.0/mod.ts#Credentials). You'll have to replace the token, ID, and URL in the examples.
+[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts#Credentials). You'll have to replace the token, ID, and URL in the examples.
 
 This example will print the name of each registered device.
 
@@ -33,7 +30,7 @@ This example will print the name of each registered device.
 <!-- Using JS as the language for the more reliable syntax highlighting -->
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@0.4.0/mod.ts";
+import * as jamf from "https://deno.land/x/jamf_school@0.4.1/mod.ts";
 
 const client = jamf.createClient({
   id: "YOUR_NETWORK_ID",
@@ -54,38 +51,6 @@ Now run that script.
 ```bash
 deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 ```
-
-<details>
-<summary>Show a more complex example</summary>
-<br>
-
-Restart all devices owned by anyone named "Robert".
-
-```javascript
-import * as jamf from "https://deno.land/x/jamf_school@0.4.0/mod.ts";
-
-// The client can be instantiated with an API instead of credentials.
-const api = jamf.createAPI({
-  id: "YOUR_NETWORK_ID",
-  token: "YOUR_API_TOKEN",
-  url: "https://YOUR_SCHOOL.jamfcloud.com/api",
-});
-
-const client = jamf.createClient({ api });
-
-// Using the API directly gives you control over exactly what requests
-// are made. All the data returned is validated, of course.
-const deviceData = await api.getDevices({ ownerName: "Robert" });
-
-// If you have a client, objects can be created from API data directly.
-const devices = deviceData.map((data) => client.createDevice(data));
-
-// Everything is promise-based, so you can do things concurrently.
-// Methods that perform actions (like restart) will reject on failure.
-await Promise.allSettled(devices.map((device) => device.restart()));
-```
-
-</details>
 
 ## Changelog
 

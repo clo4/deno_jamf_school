@@ -35,7 +35,7 @@ Deno.test({
 	async fn() {
 		mockFetch.mock("PUT@/devices/:udid/migrate", async (req, { udid }) => {
 			const json = await req.json();
-			assertEquals(udid, "c0ffee")
+			assertEquals(udid, "c0ffee");
 			assertEquals(json.locationId, 0);
 			assert(!("onlyDevice" in json));
 			return response;
