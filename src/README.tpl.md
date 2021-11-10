@@ -60,6 +60,9 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Added `User.restartDevices()` ($73)** <br>
   Users contain devices, so this makes the API more consistent.
 
+- **Fixed `DeviceGroup.restartDevices()` ($75)** <br>
+  The documentation claimed that failing to restart devices wouldn't throw, but it actually did.
+
 ### Version 0.4.0
 
 <!-- deno-fmt-ignore -->
