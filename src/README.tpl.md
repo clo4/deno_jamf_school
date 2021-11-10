@@ -1,15 +1,12 @@
 # Jamf School API for Deno
 
-An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to feel natural for anyone with basic web development experience to pick it up, and to be safe enough to trust in production.
+An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to be easy for IT professionals with JavaScript experience to learn, and to be safe enough to trust in production.
 
-If something doesn't work as expected or you just want some help, please [raise an issue on GitHub][issues] so we can improve the library and documentation for everyone!
+If something doesn't work as expected or you just want some help, please [raise an issue on GitHub]($REPO/issues). Bad documentation is a bug!
 
-Currently, only a limited (mostly read-only) subset of API features are supported.
+Currently, only a subset of API features are supported.
 
-**[Here's the documentation for the latest release.][docs]**
-
-[issues]: $REPO/issues
-[docs]: $DOCS/mod.ts
+**[Here's the documentation for the latest release.]($DOCS/mod.ts)**
 
 ## Features
 
