@@ -106,6 +106,6 @@ export class DeviceGroup implements models.DeviceGroup {
 	async restartDevices() {
 		const devices = await this.#api.getDevices({ groupIds: [this.id] });
 		const promises = devices.map((device) => this.#api.restartDevice(device.UDID));
-		await Promise.all(promises);
+		await Promise.allSettled(promises);
 	}
 }
