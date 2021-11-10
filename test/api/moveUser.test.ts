@@ -35,7 +35,7 @@ Deno.test({
 	async fn() {
 		mockFetch.mock("PUT@/users/:id/migrate", async (req, { id }) => {
 			const json = await req.json();
-			assertEquals(id, "123")
+			assertEquals(id, "123");
 			assertEquals(json, {
 				locationId: 456,
 			});
@@ -43,10 +43,10 @@ Deno.test({
 		});
 		await api.moveUser(123, 456);
 
-		mockFetch.reset()
+		mockFetch.reset();
 		mockFetch.mock("PUT@/users/:id/migrate", async (req, { id }) => {
 			const json = await req.json();
-			assertEquals(id, "123")
+			assertEquals(id, "123");
 			assertEquals(json, {
 				locationId: 456,
 				onlyUser: true,
