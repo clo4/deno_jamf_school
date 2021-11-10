@@ -49,37 +49,6 @@ Now run that script.
 deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 ```
 
-<details>
-<summary>Show another example</summary>
-<br>
-
-Restart all devices owned by the user "SeparateRecords".
-
-```javascript
-import * as jamf from "$src/mod.ts";
-
-const client = jamf.createClient({
-	id: "YOUR_NETWORK_ID",
-	token: "YOUR_API_TOKEN",
-	url: "https://YOUR_SCHOOL.jamfcloud.com/api",
-});
-
-const user = await client.getUserByUsername("SeparateRecords");
-
-if (user === null) {
-	console.error("No user named SeparateRecords");
-	Deno.exit(1);
-}
-
-// This will fail if it can't fetch the devices,
-// but won't fail if they can't be restarted.
-await user.restartDevices();
-```
-
-The `restartDevices` method also exists on [`Location`]($DOCS/mod.ts#Location) and [`DeviceGroup`]($DOCS/mod.ts#DeviceGroup) as a convenience for calling `getDevices` and restarting them in parallel. See the implementation in the relevant file in [./internal](./internal).
-
-</details>
-
 ## Changelog
 
 Each entry explains what changed and links to a pull request that has more details.
