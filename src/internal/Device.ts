@@ -39,7 +39,18 @@ export class Device implements models.Device {
 			udid: this.udid,
 			serialNumber: this.serialNumber,
 			name: this.name,
+			assetTag: this.assetTag,
 			os: this.os,
+			modelName: this.modelName,
+			modelIdentifier: this.modelIdentifier,
+			modelType: this.modelType,
+			isManaged: this.isManaged,
+			isSupervised: this.isSupervised,
+			deviceClass: this.deviceClass,
+			enrollment: this.enrollment,
+			batteryCapacity: this.batteryCapacity,
+			batteryPercentage: this.batteryPercentage,
+			ownerId: this.ownerId,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}

@@ -25,8 +25,12 @@ export class DeviceGroup implements models.DeviceGroup {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
+			locationId: this.locationId,
+			name: this.name,
+			description: this.description,
+			information: this.information,
+			isSmartGroup: this.isSmartGroup,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}

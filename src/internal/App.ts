@@ -1,6 +1,7 @@
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
+import { assert } from "../deps/std_testing_asserts.ts";
 
 export type AppData = models.APIData["getApps"][number];
 
@@ -25,10 +26,12 @@ export class App implements models.App {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
-			bundleId: this.bundleId,
+			locationId: this.locationId,
+			name: this.name,
 			version: this.version,
+			appId: this.appId,
+			bundleId: this.bundleId,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
@@ -90,7 +93,8 @@ export class App implements models.App {
 		// The data returned from GET /devices?includeApps=1 doesn't include the
 		// app ID, but does include the bundle ID. That's probably unique enough.
 		const found = devices.filter((device) => {
-			return device.apps!.some((app) => {
+			assert(Array.isArray(device.apps), "Expected an array of apps");
+			return device.apps.some((app) => {
 				return app.identifier === this.#data.bundleId;
 			});
 		});

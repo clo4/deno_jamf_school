@@ -26,8 +26,12 @@ export class Location implements models.Location {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
+			name: this.name,
+			streetName: this.streetName,
+			streetNumber: this.streetNumber,
+			city: this.city,
+			postalCode: this.postalCode,
 		}, { colors: !Deno.noColor });
 		const className = this.constructor.name;
 		return `${className} ${props}`;
