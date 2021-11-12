@@ -125,6 +125,10 @@ export class Device implements models.Device {
 		return this.#data.owner.id;
 	}
 
+	get ownerName() {
+		return this.#data.owner.name;
+	}
+
 	async update() {
 		const devices = await this.#api.getDevices({
 			serialNumber: this.#data.serialNumber,

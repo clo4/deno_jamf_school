@@ -63,6 +63,10 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data.locationId;
 	}
 
+	get count() {
+		return this.#data.members;
+	}
+
 	// get isShared() {
 	// 	return this.data.shared;
 	// }

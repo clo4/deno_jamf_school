@@ -82,6 +82,9 @@ export interface Device {
 	/** The ID of this device's owner. */
 	readonly ownerId: number;
 
+	/** The name of this device's owner. */
+	readonly ownerName: string;
+
 	/**
 	 * The type of enrollment used for this device.
 	 *
