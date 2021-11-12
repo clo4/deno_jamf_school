@@ -5,6 +5,7 @@ import type { User } from "./User.ts";
 import type { UserGroup } from "./UserGroup.ts";
 import type { Location } from "./Location.ts";
 import type { App } from "./App.ts";
+import type { Profile } from "./Profile.ts";
 
 /**
  * A high-level abstraction over the Jamf School API that allows you to reason
@@ -165,4 +166,13 @@ export interface Client {
 
 	/** (Read) Get a location by its name. */
 	getLocationByName(name: string): Promise<Location | null>;
+
+	/** (Read) Get all profiles. */
+	getProfiles(): Promise<Profile[]>;
+
+	/** (Read) Get a profile by its ID. */
+	getProfileById(id: number): Promise<Profile | null>;
+
+	/** (Read) Get a profile by its ID. */
+	getProfileByName(name: string): Promise<Profile | null>;
 }

@@ -6,6 +6,7 @@ import { User, UserData } from "./User.ts";
 import { UserGroup, UserGroupData } from "./UserGroup.ts";
 import { App, AppData } from "./App.ts";
 import { Location, LocationData } from "./Location.ts";
+import { Profile, ProfileData } from "./Profile.ts";
 import { suppressAPIError } from "./APIError.ts";
 
 /**
@@ -21,6 +22,7 @@ export type Creator = Pick<
 	| "createUserGroup"
 	| "createApp"
 	| "createLocation"
+	| "createProfile"
 >;
 
 /**
@@ -97,6 +99,14 @@ export class Client implements models.Client {
 
 	createLocation(data: LocationData): models.Location {
 		return new Location({
+			api: this.#api,
+			client: this,
+			data: data,
+		});
+	}
+
+	createProfile(data: ProfileData): models.Profile {
+		return new Profile({
 			api: this.#api,
 			client: this,
 			data: data,
@@ -450,5 +460,52 @@ export class Client implements models.Client {
 		}
 
 		return this.createLocation(found[0]);
+	}
+
+	async getProfiles() {
+		let profiles;
+		try {
+			profiles = await this.#api.getProfiles();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		return profiles.map((profile) => this.createProfile(profile));
+	}
+
+	async getProfileById(id: number) {
+		if (!isValidID(id)) {
+			return null;
+		}
+
+		let profile;
+		try {
+			profile = await this.#api.getProfile(id);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		return this.createProfile(profile);
+	}
+
+	async getProfileByName(name: string) {
+		let profiles;
+		try {
+			profiles = await this.#api.getProfiles();
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+
+		const found = profiles.filter((profile) => profile.name === name);
+
+		if (found.length === 0) {
+			return null;
+		}
+
+		if (found.length > 1) {
+			throw new Error(`More than one location with the same name (${name})`);
+		}
+
+		return this.createProfile(found[0]);
 	}
 }
