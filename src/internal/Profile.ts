@@ -1,5 +1,5 @@
 import type * as models from "../models/mod.ts";
-import type { BasicObjectInit, Creator } from "./Client.ts";
+import type { BasicObjectInit /*, Creator*/ } from "./Client.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
 
 const platforms = {
@@ -71,11 +71,11 @@ export class Profile implements models.Profile {
 	}
 
 	timeConstraints() {
-		if (this.#data.daysOfTheWeek === null) {
+		if (this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0) {
 			return null;
 		}
-		assert(this.#data.startTime, "expected this.#data.startTime to be non-null");
-		assert(this.#data.endTime, "expected this.#data.endTime to be non-null");
+		assert(this.#data.startTime, "Expected this.#data.startTime to be non-null");
+		assert(this.#data.endTime, "Expected this.#data.endTime to be non-null");
 		const days = new Set(this.#data.daysOfTheWeek);
 		return {
 			monday: days.has("1"),
