@@ -1,6 +1,5 @@
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
-import { suppressAPIError } from "./APIError.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
 
 const platforms = {
@@ -13,12 +12,12 @@ export type ProfileData = models.APIData["getProfile"];
 
 export class Profile implements models.Profile {
 	#api: models.API;
-	#client: Creator;
+	// #client: Creator;
 	#data: ProfileData;
 
 	constructor(init: BasicObjectInit<ProfileData>) {
 		this.#api = init.api;
-		this.#client = init.client;
+		// this.#client = init.client;
 		this.#data = init.data;
 	}
 
@@ -32,8 +31,12 @@ export class Profile implements models.Profile {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
+			locationId: this.locationId,
+			name: this.name,
+			description: this.description,
+			identifier: this.identifier,
+			platform: this.platform,
 		}, { colors: !Deno.noColor });
 		const className = this.constructor.name;
 		return `${className} ${props}`;
