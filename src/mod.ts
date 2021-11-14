@@ -201,6 +201,7 @@ export type {
 	Device,
 	DeviceGroup,
 	Location,
+	Profile,
 	User,
 	UserGroup,
 } from "./models/mod.ts";
