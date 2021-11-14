@@ -45,9 +45,9 @@ export interface Profile {
 	toString(): string;
 
 	/**
-	 * (Read) Update this user's data.
+	 * (Read) Update this profile's data.
 	 *
-	 * Other users created from the same data will not be updated.
+	 * Other profiles created from the same data will not be updated.
 	 */
 	update(): Promise<void>;
 
