@@ -30,7 +30,7 @@ export class DeviceGroup implements models.DeviceGroup {
 			name: this.name,
 			description: this.description,
 			information: this.information,
-			isSmartGroup: this.isSmartGroup,
+			isSmart: this.isSmart,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
@@ -55,7 +55,7 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data.description;
 	}
 
-	get isSmartGroup() {
+	get isSmart() {
 		return this.#data.isSmartGroup;
 	}
 
@@ -69,6 +69,10 @@ export class DeviceGroup implements models.DeviceGroup {
 
 	get count() {
 		return this.#data.members;
+	}
+
+	get isShared() {
+		return this.#data.shared;
 	}
 
 	// get isShared() {
