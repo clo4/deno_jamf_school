@@ -31,9 +31,9 @@ Deno.test({
 Deno.test({
 	name: "Calling Profile.timeConstraints() doesn't fail (with any of the test data)",
 	fn() {
-		const profiles = data.profiles.map(profile => client.createProfile(profile));
+		const profiles = data.profiles.map((profile) => client.createProfile(profile));
 		for (const profile of profiles) {
 			profile.timeConstraints();
 		}
-	}
-})
+	},
+});
