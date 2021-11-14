@@ -3,6 +3,7 @@ import type { DeviceGroup } from "./DeviceGroup.ts";
 import type { User } from "./User.ts";
 import type { UserGroup } from "./UserGroup.ts";
 import type { App } from "./App.ts";
+import type { Profile } from "./Profile.ts";
 
 /**
  * Location represents a physical site. All data in Jamf School must be
@@ -66,6 +67,9 @@ export interface Location {
 
 	/** (Read) Get all apps that belong to this location. */
 	getApps(): Promise<App[]>;
+
+	/** (Read) Get all profiles that belong to this location. */
+	getProfiles(): Promise<Profile[]>;
 
 	/**
 	 * (Read) Update this location's data.
