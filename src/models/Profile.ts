@@ -28,8 +28,6 @@ export interface Profile {
 	/**
 	 * The platforms this profile can be installed on.
 	 *
-	 * Universal profiles will set every property to true.
-	 *
 	 * Jamf School allows for iOS, macOS, tvOS and "custom" (universal) profiles.
 	 * OS-specific profiles will only set their OS property to true. Universal
 	 * profiles set every property to true.
