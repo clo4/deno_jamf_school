@@ -51,6 +51,7 @@ export class Device implements models.Device {
 			batteryCapacity: this.batteryCapacity,
 			batteryPercentage: this.batteryPercentage,
 			ownerId: this.ownerId,
+			ownerName: this.ownerName,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
