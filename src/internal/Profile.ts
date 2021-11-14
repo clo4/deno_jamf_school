@@ -3,10 +3,10 @@ import type { BasicObjectInit /*, Creator*/ } from "./Client.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
 
 const platforms = {
-	iOS: { iOS: true, macOS: false, tvOS: false },
-	macOS: { iOS: false, macOS: true, tvOS: false },
-	tvOS: { iOS: false, macOS: false, tvOS: true },
-	universal: { iOS: true, macOS: true, tvOS: true },
+	iOS: Object.freeze({ iOS: true, macOS: false, tvOS: false } as const),
+	macOS: Object.freeze({ iOS: false, macOS: true, tvOS: false } as const),
+	tvOS: Object.freeze({ iOS: false, macOS: false, tvOS: true } as const),
+	universal: Object.freeze({ iOS: true, macOS: true, tvOS: true } as const),
 } as const;
 
 export type ProfileData = models.APIData["getProfile"];
