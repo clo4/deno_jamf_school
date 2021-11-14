@@ -67,6 +67,14 @@ export interface Client {
 	 */
 	createUserGroup(data: APIData["getUserGroup"]): UserGroup;
 
+	/**
+	 * Create a profile object with data from the API.
+	 *
+	 * If you don't already have the data, you may want `getProfileById` or
+	 * `getProfiles`.
+	 */
+	createProfile(data: APIData["getProfile"]): Profile;
+
 	/** (Read) Get a single user by their ID. */
 	getUserById(id: number): Promise<User | null>;
 
@@ -173,6 +181,6 @@ export interface Client {
 	/** (Read) Get a profile by its ID. */
 	getProfileById(id: number): Promise<Profile | null>;
 
-	/** (Read) Get a profile by its ID. */
+	/** (Read) Get a profile by its name. */
 	getProfileByName(name: string): Promise<Profile | null>;
 }
