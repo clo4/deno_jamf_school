@@ -90,7 +90,7 @@ export class Profile implements models.Profile {
 			friday: days.has("5"),
 			saturday: this.#data.restrictedWeekendUse || days.has("6"),
 			sunday: this.#data.restrictedWeekendUse || days.has("7"),
-			holidays: this.#data.useHolidays,
+			holidays: !this.#data.useHolidays,
 			installTime: this.#data.startTime,
 			removeTime: this.#data.endTime,
 		};
