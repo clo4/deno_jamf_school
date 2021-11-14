@@ -22,8 +22,23 @@ export interface Profile {
 	/** The description of the device. */
 	readonly description: string;
 
-	/** The platforms this profile can be installed on/ */
-	readonly platform: { readonly iOS: boolean; readonly macOS: boolean };
+	/** Whether the profile can be installed on any device, regardless of OS. */
+	readonly isUniversal: boolean;
+
+	/**
+	 * The platforms this profile can be installed on.
+	 *
+	 * Universal profiles will set every property to true.
+	 *
+	 * Jamf School allows for iOS, macOS, tvOS and "custom" (universal) profiles.
+	 * OS-specific profiles will only set their OS property to true. Universal
+	 * profiles set every property to true.
+	 */
+	readonly platform: {
+		readonly iOS: boolean;
+		readonly macOS: boolean;
+		readonly tvOS: boolean;
+	};
 
 	/** Return the data used to create this object. */
 	toJSON(): unknown;
@@ -58,9 +73,6 @@ export interface ProfileTimeConstraints {
 	/** Will the profile be installed on Friday? */
 	readonly friday: boolean;
 
-	// TODO: sat/sun should always be true if restrictedWeekendUse is true
-	// (restrictedWeekendUse refers to the user, implying the profile would be restricting them)
-
 	/** Will the profile be installed on Saturday? */
 	readonly saturday: boolean;
 
@@ -72,9 +84,9 @@ export interface ProfileTimeConstraints {
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
 	/** Time the profile will be installed. (HH:MM) */
-	readonly start: string;
+	readonly installTime: string;
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
 	/** Time the profile will be removed. (HH:MM) */
-	readonly end: string;
+	readonly removeTime: string;
 }

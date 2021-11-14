@@ -202,6 +202,7 @@ export type {
 	DeviceGroup,
 	Location,
 	Profile,
+	ProfileTimeConstraints,
 	User,
 	UserGroup,
 } from "./models/mod.ts";

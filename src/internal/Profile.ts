@@ -3,9 +3,10 @@ import type { BasicObjectInit /*, Creator*/ } from "./Client.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
 
 const platforms = {
-	iOS: { iOS: true, macOS: false },
-	macOS: { iOS: false, macOS: true },
-	universal: { iOS: true, macOS: true },
+	iOS: { iOS: true, macOS: false, tvOS: false },
+	macOS: { iOS: false, macOS: true, tvOS: false },
+	tvOS: { iOS: false, macOS: false, tvOS: true },
+	universal: { iOS: true, macOS: true, tvOS: true },
 } as const;
 
 export type ProfileData = models.APIData["getProfile"];
@@ -70,6 +71,10 @@ export class Profile implements models.Profile {
 		return platforms[this.#data.platform];
 	}
 
+	get isUniversal() {
+		return this.#data.platform === "universal"
+	}
+
 	timeConstraints() {
 		if (this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0) {
 			return null;
@@ -86,8 +91,8 @@ export class Profile implements models.Profile {
 			saturday: this.#data.restrictedWeekendUse || days.has("6"),
 			sunday: this.#data.restrictedWeekendUse || days.has("7"),
 			holidays: this.#data.useHolidays,
-			start: this.#data.startTime,
-			end: this.#data.endTime,
+			installTime: this.#data.startTime,
+			removeTime: this.#data.endTime,
 		};
 	}
 

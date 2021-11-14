@@ -8,7 +8,7 @@ export type ProfileData = {
 	identifier: string;
 	name: string;
 	description: string;
-	platform: "iOS" | "macOS" | "universal";
+	platform: "iOS" | "macOS" | "tvOS" | "universal";
 	// If not null, will have at least one item.
 	// Days are stringified numbers starting from "1" (Monday) to "7" (Sunday)
 	daysOfTheWeek: string[] | null;
@@ -37,7 +37,7 @@ export const profileDataSchema: JTDSchemaType<ProfileData> = {
 		identifier: { type: "string" },
 		name: { type: "string" },
 		description: { type: "string" },
-		platform: { enum: ["iOS", "macOS", "universal"] },
+		platform: { enum: ["iOS", "macOS", "tvOS", "universal"] },
 		daysOfTheWeek: {
 			elements: { type: "string" },
 			nullable: true,
