@@ -29,8 +29,9 @@ export interface Profile {
 	 * The platforms this profile can be installed on.
 	 *
 	 * Jamf School allows for iOS, macOS, tvOS and "custom" (universal) profiles.
-	 * OS-specific profiles will only set their OS property to true. Universal
-	 * profiles set every property to true.
+	 * OS-specific profiles will only set their OS property to true.
+	 * Universal profiles set every property to true, but note that this doesn't
+	 * mean that they will successfully install on each platform.
 	 */
 	readonly platform: {
 		readonly iOS: boolean;
@@ -51,8 +52,8 @@ export interface Profile {
 	 */
 	update(): Promise<void>;
 
-	/** The profile's time filter. */
-	timeConstraints(): ProfileTimeConstraints | null;
+	/** Get the profile's time constraints (the "time filter"). */
+	getTimeConstraints(): ProfileTimeConstraints | null;
 }
 
 export interface ProfileTimeConstraints {
