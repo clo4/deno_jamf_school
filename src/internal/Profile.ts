@@ -76,7 +76,7 @@ export class Profile implements models.Profile {
 		return this.#data.platform === "universal"
 	}
 
-	getTimeConstraints() {
+	getSchedule() {
 		if (this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0) {
 			return null;
 		}

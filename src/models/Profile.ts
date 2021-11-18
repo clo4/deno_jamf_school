@@ -53,10 +53,10 @@ export interface Profile {
 	update(): Promise<void>;
 
 	/** Get the profile's time constraints (the "time filter"). */
-	getTimeConstraints(): ProfileTimeConstraints | null;
+	getSchedule(): ProfileSchedule | null;
 }
 
-export interface ProfileTimeConstraints {
+export interface ProfileSchedule {
 	/** Will the profile be installed on Monday? */
 	readonly monday: boolean;
 
