@@ -1,3 +1,6 @@
+export * from "./api.ts";
+export * from "./mod.ts";
+
 // MIT License
 //
 // Copyright (c) 2021 SeparateRecords
@@ -62,10 +65,10 @@
  */
 
 // Can't be namespaced because doc.deno.land will always link to another page
-import type { Client, Credentials } from "./models/mod.ts";
+import type { API, Client } from "./models/mod.ts";
 
+// Never show up in docs, these can be namespaced
 import * as client from "./internal/Client.ts";
-import { createAPI } from "./api.ts";
 
 /**
  * Create a Client. Clients make it easier to use the API by modelling
@@ -119,21 +122,6 @@ import { createAPI } from "./api.ts";
  * For information on how to get the necessary credentials, see the
  * `Credentials` interface.
  */
-export function createClient(init: Credentials): Client {
-	return new client.Client({
-		api: createAPI(init),
-	});
+export function createClientWith(api: API): Client {
+	return new client.Client({ api });
 }
-
-export type {
-	App,
-	Client,
-	Credentials,
-	Device,
-	DeviceGroup,
-	Location,
-	User,
-	UserGroup,
-} from "./models/mod.ts";
-
-export { version } from "./version.ts";

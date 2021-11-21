@@ -62,36 +62,16 @@
  */
 
 // Can't be namespaced because doc.deno.land will always link to another page
-import type { Client, Credentials } from "./models/mod.ts";
+import type { API } from "./models/API.ts";
+import type { Credentials } from "./models/Credentials.ts";
 
-import * as client from "./internal/Client.ts";
-import { createAPI } from "./api.ts";
+// Never show up in docs, these can be namespaced
+import * as api from "./internal/API.ts";
 
 /**
- * Create a Client. Clients make it easier to use the API by modelling
- * data as objects with methods. The methods are designed to handle common
- * tasks, such as finding a device with a specific name, or getting all users
- * that belong to a particular location.
- *
- * ```
- * const client = jamf.createClient({
- *   id: "YOUR_NETWORK_ID",
- *   token: "YOUR_API_TOKEN",
- *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
- * });
- *
- * // Get an array of `jamf.Location` objects
- * const locations = await client.getLocations();
- *
- * // Concurrently get an array of `jamf.User` objects for each location
- * const usersByLocation = await Promise.all(
- *   locations.map((loc) => loc.getUsers())
- * );
- * ```
- *
- * A `Client` can upgrade raw data returned by an `API` instance using the
- * "create" methods. You can also reuse the same `API` by supplying it when
- * creating the client.
+ * Create an API object, a low level wrapper over the API that validates the
+ * data returned and gives it back to you directly. Having validation always
+ * guarantees that the data promised is what you get.
  *
  * ```
  * const api = jamf.createAPI({
@@ -100,40 +80,32 @@ import { createAPI } from "./api.ts";
  *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
  * });
  *
- * // The client can be created with an API instead of credentials.
- * const client = jamf.createClient({ api });
- *
- * // The raw data. This may expose more properties than the object does.
- * const data = await api.getDevice(3);
- *
- * // Provides convenience methods for restarting, getting the owner, etc.
- * const device = client.createDevice(data);
- *
- * // They're the same device!
- * console.assert(data.UDID === device.udid)
+ * const app = await api.getApp(23);
+ * console.log(app.name);
  * ```
- *
- * All objects can also be converted back to the JSON that would be used to
- * create them using `JSON.parse(JSON.stringify(object))`.
  *
  * For information on how to get the necessary credentials, see the
  * `Credentials` interface.
  */
-export function createClient(init: Credentials): Client {
-	return new client.Client({
-		api: createAPI(init),
-	});
+export function createAPI(init: Credentials): API {
+	return new api.API(init);
 }
 
 export type {
-	App,
-	Client,
-	Credentials,
-	Device,
-	DeviceGroup,
-	Location,
-	User,
-	UserGroup,
-} from "./models/mod.ts";
+	API,
+	APIDeviceData,
+	APIDeviceGroupData,
+	APIGetDeviceOptions,
+	APIGetDevicesOptions,
+	APIMoveDeviceOptions,
+	APIMoveDevicesOptions,
+	APIMoveUserOptions,
+	APIRestartDeviceOptions,
+	APIUserData,
+	APIUserGroupData,
+	APIWipeDeviceOptions,
+} from "./models/API.ts";
+
+export type { Credentials } from "./models/Credentials.ts";
 
 export { version } from "./version.ts";
