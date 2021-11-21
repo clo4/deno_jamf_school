@@ -39,6 +39,9 @@ export interface Profile {
 		readonly tvOS: boolean;
 	};
 
+	/** Whether the profile has a time filter. */
+	readonly isScheduled: boolean;
+
 	/** Return the data used to create this object. */
 	toJSON(): unknown;
 
@@ -52,7 +55,7 @@ export interface Profile {
 	 */
 	update(): Promise<void>;
 
-	/** Get the profile's time constraints (the "time filter"). */
+	/** Get the profile's time filter (null if `isScheduled` is false). */
 	getSchedule(): ProfileSchedule | null;
 }
 

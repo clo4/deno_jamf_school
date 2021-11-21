@@ -73,7 +73,15 @@ export class Profile implements models.Profile {
 	}
 
 	get isUniversal() {
-		return this.#data.platform === "universal"
+		return this.#data.platform === "universal";
+	}
+
+	get isScheduled() {
+		// There's actually no value to indicate that the profile doesn't have a time
+		// filter, but if it does have one, daysOfTheWeek must be an array with at
+		// least one value. If it isn't an array or doesn't have any values, then
+		// it definitely doesn't have a time filter.
+		return this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0;
 	}
 
 	getSchedule() {
