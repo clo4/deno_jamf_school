@@ -226,6 +226,12 @@ export interface API {
 
 	/** (Read) Get a single location by its ID (zero-indexed). */
 	getLocation(id: number): Promise<RouteData<"GET /locations/:id">>;
+
+	/** (Read) Get a single profile by its ID. */
+	getProfile(id: number): Promise<RouteData<"GET /profiles/:id">>;
+
+	/** (Read) Get all the profiles on your instance. */
+	getProfiles(): Promise<RouteData<"GET /profiles">["profiles"]>;
 }
 
 /** Helper type to map from API method name to the method's return type. */

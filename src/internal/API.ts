@@ -488,4 +488,17 @@ export class API implements models.API {
 		schemas.assertValid("GET /locations/:id", data);
 		return data;
 	}
+
+	async getProfile(id: number): Promise<RouteData<"GET /profiles/:id">> {
+		assertValidID(id);
+		const data = await this.http.get(`profiles/${id}`).json();
+		schemas.assertValid("GET /profiles/:id", data);
+		return data;
+	}
+
+	async getProfiles(): Promise<RouteData<"GET /profiles">["profiles"]> {
+		const data = await this.http.get(`profiles`).json();
+		schemas.assertValid("GET /profiles", data);
+		return data.profiles;
+	}
 }
