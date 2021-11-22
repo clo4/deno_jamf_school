@@ -113,11 +113,24 @@ export class User implements models.User {
 			return suppressAPIError([], e);
 		}
 
-		const myGroups = userGroupData.filter((group) =>
-			this.#data.groupIds.includes(group.id)
-		);
+		const groupIds = new Set(this.#data.groupIds);
+		const myGroups = userGroupData.filter((group) => groupIds.has(group.id));
 
 		return myGroups.map((group) => this.#client.createUserGroup(group));
+	}
+
+	async getClasses(): Promise<models.UserGroup[]> {
+		let userGroupData;
+		try {
+			userGroupData = await this.#api.getUserGroups();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		const groupIds = new Set(this.#data.teacherGroups);
+		const myClasses = userGroupData.filter((group) => groupIds.has(group.id));
+
+		return myClasses.map((group) => this.#client.createUserGroup(group));
 	}
 
 	async getLocation() {
