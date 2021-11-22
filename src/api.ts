@@ -1,94 +1,10 @@
-// MIT License
-//
-// Copyright (c) 2021 SeparateRecords
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-
-/**
- * Jamf School for Deno is an idiomatic, unofficial wrapper for the Jamf School
- * API.
- *
- * All data you get back from the API is validated against a custom, public
- * JSON schema to ensure you don't get any unexpected results without knowing.
- *
- * The `Client` and related objects are an optional layer of sugar over an
- * `API` object that abstract away the complexity and provide convenience
- * methods.
- *
- * It's modelled after web APIs, so it feels right at home in JavaScript and
- * TypeScript.
- *
- * Getting started is super quick. Once you've got your network ID and API
- * token, create a new JS or TS file and write the following.
- *
- * ```
- * import * as jamf from "https://deno.land/x/jamf_school/mod.ts";
- *
- * const client = jamf.createClient({
- *   id: "YOUR_NETWORK_ID",
- *   token: "YOUR_API_TOKEN",
- *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
- * })
- * ```
- *
- * You can now start calling methods on the `client` object. If the credentials
- * were incorrect, awaiting a method will throw an error to let you know.
- *
- * The library handles failure differently depending on the action being
- * performed. If the method retrieves objects, it returns null (or an empty
- * array) if there is a network failure, but throws when an unexpected
- * condition is encountered. For example, duplicate names will cause a
- * `Client.get[...]ByName` method to throw, instead of returning null or a single
- * the value. If the method performs an action, such as `Device.restart`, it
- * will always throw on failure.
- *
- * @module
- */
-
-// Can't be namespaced because doc.deno.land will always link to another page
 import type { API } from "./models/API.ts";
 import type { Credentials } from "./models/Credentials.ts";
 
-// Never show up in docs, these can be namespaced
-import * as api from "./internal/API.ts";
+import { API as InternalAPI } from "./internal/API.ts";
 
-/**
- * Create an API object, a low level wrapper over the API that validates the
- * data returned and gives it back to you directly. Having validation always
- * guarantees that the data promised is what you get.
- *
- * ```
- * const api = jamf.createAPI({
- *   id: "YOUR_NETWORK_ID",
- *   token: "YOUR_API_TOKEN",
- *   url: "https://YOUR_SCHOOL.jamfcloud.com/api"
- * });
- *
- * const app = await api.getApp(23);
- * console.log(app.name);
- * ```
- *
- * For information on how to get the necessary credentials, see the
- * `Credentials` interface.
- */
-export function createAPI(init: Credentials): API {
-	return new api.API(init);
+export function createAPI(credentials: Credentials): API {
+	return new InternalAPI(credentials);
 }
 
 export type {
