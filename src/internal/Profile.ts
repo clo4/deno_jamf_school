@@ -39,9 +39,9 @@ export class Profile implements models.Profile {
 			identifier: this.identifier,
 			isUniversal: this.isUniversal,
 			platform: this.platform,
+			isScheduled: this.isScheduled,
 		}, { colors: !Deno.noColor });
-		const className = this.constructor.name;
-		return `${className} ${props}`;
+		return `${this.type} ${props}`;
 	}
 
 	get type() {
