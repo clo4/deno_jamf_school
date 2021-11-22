@@ -192,9 +192,8 @@ export class Device implements models.Device {
 			return suppressAPIError([], e);
 		}
 
-		const myGroups = allGroups.filter(
-			(groupData) => this.#data.groups.includes(groupData.name),
-		);
+		const groups = new Set(this.#data.groups);
+		const myGroups = allGroups.filter((group) => groups.has(group.name));
 
 		return myGroups.map((group) => this.#client.createDeviceGroup(group));
 	}
