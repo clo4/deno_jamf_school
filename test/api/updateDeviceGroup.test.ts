@@ -1,4 +1,4 @@
-import * as jamf from "../../src/mod.ts";
+import * as jamf from "../../src/full.ts";
 import validatePutDevicesGroupsId from "../../src/schemas/PUT_devices_groups_id.ts";
 import { assertEquals } from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";

@@ -1,4 +1,4 @@
-import * as jamf from "../../src/mod.ts";
+import * as jamf from "../../src/full.ts";
 import validatePutDevicesMigrate from "../../src/schemas/PUT_devices_migrate.ts";
 import {
 	assert,

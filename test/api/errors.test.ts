@@ -1,4 +1,4 @@
-import * as jamf from "../../src/mod.ts";
+import * as jamf from "../../src/full.ts";
 import ky from "../../src/deps/ky.ts";
 import { PermissionError } from "../../src/internal/PermissionError.ts";
 import { APIError } from "../../src/internal/APIError.ts";

@@ -1,4 +1,4 @@
-import * as jamf from "../../src/mod.ts";
+import * as jamf from "../../src/full.ts";
 import { assertValid } from "../../src/schemas/mod.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 
