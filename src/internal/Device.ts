@@ -4,11 +4,11 @@ import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
 const enrollment = {
-	"ac2": { type: "ac2", pending: false } as const,
-	"dep": { type: "dep", pending: false } as const,
-	"ac2Pending": { type: "ac2", pending: true } as const,
-	"depPending": { type: "dep", pending: true } as const,
-	"manual": { type: "manual", pending: false } as const,
+	"ac2": Object.freeze({ type: "ac2", pending: false } as const),
+	"dep": Object.freeze({ type: "dep", pending: false } as const),
+	"ac2Pending": Object.freeze({ type: "ac2", pending: true } as const),
+	"depPending": Object.freeze({ type: "dep", pending: true } as const),
+	"manual": Object.freeze({ type: "manual", pending: false } as const),
 } as const;
 
 // /devices and /devices/:udid both return subtly different data, but /devices

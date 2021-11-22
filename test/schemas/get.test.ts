@@ -117,3 +117,13 @@ Deno.test("schemas/assertValid: GET /locations/:id (200 OK, many)", async () => 
 		assertValid("GET /locations/:id", json);
 	}
 });
+
+Deno.test("schemas/assertValid: GET /profiles (200 OK)", async () => {
+	const json = await readRelativeTextFile("../example_data/GET_profiles__200.json");
+	assertValid("GET /profiles", JSON.parse(json));
+});
+
+Deno.test("schemas/assertValid: GET /profiles/:id (200 OK)", async () => {
+	const json = await readRelativeTextFile("../example_data/GET_profiles_id__200.json");
+	assertValid("GET /profiles/:id", JSON.parse(json));
+});

@@ -6,3 +6,4 @@ export * from "./User.ts";
 export * from "./UserGroup.ts";
 export * from "./App.ts";
 export * from "./Location.ts";
+export * from "./Profile.ts";

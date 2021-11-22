@@ -148,6 +148,19 @@ export class Location implements models.Location {
 		return myApps.map((app) => this.#client.createApp(app));
 	}
 
+	async getProfiles() {
+		let profiles;
+		try {
+			profiles = await this.#api.getProfiles();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		return profiles
+			.filter((profile) => profile.locationId === this.id)
+			.map((profile) => this.#client.createProfile(profile));
+	}
+
 	async moveDevices(devices: { udid: string; locationId?: number }[]) {
 		// This signature in the model doesn't specify locationId, but if the object
 		// *does* have it, we can optimize this further by filtering out the devices
