@@ -81,7 +81,7 @@ export class Profile implements models.Profile {
 		// filter, but if it does have one, daysOfTheWeek must be an array with at
 		// least one value. If it isn't an array or doesn't have any values, then
 		// it definitely doesn't have a time filter.
-		return this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0;
+		return this.#data.daysOfTheWeek !== null && this.#data.daysOfTheWeek.length !== 0;
 	}
 
 	getSchedule() {
