@@ -1,1 +1,1 @@
-export * from "https://deno.land/std@0.113.0/fs/expand_glob.ts";
+export * from "https://deno.land/std@0.115.1/fs/expand_glob.ts";
