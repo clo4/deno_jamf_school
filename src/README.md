@@ -56,12 +56,20 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 
 Each entry explains what changed and links to a pull request that has more details.
 
+<!-- Past tense: describe what /has/ changed, not what /will/ change. -->
+
 ### Version 0.5.0
 
 <!-- deno-fmt-ignore -->
 
-- **Add support for profiles ([#76](https://github.com/SeparateRecords/deno_jamf_school/issues/76))** <br>
+- **Added support for profiles ([#76](https://github.com/SeparateRecords/deno_jamf_school/issues/76))** <br>
   Due to limitations with the API, it isn't possible to get profiles assigned to particular devices or device groups.
+
+- **Exposed more properties on objects ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77))** <br>
+  This includes `Device.ownerName`, `DeviceGroup.count`, and the `User.getClasses()` method.
+
+- **Breaking: Renamed `DeviceGroup.isSmartGroup` ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77))**
+  Removed the stutter from the name (now `DeviceGroup.isSmart`).
 
 <details>
 <summary>Older versions</summary>
