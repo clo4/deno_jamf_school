@@ -1,3 +1,5 @@
+import type { Location } from "./Location.ts";
+
 /**
  * Profile represents a single profile.
  *
@@ -54,6 +56,9 @@ export interface Profile {
 	 * Other profiles created from the same data will not be updated.
 	 */
 	update(): Promise<void>;
+
+	/** (Read) Get the location this profile belongs to. */
+	getLocation(): Promise<Location | null>;
 
 	/** Get the profile's time filter (null if `isScheduled` is false). */
 	getSchedule(): ProfileSchedule | null;

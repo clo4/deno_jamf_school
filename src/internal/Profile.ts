@@ -1,6 +1,7 @@
 import type * as models from "../models/mod.ts";
-import type { BasicObjectInit /*, Creator*/ } from "./Client.ts";
+import type { BasicObjectInit, Creator } from "./Client.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
+import { suppressAPIError } from "./APIError.ts";
 
 const platforms = {
 	iOS: Object.freeze({ iOS: true, macOS: false, tvOS: false } as const),
@@ -13,12 +14,12 @@ export type ProfileData = models.APIData["getProfile"];
 
 export class Profile implements models.Profile {
 	#api: models.API;
-	// #client: Creator;
+	#client: Creator;
 	#data: ProfileData;
 
 	constructor(init: BasicObjectInit<ProfileData>) {
 		this.#api = init.api;
-		// this.#client = init.client;
+		this.#client = init.client;
 		this.#data = init.data;
 	}
 
@@ -123,6 +124,16 @@ export class Profile implements models.Profile {
 				minute: parseInt(removeTimeMatch[2]),
 			},
 		};
+	}
+
+	async getLocation() {
+		let locationData;
+		try {
+			locationData = await this.#api.getLocation(this.#data.locationId);
+		} catch (e: unknown) {
+			return suppressAPIError(null, e);
+		}
+		return this.#client.createLocation(locationData);
 	}
 
 	async update() {
