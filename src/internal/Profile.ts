@@ -88,9 +88,17 @@ export class Profile implements models.Profile {
 		if (this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0) {
 			return null;
 		}
+
 		assert(this.#data.startTime, "Expected this.#data.startTime to be non-null");
 		assert(this.#data.endTime, "Expected this.#data.endTime to be non-null");
+
 		const days = new Set(this.#data.daysOfTheWeek);
+
+		const [installHour, installMinute] = this.#data.startTime
+			.split(":").map((time) => parseInt(time));
+		const [removeHour, removeMinute] = this.#data.endTime
+			.split(":").map((time) => parseInt(time));
+
 		return {
 			monday: days.has("1"),
 			tuesday: days.has("2"),
@@ -100,8 +108,14 @@ export class Profile implements models.Profile {
 			saturday: this.#data.restrictedWeekendUse || days.has("6"),
 			sunday: this.#data.restrictedWeekendUse || days.has("7"),
 			holidays: !this.#data.useHolidays,
-			installTime: this.#data.startTime,
-			removeTime: this.#data.endTime,
+			installTime: {
+				hour: installHour,
+				minute: installMinute,
+			},
+			removeTime: {
+				hour: removeHour,
+				minute: removeMinute,
+			},
 		};
 	}
 

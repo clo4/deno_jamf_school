@@ -85,10 +85,26 @@ export interface ProfileSchedule {
 	readonly holidays: boolean;
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
-	/** Time the profile will be installed. (HH:MM) */
-	readonly installTime: string;
+	/**
+	 * Time the profile will be installed.
+	 *
+	 * This will be replaced with a `Temporal.PlainTime` when the Temporal API
+	 * is stabilized.
+	 */
+	readonly installTime: {
+		hour: number;
+		minute: number;
+	};
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
-	/** Time the profile will be removed. (HH:MM) */
-	readonly removeTime: string;
+	/**
+	 * Time the profile will be removed.
+	 *
+	 * This will be replaced with a `Temporal.PlainTime` when the Temporal API
+	 * is stabilized.
+	 */
+	readonly removeTime: {
+		hour: number;
+		minute: number;
+	};
 }
