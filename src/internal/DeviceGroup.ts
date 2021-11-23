@@ -75,9 +75,6 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data.shared;
 	}
 
-	// get isShared() {
-	// 	return this.data.shared;
-	// }
 	// get isClass() {
 	// 	return this.data.type === "class";
 	// }
