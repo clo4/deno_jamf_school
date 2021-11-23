@@ -27,10 +27,9 @@ export interface DeviceGroup {
 	readonly imageUrl: string | null;
 
 	/**
-	 * Whether the group is static (false) or smart (true).
-	 *
-	 * Smart groups select their members based on filters, whereas static group
-	 * members must be manually assigned.
+	 * Whether the group is a "smart group". Smart groups are assigned devices
+	 * based on specific criteria. These criteria must be set in the web
+	 * interface.
 	 */
 	readonly isSmart: boolean;
 

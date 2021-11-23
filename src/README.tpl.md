@@ -65,7 +65,7 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Exposed more properties on objects ($77)** <br>
   This includes `Device.ownerName`, `DeviceGroup.count`, and the `User.getClasses()` method.
 
-- **Breaking: Renamed `DeviceGroup.isSmartGroup` ($77)**
+- **Breaking: Renamed `DeviceGroup.isSmartGroup` ($77)** <br>
   Removed the stutter from the name (now `DeviceGroup.isSmart`).
 
 <details>
