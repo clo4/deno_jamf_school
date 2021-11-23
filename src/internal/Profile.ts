@@ -85,19 +85,24 @@ export class Profile implements models.Profile {
 	}
 
 	getSchedule() {
+		// See isScheduled above (this is inverted, return null if *not* scheduled)
 		if (this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0) {
 			return null;
 		}
 
-		assert(this.#data.startTime, "Expected this.#data.startTime to be non-null");
-		assert(this.#data.endTime, "Expected this.#data.endTime to be non-null");
-
 		const days = new Set(this.#data.daysOfTheWeek);
 
-		const [installHour, installMinute] = this.#data.startTime
-			.split(":").map((time) => parseInt(time));
-		const [removeHour, removeMinute] = this.#data.endTime
-			.split(":").map((time) => parseInt(time));
+		// The startTime/endTime properties should both be strings if daysOfTheWeek
+		// is an array with at least one element, but that can't be enforced by
+		// the schema. The strings will be tested against this RegExp - if they're
+		// null or in the wrong format, the assertions will fail.
+		const hhmm = /^(\d\d):(\d\d)$/;
+
+		const installTimeMatch = this.#data.startTime?.match(hhmm);
+		assert(installTimeMatch, `startTime was not HH:MM: ${this.#data.startTime}`);
+
+		const removeTimeMatch = this.#data.endTime?.match(hhmm);
+		assert(removeTimeMatch, `endTime was not HH:MM: ${this.#data.endTime}`);
 
 		return {
 			monday: days.has("1"),
@@ -107,14 +112,15 @@ export class Profile implements models.Profile {
 			friday: days.has("5"),
 			saturday: this.#data.restrictedWeekendUse || days.has("6"),
 			sunday: this.#data.restrictedWeekendUse || days.has("7"),
+			// I think useHolidays is named incorrectly, it's always inverted...?
 			holidays: !this.#data.useHolidays,
 			installTime: {
-				hour: installHour,
-				minute: installMinute,
+				hour: parseInt(installTimeMatch[1]),
+				minute: parseInt(installTimeMatch[2]),
 			},
 			removeTime: {
-				hour: removeHour,
-				minute: removeMinute,
+				hour: parseInt(removeTimeMatch[1]),
+				minute: parseInt(removeTimeMatch[2]),
 			},
 		};
 	}
