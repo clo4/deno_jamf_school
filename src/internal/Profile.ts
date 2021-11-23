@@ -81,28 +81,28 @@ export class Profile implements models.Profile {
 		// filter, but if it does have one, daysOfTheWeek must be an array with at
 		// least one value. If it isn't an array or doesn't have any values, then
 		// it definitely doesn't have a time filter.
-		return this.#data.daysOfTheWeek !== null && this.#data.daysOfTheWeek.length !== 0;
+		return this.#data.daysOfTheWeek.length !== 0;
 	}
 
 	getSchedule() {
 		// See isScheduled above (this is inverted, return null if *not* scheduled)
-		if (this.#data.daysOfTheWeek === null || this.#data.daysOfTheWeek.length === 0) {
+		if (this.#data.daysOfTheWeek.length === 0) {
 			return null;
 		}
-
-		const days = new Set(this.#data.daysOfTheWeek);
 
 		// The startTime/endTime properties should both be strings if daysOfTheWeek
 		// is an array with at least one element, but that can't be enforced by
 		// the schema. The strings will be tested against this RegExp - if they're
 		// null or in the wrong format, the assertions will fail.
-		const hhmm = /^(\d\d):(\d\d)$/;
+		const hhmm = /^(\d?\d):(\d\d)$/;
 
 		const installTimeMatch = this.#data.startTime?.match(hhmm);
 		assert(installTimeMatch, `startTime was not HH:MM: ${this.#data.startTime}`);
 
 		const removeTimeMatch = this.#data.endTime?.match(hhmm);
 		assert(removeTimeMatch, `endTime was not HH:MM: ${this.#data.endTime}`);
+
+		const days = new Set(this.#data.daysOfTheWeek);
 
 		return {
 			monday: days.has("1"),
