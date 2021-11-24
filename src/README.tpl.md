@@ -2,16 +2,15 @@
 
 An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to be easy for IT professionals with JavaScript experience to learn, and to be safe enough to trust in production.
 
-If something doesn't work as expected or you just want some help, please [raise an issue on GitHub]($REPO/issues). Bad documentation is a bug!
-
-Currently, only a subset of API features are supported.
+Bad documentation is a bug! If something doesn't work as expected or you just want some help, please [raise an issue on GitHub]($REPO/issues).
 
 **[Here's the documentation for the latest release.]($DOCS/mod.ts)**
 
 ## Features
 
 - Designed for modern JavaScript
-- A low-level API wrapper and a higher-level object-oriented interface
+- A high-level object-oriented interface
+- A low-level functional API wrapper
 - Data validation means you always get the data you're promised
 - Comprehensive documentation and easy-to-follow example
 - Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
@@ -36,6 +35,7 @@ const client = jamf.createClient({
 });
 
 // See the docs for everything clients can do.
+// $DOCS/mod.ts#Client
 const devices = await client.getDevices();
 
 for (const device of devices) {
