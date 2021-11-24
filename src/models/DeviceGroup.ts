@@ -27,21 +27,20 @@ export interface DeviceGroup {
 	readonly imageUrl: string | null;
 
 	/**
-	 * Whether the group is static (false) or smart (true).
-	 *
-	 * Smart groups select their members based on filters, whereas static group
-	 * members must be manually assigned.
+	 * Whether the group is a "smart group". Smart groups are assigned devices
+	 * based on specific criteria. These criteria must be set in the web
+	 * interface.
 	 */
-	readonly isSmartGroup: boolean;
+	readonly isSmart: boolean;
 
 	/** The ID of this device group's location. */
 	readonly locationId: number;
 
-	// /**
-	//  * _If you know what this is, please raise an issue to tell me._
-	//  * https://github.com/SeparateRecords/deno_jamf_school/issues/new
-	//  */
-	// readonly isShared: boolean;
+	/** The number of devices in this group. */
+	readonly count: number;
+
+	/** Whether the device group is shared with all locations. */
+	readonly isShared: boolean;
 
 	// /**
 	//  * _If you know what this is, please raise an issue to tell me._

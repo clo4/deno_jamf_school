@@ -7,7 +7,7 @@
 	"name": "[redacted]",
 	"description": "[redacted]",
 	"platform": "iOS",
-	"daysOfTheWeek": ["[redacted]", "[redacted]"],
+	"daysOfTheWeek": ["1", "2"],
 	"isTemplate": false,
 	"startTime": "[redacted]",
 	"endTime": "[redacted]",
