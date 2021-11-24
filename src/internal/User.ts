@@ -144,53 +144,53 @@ export class User implements models.User {
 	}
 
 	async setUsername(username: string) {
-		await this.#api.updateUser(this.id, { username });
+		await this.#api.updateUser(this.#data.id, { username });
 	}
 
 	async setDomain(domain: string) {
-		await this.#api.updateUser(this.id, { domain });
+		await this.#api.updateUser(this.#data.id, { domain });
 	}
 
 	async setFirstName(name: string) {
-		await this.#api.updateUser(this.id, { firstName: name });
+		await this.#api.updateUser(this.#data.id, { firstName: name });
 	}
 
 	async setLastName(name: string) {
-		await this.#api.updateUser(this.id, { lastName: name });
+		await this.#api.updateUser(this.#data.id, { lastName: name });
 	}
 
 	async setPassword(password: string) {
-		await this.#api.updateUser(this.id, { password });
+		await this.#api.updateUser(this.#data.id, { password });
 	}
 
 	async setEmail(email: string) {
-		await this.#api.updateUser(this.id, { email });
+		await this.#api.updateUser(this.#data.id, { email });
 	}
 
 	async setGroups(groups: { id: number }[]) {
-		await this.#api.updateUser(this.id, {
+		await this.#api.updateUser(this.#data.id, {
 			memberOf: groups.map((group) => group.id),
 		});
 	}
 
 	async setClasses(groups: { id: number }[]) {
-		await this.#api.updateUser(this.id, {
+		await this.#api.updateUser(this.#data.id, {
 			teacher: groups.map((group) => group.id),
 		});
 	}
 
 	async setChildren(users: { id: number }[]) {
-		await this.#api.updateUser(this.id, {
+		await this.#api.updateUser(this.#data.id, {
 			children: users.map((user) => user.id),
 		});
 	}
 
 	async setLocation(location: { id: number }) {
-		await this.#api.moveUser(this.id, location.id);
+		await this.#api.moveUser(this.#data.id, location.id);
 	}
 
 	async restartDevices() {
-		const devices = await this.#api.getDevices({ ownerId: this.id });
+		const devices = await this.#api.getDevices({ ownerId: this.#data.id });
 		const promises = devices.map((device) => this.#api.restartDevice(device.UDID));
 		await Promise.allSettled(promises);
 	}
