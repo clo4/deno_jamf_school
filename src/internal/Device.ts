@@ -141,6 +141,23 @@ export class Device implements models.Device {
 		return this.#data.owner.name;
 	}
 
+	getRegion() {
+		if (this.#data.region.string === "") {
+			return null;
+		}
+
+		assert(this.#data.region.coordinates, "Expected coordinates");
+		const [lat, lon] = this.#data.region.coordinates
+			.split(",")
+			.map((num) => parseInt(num, 10));
+
+		return Object.freeze({
+			name: this.#data.region.string,
+			latitude: lat,
+			longitude: lon,
+		});
+	}
+
 	async update() {
 		const devices = await this.#api.getDevices({
 			serialNumber: this.#data.serialNumber,
