@@ -142,20 +142,17 @@ export class Device implements models.Device {
 	}
 
 	getRegion() {
-		if (this.#data.region.string === "") {
+		const name = this.#data.region.string;
+		if (name === "") {
 			return null;
 		}
 
 		assert(this.#data.region.coordinates, "Expected coordinates");
-		const [lat, lon] = this.#data.region.coordinates
+		const [latitude, longitude] = this.#data.region.coordinates
 			.split(",")
 			.map((num) => parseInt(num, 10));
 
-		return Object.freeze({
-			name: this.#data.region.string,
-			latitude: lat,
-			longitude: lon,
-		});
+		return { name, latitude, longitude };
 	}
 
 	async update() {
@@ -164,7 +161,7 @@ export class Device implements models.Device {
 		});
 
 		if (devices.length !== 1) {
-			throw new Error(`Expected 1 devices, got ${devices.length}`);
+			throw new Error(`Expected 1 device, got ${devices.length}`);
 		}
 
 		this.#data = devices[0];
