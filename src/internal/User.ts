@@ -144,19 +144,27 @@ export class User implements models.User {
 	}
 
 	async setUsername(username: string) {
-		await this.#api.updateUser(this.#data.id, { username });
+		if (this.#data.username !== username) {
+			await this.#api.updateUser(this.#data.id, { username });
+		}
 	}
 
 	async setDomain(domain: string) {
-		await this.#api.updateUser(this.#data.id, { domain });
+		if (this.#data.domain !== domain) {
+			await this.#api.updateUser(this.#data.id, { domain });
+		}
 	}
 
 	async setFirstName(name: string) {
-		await this.#api.updateUser(this.#data.id, { firstName: name });
+		if (this.#data.firstName !== name) {
+			await this.#api.updateUser(this.#data.id, { firstName: name });
+		}
 	}
 
 	async setLastName(name: string) {
-		await this.#api.updateUser(this.#data.id, { lastName: name });
+		if (this.#data.lastName !== name) {
+			await this.#api.updateUser(this.#data.id, { lastName: name });
+		}
 	}
 
 	async setPassword(password: string) {
@@ -164,7 +172,9 @@ export class User implements models.User {
 	}
 
 	async setEmail(email: string) {
-		await this.#api.updateUser(this.#data.id, { email });
+		if (this.#data.email !== email) {
+			await this.#api.updateUser(this.#data.id, { email });
+		}
 	}
 
 	async setGroups(groups: { id: number }[]) {
@@ -186,7 +196,9 @@ export class User implements models.User {
 	}
 
 	async setLocation(location: { id: number }) {
-		await this.#api.moveUser(this.#data.id, location.id);
+		if (this.#data.locationId !== location.id) {
+			await this.#api.moveUser(this.#data.id, location.id);
+		}
 	}
 
 	async restartDevices() {

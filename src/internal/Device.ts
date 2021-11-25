@@ -173,7 +173,7 @@ export class Device implements models.Device {
 			user.id !== 0,
 			"Using ID 0 would remove the owner. If this is intentional, use `Device.removeOwner()`",
 		);
-		if (user.id !== this.#data.owner.id) {
+		if (this.#data.owner.id !== user.id) {
 			await this.#api.setDeviceOwner(this.#data.UDID, user.id);
 		}
 	}
@@ -238,14 +238,20 @@ export class Device implements models.Device {
 	}
 
 	async setAssetTag(text: string) {
-		await this.#api.updateDevice(this.#data.UDID, { assetTag: text });
+		if (this.#data.assetTag !== text) {
+			await this.#api.updateDevice(this.#data.UDID, { assetTag: text });
+		}
 	}
 
 	async setNotes(text: string) {
-		await this.#api.updateDevice(this.#data.UDID, { notes: text });
+		if (this.#data.notes !== text) {
+			await this.#api.updateDevice(this.#data.UDID, { notes: text });
+		}
 	}
 
 	async setLocation(location: { id: number }) {
-		await this.#api.moveDevice(this.#data.UDID, location.id);
+		if (this.#data.locationId !== location.id) {
+			await this.#api.moveDevice(this.#data.UDID, location.id);
+		}
 	}
 }
