@@ -11,11 +11,8 @@ const enrollment = {
 	"manual": Object.freeze({ type: "manual", pending: false } as const),
 } as const;
 
-// You're not likely to have more than a few regions, but calling getRegion
-// on each device will process the string and create a new array. Much more
-// efficient to reuse the same one!
-const coordsCache = new Map<string, [number, number]>();
-const coordsRegex = /^([+-]?\d{1,3}(?:\.\d{1,15})?),([+-]?\d{1,3}(?:\.\d{1,15})?)$/;
+// Very dumb regex that matches the Jamf School region coordinate string format
+const coords = /^([+-]?\d{1,3}(?:\.\d{1,15})?),([+-]?\d{1,3}(?:\.\d{1,15})?)$/;
 
 // /devices and /devices/:udid both return subtly different data, but /devices
 // is the more sane of the two routes.
@@ -152,19 +149,13 @@ export class Device implements models.Device {
 			return null;
 		}
 
-		assert(this.#data.region.coordinates, "Expected coordinates");
-		let coords = coordsCache.get(this.#data.region.coordinates);
-		if (!coords) {
-			const match = this.#data.region.coordinates.match(coordsRegex);
-			assert(match, "Unexpected coordinate format");
-			coords = [parseFloat(match[1]), parseFloat(match[2])];
-			coordsCache.set(this.#data.region.coordinates, coords);
-		}
+		const match = this.#data.region.coordinates?.match(coords);
+		assert(match, "Unexpected coordinate format");
 
 		return {
 			name: this.#data.region.string,
-			latitude: coords[0],
-			longitude: coords[1],
+			latitude: parseFloat(match[1]),
+			longitude: parseFloat(match[2]),
 		};
 	}
 
