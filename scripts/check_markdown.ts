@@ -1,5 +1,4 @@
 import * as glob from "./deps/std_fs_expand_glob.ts";
-import * as hash from "./deps/std_hash.ts";
 import * as path from "./deps/std_path.ts";
 import * as flags from "./deps/std_flags.ts";
 import * as log from "./deps/std_log.ts";
@@ -78,9 +77,8 @@ for (const [tplPath, mdPath] of filePathMap) {
 async function hashRenderedMdFiles() {
 	const hashing = [...filePathMap].map(async ([_, mdPath]) => {
 		const mdContent = await Deno.readFile(mdPath);
-		const mdContentHash = hash.createHash("md5");
-		mdContentHash.update(mdContent);
-		return [mdPath, mdContentHash.digest()] as const;
+		const mdContentHash = await crypto.subtle.digest("SHA-256", mdContent);
+		return [mdPath, mdContentHash] as const;
 	});
 
 	return new Map(await Promise.all(hashing));
