@@ -105,11 +105,15 @@ export class DeviceGroup implements models.DeviceGroup {
 	}
 
 	async setName(name: string) {
-		await this.#api.updateDeviceGroup(this.#data.id, { name });
+		if (this.#data.name !== name) {
+			await this.#api.updateDeviceGroup(this.#data.id, { name });
+		}
 	}
 
 	async setDescription(text: string) {
-		await this.#api.updateDeviceGroup(this.#data.id, { description: text });
+		if (this.#data.description !== text) {
+			await this.#api.updateDeviceGroup(this.#data.id, { description: text });
+		}
 	}
 
 	async restartDevices() {

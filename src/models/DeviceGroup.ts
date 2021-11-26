@@ -72,6 +72,9 @@ export interface DeviceGroup {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `DeviceGroup.update()`.
+	 *
+	 * This method is a no-op if the name is the same as the device group's
+	 * current name.
 	 */
 	setName(name: string): Promise<void>;
 
@@ -80,6 +83,9 @@ export interface DeviceGroup {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `DeviceGroup.update()`.
+	 *
+	 * This method is a no-op if the description is the same as the device
+	 * group's current description.
 	 */
 	setDescription(text: string): Promise<void>;
 
