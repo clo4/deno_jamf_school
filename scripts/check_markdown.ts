@@ -4,7 +4,7 @@ import * as path from "./deps/std_path.ts";
 import * as flags from "./deps/std_flags.ts";
 import * as log from "./deps/std_log.ts";
 import { assert, equal } from "./deps/std_testing_asserts.ts";
-import { exists } from "./deps/std_fs_exists.ts";
+import { exists } from "./deps/path_exists.ts";
 
 // 1. Hash all the rendered markdown files
 // 2. Render the templates again
