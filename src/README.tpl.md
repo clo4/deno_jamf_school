@@ -65,6 +65,9 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Exposed more properties on objects ($77)** <br>
   This includes `Device.ownerName`, `DeviceGroup.count`, and the `User.getClasses()` method.
 
+- **Optimized Add/Edit object methods ($81)** <br>
+  API calls are skipped in cases where nothing would change. This behaviour was previously inconsistently applied, now it is defined.
+
 - **Breaking: Renamed `DeviceGroup.isSmartGroup` ($77)** <br>
   Removed the stutter from the name (now `DeviceGroup.isSmart`).
 
