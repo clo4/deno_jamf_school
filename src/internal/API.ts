@@ -17,18 +17,12 @@ import { customInspect } from "./customInspect.ts";
 function toSearchParams(
 	data: Record<string, unknown>,
 ): URLSearchParams | undefined {
-	const entries: Record<string, string> = {};
+	const entries = Object.entries(data)
+		.filter(([_, val]) => val != null)
+		.map(([key, val]) => [key, typeof val === "boolean" ? Number(val) : val] as const)
+		.map(([key, val]) => [key, String(val)]);
 
-	for (const [key, value] of Object.entries(data)) {
-		if (value === null) continue;
-		if (typeof value === "boolean") {
-			entries[key] = String(Number(value));
-		} else {
-			entries[key] = String(value);
-		}
-	}
-
-	if (Object.keys(entries).length === 0) {
+	if (entries.length > 0) {
 		return new URLSearchParams(entries);
 	}
 }
