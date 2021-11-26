@@ -4,7 +4,7 @@ import { Client as InternalClient } from "./internal/Client.ts";
 
 // This has to be namespaced for doc.deno.land to link to it, otherwise
 // the generated link in `createClient` will go to models/mod.ts
-import * as jamfAPI from "./api.ts";
+import * as jamfapi from "./api.ts";
 
 /**
  * Create an API client.
@@ -22,12 +22,12 @@ import * as jamfAPI from "./api.ts";
  * await it?.restartDevices();
  * ```
  */
-export function createClient(init: Credentials | { api: jamfAPI.API }): Client {
+export function createClient(init: Credentials | { api: jamfapi.API }): Client {
 	let api;
 	if ("api" in init) {
 		api = init.api;
 	} else {
-		api = jamfAPI.createAPI(init);
+		api = jamfapi.createAPI(init);
 	}
 
 	return new InternalClient({ api });
@@ -45,5 +45,3 @@ export type {
 	User,
 	UserGroup,
 } from "./models/mod.ts";
-
-export { version } from "./version.ts";

@@ -11,7 +11,7 @@ import { API as InternalAPI } from "./internal/API.ts";
  * ensure that the correct data is returned.
  *
  * ```
- * const api = jamfAPI.createAPI({
+ * const api = jamfapi.createAPI({
  *   id: "your_network_id",
  *   token: "your_api_token",
  *   url: "https://your_school.jamfcloud.com",
@@ -45,5 +45,3 @@ export type {
 } from "./models/API.ts";
 
 export type { Credentials } from "./models/Credentials.ts";
-
-export { version } from "./version.ts";

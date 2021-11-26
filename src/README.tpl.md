@@ -49,6 +49,8 @@ Now run that script.
 deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 ```
 
+There's also a lower-level API wrapper available. [Here's the documentation]($DOCS/api.ts).
+
 ## Changelog
 
 Each entry explains what changed and links to a pull request that has more details.
