@@ -1,3 +1,5 @@
+import type { Location } from "./Location.ts";
+
 /**
  * Profile represents a single profile.
  *
@@ -55,6 +57,9 @@ export interface Profile {
 	 */
 	update(): Promise<void>;
 
+	/** (Read) Get the location this profile belongs to. */
+	getLocation(): Promise<Location | null>;
+
 	/** Get the profile's time filter (null if `isScheduled` is false). */
 	getSchedule(): ProfileSchedule | null;
 }
@@ -85,10 +90,26 @@ export interface ProfileSchedule {
 	readonly holidays: boolean;
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
-	/** Time the profile will be installed. (HH:MM) */
-	readonly installTime: string;
+	/**
+	 * Time the profile will be installed.
+	 *
+	 * This will be replaced with a `Temporal.PlainTime` when the Temporal API
+	 * is stabilized.
+	 */
+	readonly installTime: {
+		hour: number;
+		minute: number;
+	};
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
-	/** Time the profile will be removed. (HH:MM) */
-	readonly removeTime: string;
+	/**
+	 * Time the profile will be removed.
+	 *
+	 * This will be replaced with a `Temporal.PlainTime` when the Temporal API
+	 * is stabilized.
+	 */
+	readonly removeTime: {
+		hour: number;
+		minute: number;
+	};
 }

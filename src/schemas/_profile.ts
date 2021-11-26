@@ -9,9 +9,8 @@ export type ProfileData = {
 	name: string;
 	description: string;
 	platform: "iOS" | "macOS" | "tvOS" | "universal";
-	// If not null, will have at least one item.
 	// Days are stringified numbers starting from "1" (Monday) to "7" (Sunday)
-	daysOfTheWeek: string[] | null;
+	daysOfTheWeek: ("1" | "2" | "3" | "4" | "5" | "6" | "7")[];
 	isTemplate: boolean;
 	startTime: string | null;
 	endTime: string | null;
@@ -39,8 +38,7 @@ export const profileDataSchema: JTDSchemaType<ProfileData> = {
 		description: { type: "string" },
 		platform: { enum: ["iOS", "macOS", "tvOS", "universal"] },
 		daysOfTheWeek: {
-			elements: { type: "string" },
-			nullable: true,
+			elements: { enum: ["1", "2", "3", "4", "5", "6", "7"] },
 		},
 		isTemplate: { type: "boolean" },
 		startTime: { type: "string", nullable: true },

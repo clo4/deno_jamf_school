@@ -51,8 +51,12 @@ export class UserGroup implements models.UserGroup {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
+			locationId: this.locationId,
+			name: this.name,
+			description: this.description,
+			isParentGroup: this.isParentGroup,
+			isTeacherGroup: this.isTeacherGroup,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
@@ -115,15 +119,15 @@ export class UserGroup implements models.UserGroup {
 	}
 
 	async setName(name: string) {
-		await this.#api.updateUserGroup(this.id, { name });
+		await this.#api.updateUserGroup(this.#data.id, { name });
 	}
 
 	async setDescription(text: string) {
-		await this.#api.updateUserGroup(this.id, { description: text });
+		await this.#api.updateUserGroup(this.#data.id, { description: text });
 	}
 
 	async setParentGroup(status: boolean | null) {
-		await this.#api.updateUserGroup(this.id, {
+		await this.#api.updateUserGroup(this.#data.id, {
 			acl: {
 				parent: convertStatusToACL(status),
 			},
@@ -131,7 +135,7 @@ export class UserGroup implements models.UserGroup {
 	}
 
 	async setTeacherGroup(status: boolean | null) {
-		await this.#api.updateUserGroup(this.id, {
+		await this.#api.updateUserGroup(this.#data.id, {
 			acl: {
 				teacher: convertStatusToACL(status),
 			},

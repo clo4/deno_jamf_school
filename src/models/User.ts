@@ -61,6 +61,9 @@ export interface User {
 	/** (Read) Get all the groups the user is in. */
 	getGroups(): Promise<UserGroup[]>;
 
+	/** (Read) Get all the groups the user can teach. */
+	getClasses(): Promise<UserGroup[]>;
+
 	/** (Read) Get the location this user belongs to. */
 	getLocation(): Promise<Location | null>;
 

@@ -39,7 +39,19 @@ export class Device implements models.Device {
 			udid: this.udid,
 			serialNumber: this.serialNumber,
 			name: this.name,
+			assetTag: this.assetTag,
 			os: this.os,
+			modelName: this.modelName,
+			modelIdentifier: this.modelIdentifier,
+			modelType: this.modelType,
+			isManaged: this.isManaged,
+			isSupervised: this.isSupervised,
+			deviceClass: this.deviceClass,
+			enrollment: this.enrollment,
+			batteryCapacity: this.batteryCapacity,
+			batteryPercentage: this.batteryPercentage,
+			ownerId: this.ownerId,
+			ownerName: this.ownerName,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
@@ -125,6 +137,10 @@ export class Device implements models.Device {
 		return this.#data.owner.id;
 	}
 
+	get ownerName() {
+		return this.#data.owner.name;
+	}
+
 	async update() {
 		const devices = await this.#api.getDevices({
 			serialNumber: this.#data.serialNumber,
@@ -158,13 +174,13 @@ export class Device implements models.Device {
 			"Using ID 0 would remove the owner. If this is intentional, use `Device.removeOwner()`",
 		);
 		if (user.id !== this.#data.owner.id) {
-			await this.#api.setDeviceOwner(this.udid, user.id);
+			await this.#api.setDeviceOwner(this.#data.UDID, user.id);
 		}
 	}
 
 	async removeOwner() {
 		if (this.#data.owner.id !== 0) {
-			await this.#api.setDeviceOwner(this.udid, 0);
+			await this.#api.setDeviceOwner(this.#data.UDID, 0);
 		}
 	}
 
@@ -176,9 +192,8 @@ export class Device implements models.Device {
 			return suppressAPIError([], e);
 		}
 
-		const myGroups = allGroups.filter(
-			(groupData) => this.#data.groups.includes(groupData.name),
-		);
+		const groups = new Set(this.#data.groups);
+		const myGroups = allGroups.filter((group) => groups.has(group.name));
 
 		return myGroups.map((group) => this.#client.createDeviceGroup(group));
 	}
@@ -196,7 +211,7 @@ export class Device implements models.Device {
 		try {
 			[apps, myAppData] = await Promise.all([
 				this.#api.getApps(),
-				this.#api.getDevice(this.udid, { includeApps: true }),
+				this.#api.getDevice(this.#data.UDID, { includeApps: true }),
 			]);
 		} catch (e: unknown) {
 			return suppressAPIError([], e);
@@ -223,14 +238,14 @@ export class Device implements models.Device {
 	}
 
 	async setAssetTag(text: string) {
-		await this.#api.updateDevice(this.udid, { assetTag: text });
+		await this.#api.updateDevice(this.#data.UDID, { assetTag: text });
 	}
 
 	async setNotes(text: string) {
-		await this.#api.updateDevice(this.udid, { notes: text });
+		await this.#api.updateDevice(this.#data.UDID, { notes: text });
 	}
 
 	async setLocation(location: { id: number }) {
-		await this.#api.moveDevice(this.udid, location.id);
+		await this.#api.moveDevice(this.#data.UDID, location.id);
 	}
 }
