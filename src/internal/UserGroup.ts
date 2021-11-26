@@ -1,6 +1,7 @@
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
+import { customInspect } from "./customInspect.ts";
 
 function convertStatusToACL(status: boolean | null): "allow" | "deny" | "inherit" {
 	switch (status) {
@@ -50,15 +51,7 @@ export class UserGroup implements models.UserGroup {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			id: this.id,
-			locationId: this.locationId,
-			name: this.name,
-			description: this.description,
-			isParentGroup: this.isParentGroup,
-			isTeacherGroup: this.isTeacherGroup,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {

@@ -7,6 +7,7 @@ import { PermissionError } from "./PermissionError.ts";
 import { APIError } from "./APIError.ts";
 import { AuthError } from "./AuthError.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
+import { customInspect } from "./customInspect.ts";
 
 /**
  * Convert an object to search params, skipping undefined and null entries.
@@ -16,12 +17,18 @@ import { assert } from "../deps/std_testing_asserts.ts";
 function toSearchParams(
 	data: Record<string, unknown>,
 ): URLSearchParams | undefined {
-	const entries = Object.entries(data)
-		.filter(([_, val]) => val != null)
-		.map(([key, val]) => [key, typeof val === "boolean" ? Number(val) : val] as const)
-		.map(([key, val]) => [key, String(val)]);
+	const entries: Record<string, string> = {};
 
-	if (entries.length > 0) {
+	for (const [key, value] of Object.entries(data)) {
+		if (value === null) continue;
+		if (typeof value === "boolean") {
+			entries[key] = String(Number(value));
+		} else {
+			entries[key] = String(value);
+		}
+	}
+
+	if (Object.keys(entries).length === 0) {
 		return new URLSearchParams(entries);
 	}
 }
@@ -116,12 +123,7 @@ export class API implements models.API {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			id: "[hidden]",
-			token: "[hidden]",
-			url: this.url,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {
