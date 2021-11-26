@@ -25,8 +25,12 @@ export class DeviceGroup implements models.DeviceGroup {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
+			locationId: this.locationId,
+			name: this.name,
+			description: this.description,
+			information: this.information,
+			isSmart: this.isSmart,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
@@ -51,7 +55,7 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data.description;
 	}
 
-	get isSmartGroup() {
+	get isSmart() {
 		return this.#data.isSmartGroup;
 	}
 
@@ -63,9 +67,14 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data.locationId;
 	}
 
-	// get isShared() {
-	// 	return this.data.shared;
-	// }
+	get count() {
+		return this.#data.members;
+	}
+
+	get isShared() {
+		return this.#data.shared;
+	}
+
 	// get isClass() {
 	// 	return this.data.type === "class";
 	// }
@@ -96,15 +105,19 @@ export class DeviceGroup implements models.DeviceGroup {
 	}
 
 	async setName(name: string) {
-		await this.#api.updateDeviceGroup(this.id, { name });
+		if (this.#data.name !== name) {
+			await this.#api.updateDeviceGroup(this.#data.id, { name });
+		}
 	}
 
 	async setDescription(text: string) {
-		await this.#api.updateDeviceGroup(this.id, { description: text });
+		if (this.#data.description !== text) {
+			await this.#api.updateDeviceGroup(this.#data.id, { description: text });
+		}
 	}
 
 	async restartDevices() {
-		const devices = await this.#api.getDevices({ groupIds: [this.id] });
+		const devices = await this.#api.getDevices({ groupIds: [this.#data.id] });
 		const promises = devices.map((device) => this.#api.restartDevice(device.UDID));
 		await Promise.allSettled(promises);
 	}

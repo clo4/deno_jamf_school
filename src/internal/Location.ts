@@ -26,8 +26,12 @@ export class Location implements models.Location {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
+			name: this.name,
+			streetName: this.streetName,
+			streetNumber: this.streetNumber,
+			city: this.city,
+			postalCode: this.postalCode,
 		}, { colors: !Deno.noColor });
 		const className = this.constructor.name;
 		return `${className} ${props}`;
@@ -144,12 +148,25 @@ export class Location implements models.Location {
 		return myApps.map((app) => this.#client.createApp(app));
 	}
 
+	async getProfiles() {
+		let profiles;
+		try {
+			profiles = await this.#api.getProfiles();
+		} catch (e: unknown) {
+			return suppressAPIError([], e);
+		}
+
+		return profiles
+			.filter((profile) => profile.locationId === this.#data.id)
+			.map((profile) => this.#client.createProfile(profile));
+	}
+
 	async moveDevices(devices: { udid: string; locationId?: number }[]) {
 		// This signature in the model doesn't specify locationId, but if the object
 		// *does* have it, we can optimize this further by filtering out the devices
 		// that wouldn't be moved
 		const udids = devices
-			.filter((device) => device.locationId !== this.id)
+			.filter((device) => device.locationId !== this.#data.id)
 			.map((device) => device.udid);
 
 		// It's possible that after the filter there wouldn't be any devices left, so
@@ -162,13 +179,13 @@ export class Location implements models.Location {
 		// array into groups of 20 and requesting in parallel is an easy workaround.
 		const unique = [...new Set(udids)];
 		const chunks = chunk(unique, 20);
-		const promises = chunks.map((arr) => this.#api.moveDevices(arr, this.id));
+		const promises = chunks.map((arr) => this.#api.moveDevices(arr, this.#data.id));
 		await Promise.allSettled(promises);
 	}
 
 	async moveUsers(users: { id: number; locationId?: number }[]) {
 		const ids = users
-			.filter((user) => user.locationId !== this.id)
+			.filter((user) => user.locationId !== this.#data.id)
 			.map((user) => user.id);
 
 		if (ids.length === 0) {
@@ -176,12 +193,12 @@ export class Location implements models.Location {
 		}
 
 		const unique = [...new Set(ids)];
-		const promises = unique.map((id) => this.#api.moveUser(id, this.id));
+		const promises = unique.map((id) => this.#api.moveUser(id, this.#data.id));
 		await Promise.allSettled(promises);
 	}
 
 	async restartDevices() {
-		const devices = await this.#api.getDevices({ locationId: this.id });
+		const devices = await this.#api.getDevices({ locationId: this.#data.id });
 		const promises = devices.map((device) => this.#api.restartDevice(device.UDID));
 		await Promise.allSettled(promises);
 	}

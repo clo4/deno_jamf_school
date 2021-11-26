@@ -18,7 +18,7 @@ ${["INTRODUCTION:", "bold"]}
 Replace variables in *.tpl files and write the result to another file, dropping
 the .tpl extension. Variables follow basic shell syntax: ${["$VAR", "italic"]} or ${["\${VAR}", "italic"]}
 
-Directories will be searched recursively for files matching *.tpl.md.
+Directories will be searched recursively for files matching *.tpl
 Searching and rendering are concurrent.
 
 All variables and settings are piped in as UTF-8 JSON via stdin. How you get
@@ -114,7 +114,7 @@ The script requires '--allow-read=.' and '--allow-write=.' but the flags have
 been omitted from the examples for brevity. The script will fail without them.
 Because stdin is a pipe, not a terminal, '--prompt' cannot be used.
 
-  ${["$", "dim"]} "cat" tpl.json
+  ${["$", "dim"]} cat tpl.json
   {
     "settings": {
       "excludePaths": ["**/node_modules"]

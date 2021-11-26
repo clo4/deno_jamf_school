@@ -82,6 +82,9 @@ export interface Device {
 	/** The ID of this device's owner. */
 	readonly ownerId: number;
 
+	/** The name of this device's owner. */
+	readonly ownerName: string;
+
 	/**
 	 * The type of enrollment used for this device.
 	 *
@@ -137,6 +140,18 @@ export interface Device {
 	 */
 	update(): Promise<void>;
 
+	/**
+	 * The device's region.
+	 *
+	 * This is set by matching its public IP address. Regions can be created and
+	 * edited in the Jamf School website: "Organisation" > "Settings" > "Regions"
+	 */
+	getRegion(): {
+		readonly name: string;
+		readonly latitude: number;
+		readonly longitude: number;
+	} | null;
+
 	/** (Read) Get the device's owner, if any. */
 	getOwner(): Promise<User | null>;
 
@@ -165,6 +180,8 @@ export interface Device {
 	 * ```
 	 *
 	 * To remove the owner, try `Device.removeOwner`.
+	 *
+	 * This method is a no-op if the user ID is the same as the device's owner ID.
 	 */
 	setOwner(user: { id: number }): Promise<void>;
 
@@ -173,6 +190,8 @@ export interface Device {
 	 *
 	 * This method will not update the device object. To update the object, call
 	 * `Device.update()`.
+	 *
+	 * This method is a no-op if the device already has no owner.
 	 */
 	removeOwner(): Promise<void>;
 
@@ -181,6 +200,8 @@ export interface Device {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
+	 *
+	 * This method is a no-op if the notes are the same as the current notes.
 	 */
 	setNotes(text: string): Promise<void>;
 
@@ -189,6 +210,9 @@ export interface Device {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
+	 *
+	 * This method is a no-op if the asset tag is the same as the current asset
+	 * tag.
 	 */
 	setAssetTag(text: string): Promise<void>;
 
@@ -213,6 +237,9 @@ export interface Device {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `Device.update()`.
+	 *
+	 * This method is a no-op if the location ID is the same as the device's
+	 * current location ID.
 	 */
 	setLocation(location: { id: number }): Promise<void>;
 }

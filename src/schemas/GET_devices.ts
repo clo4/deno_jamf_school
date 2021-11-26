@@ -47,6 +47,7 @@ type ResponseData = {
 		region: {
 			// Yeah, it really is a key named "string"
 			string: string;
+			coordinates?: string;
 		};
 		apps?: {
 			name: string;
@@ -158,6 +159,9 @@ const responseSchema: JTDSchemaType<ResponseData> = {
 					region: {
 						properties: {
 							string: { type: "string" },
+						},
+						optionalProperties: {
+							coordinates: { type: "string" },
 						},
 					},
 					networkInformation: {

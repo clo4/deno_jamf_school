@@ -51,8 +51,12 @@ export class UserGroup implements models.UserGroup {
 
 	[Symbol.for("Deno.customInspect")]() {
 		const props = Deno.inspect({
-			name: this.name,
 			id: this.id,
+			locationId: this.locationId,
+			name: this.name,
+			description: this.description,
+			isParentGroup: this.isParentGroup,
+			isTeacherGroup: this.isTeacherGroup,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
@@ -115,26 +119,28 @@ export class UserGroup implements models.UserGroup {
 	}
 
 	async setName(name: string) {
-		await this.#api.updateUserGroup(this.id, { name });
+		if (this.#data.name !== name) {
+			await this.#api.updateUserGroup(this.#data.id, { name });
+		}
 	}
 
 	async setDescription(text: string) {
-		await this.#api.updateUserGroup(this.id, { description: text });
+		if (this.#data.description !== text) {
+			await this.#api.updateUserGroup(this.#data.id, { description: text });
+		}
 	}
 
 	async setParentGroup(status: boolean | null) {
-		await this.#api.updateUserGroup(this.id, {
-			acl: {
-				parent: convertStatusToACL(status),
-			},
-		});
+		const parent = convertStatusToACL(status);
+		if (this.#data.acl.parent !== parent) {
+			await this.#api.updateUserGroup(this.#data.id, { acl: { parent } });
+		}
 	}
 
 	async setTeacherGroup(status: boolean | null) {
-		await this.#api.updateUserGroup(this.id, {
-			acl: {
-				teacher: convertStatusToACL(status),
-			},
-		});
+		const teacher = convertStatusToACL(status);
+		if (this.#data.acl.teacher !== teacher) {
+			await this.#api.updateUserGroup(this.#data.id, { acl: { teacher } });
+		}
 	}
 }

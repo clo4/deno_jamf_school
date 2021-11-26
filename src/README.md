@@ -56,6 +56,27 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
 
 Each entry explains what changed and links to a pull request that has more details.
 
+<!-- Past tense: describe what /has/ changed, not what /will/ change. -->
+
+### Version 0.5.0
+
+<!-- deno-fmt-ignore -->
+
+- **Added support for profiles ([#76](https://github.com/SeparateRecords/deno_jamf_school/issues/76))** <br>
+  Due to limitations with the API, it isn't possible to get profiles assigned to particular devices or device groups.
+
+- **Exposed more properties on objects ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77), [#82](https://github.com/SeparateRecords/deno_jamf_school/issues/82))** <br>
+  This includes `Device.ownerName`, `DeviceGroup.count`, and the `User.getClasses()` method.
+
+- **Optimized Add/Edit object methods ([#81](https://github.com/SeparateRecords/deno_jamf_school/issues/81))** <br>
+  API calls are skipped in cases where nothing would change. This behaviour was previously inconsistently applied, now it is defined.
+
+- **Breaking: Renamed `DeviceGroup.isSmartGroup` ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77))** <br>
+  Removed the stutter from the name (now `DeviceGroup.isSmart`).
+
+<details>
+<summary>Older versions</summary>
+
 ### Version 0.4.1
 
 <!-- deno-fmt-ignore -->
@@ -96,9 +117,6 @@ Each entry explains what changed and links to a pull request that has more detai
 
 - **Breaking: Methods that returned `Promise<this>` now return `Promise<void>` ([#68](https://github.com/SeparateRecords/deno_jamf_school/issues/68))** <br>
   Returning `this` is unexpected and encourages worse code than returning nothing at all.
-
-<details>
-<summary>Older versions</summary>
 
 ### Version 0.3.2
 

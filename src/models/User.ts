@@ -61,6 +61,9 @@ export interface User {
 	/** (Read) Get all the groups the user is in. */
 	getGroups(): Promise<UserGroup[]>;
 
+	/** (Read) Get all the groups the user can teach. */
+	getClasses(): Promise<UserGroup[]>;
+
 	/** (Read) Get the location this user belongs to. */
 	getLocation(): Promise<Location | null>;
 
@@ -69,6 +72,9 @@ export interface User {
 	 *
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
+	 *
+	 * This method is a no-op if the username is the same as the user's current
+	 * username.
 	 */
 	setUsername(username: string): Promise<void>;
 
@@ -77,6 +83,9 @@ export interface User {
 	 *
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
+	 *
+	 * This method is a no-op if the domain is the same as the user's current
+	 * domain.
 	 */
 	setDomain(domain: string): Promise<void>;
 
@@ -85,6 +94,9 @@ export interface User {
 	 *
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
+	 *
+	 * This method is a no-op if the name is the same as the user's current
+	 * first name.
 	 */
 	setFirstName(firstName: string): Promise<void>;
 
@@ -93,6 +105,9 @@ export interface User {
 	 *
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
+	 *
+	 * This method is a no-op if the name is the same as the user's current
+	 * last name.
 	 */
 	setLastName(lastName: string): Promise<void>;
 
@@ -109,6 +124,9 @@ export interface User {
 	 *
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
+	 *
+	 * This method is a no-op if the email is the same as the user's current
+	 * email.
 	 */
 	setEmail(email: string): Promise<void>;
 
@@ -126,6 +144,9 @@ export interface User {
 	 *
 	 * This method will not update the user object. To update the object, call
 	 * `User.update()`.
+	 *
+	 * This method is a no-op if the location ID is the same as the user's
+	 * current location ID.
 	 */
 	setLocation(location: { id: number }): Promise<void>;
 

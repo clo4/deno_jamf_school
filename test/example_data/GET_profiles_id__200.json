@@ -1,0 +1,16 @@
+{
+	"id": 0,
+	"locationId": 0,
+	"type": { "value": "default" },
+	"status": { "value": "Active" },
+	"identifier": "[redacted]",
+	"name": "[redacted]",
+	"description": "[redacted]",
+	"platform": "iOS",
+	"daysOfTheWeek": ["1", "2"],
+	"isTemplate": false,
+	"startTime": "[redacted]",
+	"endTime": "[redacted]",
+	"useHolidays": false,
+	"restrictedWeekendUse": false
+}

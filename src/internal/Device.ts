@@ -4,12 +4,15 @@ import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
 
 const enrollment = {
-	"ac2": { type: "ac2", pending: false } as const,
-	"dep": { type: "dep", pending: false } as const,
-	"ac2Pending": { type: "ac2", pending: true } as const,
-	"depPending": { type: "dep", pending: true } as const,
-	"manual": { type: "manual", pending: false } as const,
+	"ac2": Object.freeze({ type: "ac2", pending: false } as const),
+	"dep": Object.freeze({ type: "dep", pending: false } as const),
+	"ac2Pending": Object.freeze({ type: "ac2", pending: true } as const),
+	"depPending": Object.freeze({ type: "dep", pending: true } as const),
+	"manual": Object.freeze({ type: "manual", pending: false } as const),
 } as const;
+
+// Very dumb regex that matches the Jamf School region coordinate string format
+const coords = /^([+-]?\d{1,3}(?:\.\d{1,15})?),([+-]?\d{1,3}(?:\.\d{1,15})?)$/;
 
 // /devices and /devices/:udid both return subtly different data, but /devices
 // is the more sane of the two routes.
@@ -39,7 +42,19 @@ export class Device implements models.Device {
 			udid: this.udid,
 			serialNumber: this.serialNumber,
 			name: this.name,
+			assetTag: this.assetTag,
 			os: this.os,
+			modelName: this.modelName,
+			modelIdentifier: this.modelIdentifier,
+			modelType: this.modelType,
+			isManaged: this.isManaged,
+			isSupervised: this.isSupervised,
+			deviceClass: this.deviceClass,
+			enrollment: this.enrollment,
+			batteryCapacity: this.batteryCapacity,
+			batteryPercentage: this.batteryPercentage,
+			ownerId: this.ownerId,
+			ownerName: this.ownerName,
 		}, { colors: !Deno.noColor });
 		return `${this.type} ${props}`;
 	}
@@ -125,13 +140,32 @@ export class Device implements models.Device {
 		return this.#data.owner.id;
 	}
 
+	get ownerName() {
+		return this.#data.owner.name;
+	}
+
+	getRegion() {
+		if (this.#data.region.string === "") {
+			return null;
+		}
+
+		const match = this.#data.region.coordinates?.match(coords);
+		assert(match, "Unexpected coordinate format");
+
+		return {
+			name: this.#data.region.string,
+			latitude: parseFloat(match[1]),
+			longitude: parseFloat(match[2]),
+		};
+	}
+
 	async update() {
 		const devices = await this.#api.getDevices({
 			serialNumber: this.#data.serialNumber,
 		});
 
 		if (devices.length !== 1) {
-			throw new Error(`Expected 1 devices, got ${devices.length}`);
+			throw new Error(`Expected 1 device, got ${devices.length}`);
 		}
 
 		this.#data = devices[0];
@@ -157,14 +191,14 @@ export class Device implements models.Device {
 			user.id !== 0,
 			"Using ID 0 would remove the owner. If this is intentional, use `Device.removeOwner()`",
 		);
-		if (user.id !== this.#data.owner.id) {
-			await this.#api.setDeviceOwner(this.udid, user.id);
+		if (this.#data.owner.id !== user.id) {
+			await this.#api.setDeviceOwner(this.#data.UDID, user.id);
 		}
 	}
 
 	async removeOwner() {
 		if (this.#data.owner.id !== 0) {
-			await this.#api.setDeviceOwner(this.udid, 0);
+			await this.#api.setDeviceOwner(this.#data.UDID, 0);
 		}
 	}
 
@@ -176,9 +210,8 @@ export class Device implements models.Device {
 			return suppressAPIError([], e);
 		}
 
-		const myGroups = allGroups.filter(
-			(groupData) => this.#data.groups.includes(groupData.name),
-		);
+		const groups = new Set(this.#data.groups);
+		const myGroups = allGroups.filter((group) => groups.has(group.name));
 
 		return myGroups.map((group) => this.#client.createDeviceGroup(group));
 	}
@@ -196,7 +229,7 @@ export class Device implements models.Device {
 		try {
 			[apps, myAppData] = await Promise.all([
 				this.#api.getApps(),
-				this.#api.getDevice(this.udid, { includeApps: true }),
+				this.#api.getDevice(this.#data.UDID, { includeApps: true }),
 			]);
 		} catch (e: unknown) {
 			return suppressAPIError([], e);
@@ -223,14 +256,20 @@ export class Device implements models.Device {
 	}
 
 	async setAssetTag(text: string) {
-		await this.#api.updateDevice(this.udid, { assetTag: text });
+		if (this.#data.assetTag !== text) {
+			await this.#api.updateDevice(this.#data.UDID, { assetTag: text });
+		}
 	}
 
 	async setNotes(text: string) {
-		await this.#api.updateDevice(this.udid, { notes: text });
+		if (this.#data.notes !== text) {
+			await this.#api.updateDevice(this.#data.UDID, { notes: text });
+		}
 	}
 
 	async setLocation(location: { id: number }) {
-		await this.#api.moveDevice(this.udid, location.id);
+		if (this.#data.locationId !== location.id) {
+			await this.#api.moveDevice(this.#data.UDID, location.id);
+		}
 	}
 }

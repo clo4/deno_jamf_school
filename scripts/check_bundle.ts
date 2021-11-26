@@ -1,4 +1,3 @@
-import * as hash from "./deps/std_hash.ts";
 import * as path from "./deps/std_path.ts";
 import { equal } from "./deps/std_testing_asserts.ts";
 
@@ -12,9 +11,8 @@ const bundlePath = path.join(repoRoot, "src", "schemas", "mod.bundle.js");
 const inputText = await Deno.readTextFile(bundlePath);
 
 console.info("Hashing bundle");
-const beforeHash = hash.createHash("md5")
-	.update(inputText)
-	.digest();
+const beforeBytes = new TextEncoder().encode(inputText);
+const beforeHash = await crypto.subtle.digest("SHA-256", beforeBytes);
 
 // The hashes will never match if we don't also bundle as release. The bundle
 // script injects a comment for release builds, specifically so this script can
@@ -46,9 +44,8 @@ if (!status.success) {
 }
 
 console.info("Hashing bundle again");
-const afterHash = hash.createHash("md5")
-	.update(await Deno.readTextFile(bundlePath))
-	.digest();
+const afterBytes = new TextEncoder().encode(inputText);
+const afterHash = await crypto.subtle.digest("SHA-256", afterBytes);
 
 if (!equal(beforeHash, afterHash)) {
 	console.error(
