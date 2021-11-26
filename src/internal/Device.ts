@@ -11,6 +11,9 @@ const enrollment = {
 	"manual": Object.freeze({ type: "manual", pending: false } as const),
 } as const;
 
+// Very dumb regex that matches the Jamf School region coordinate string format
+const coords = /^([+-]?\d{1,3}(?:\.\d{1,15})?),([+-]?\d{1,3}(?:\.\d{1,15})?)$/;
+
 // /devices and /devices/:udid both return subtly different data, but /devices
 // is the more sane of the two routes.
 export type DeviceData = models.APIData["getDevices"][number];
@@ -141,13 +144,28 @@ export class Device implements models.Device {
 		return this.#data.owner.name;
 	}
 
+	getRegion() {
+		if (this.#data.region.string === "") {
+			return null;
+		}
+
+		const match = this.#data.region.coordinates?.match(coords);
+		assert(match, "Unexpected coordinate format");
+
+		return {
+			name: this.#data.region.string,
+			latitude: parseFloat(match[1]),
+			longitude: parseFloat(match[2]),
+		};
+	}
+
 	async update() {
 		const devices = await this.#api.getDevices({
 			serialNumber: this.#data.serialNumber,
 		});
 
 		if (devices.length !== 1) {
-			throw new Error(`Expected 1 devices, got ${devices.length}`);
+			throw new Error(`Expected 1 device, got ${devices.length}`);
 		}
 
 		this.#data = devices[0];

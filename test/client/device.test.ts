@@ -40,3 +40,13 @@ Deno.test({
 		}
 	},
 });
+
+Deno.test({
+	name: "Device.getRegion() doesn't fail",
+	fn() {
+		for (const deviceData of data.devices) {
+			const device = client.createDevice(deviceData);
+			device.getRegion();
+		}
+	},
+});

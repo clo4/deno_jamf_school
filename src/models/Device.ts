@@ -140,6 +140,18 @@ export interface Device {
 	 */
 	update(): Promise<void>;
 
+	/**
+	 * The device's region.
+	 *
+	 * This is set by matching its public IP address. Regions can be created and
+	 * edited in the Jamf School website: "Organisation" > "Settings" > "Regions"
+	 */
+	getRegion(): {
+		readonly name: string;
+		readonly latitude: number;
+		readonly longitude: number;
+	} | null;
+
 	/** (Read) Get the device's owner, if any. */
 	getOwner(): Promise<User | null>;
 
