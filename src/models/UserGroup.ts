@@ -50,6 +50,9 @@ export interface UserGroup {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
+	 *
+	 * This method is a no-op if the name is the same as the user group's
+	 * current name.
 	 */
 	setName(name: string): Promise<void>;
 
@@ -58,6 +61,9 @@ export interface UserGroup {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
+	 *
+	 * This method is a no-op if the description is the same as the user group's
+	 * current description.
 	 */
 	setDescription(text: string): Promise<void>;
 
@@ -70,6 +76,8 @@ export interface UserGroup {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
+	 *
+	 * This method is a no-op if the user group is already a parent group.
 	 */
 	setParentGroup(status: boolean | null): Promise<void>;
 
@@ -82,6 +90,8 @@ export interface UserGroup {
 	 *
 	 * This method will not update the object. To update it, call
 	 * `UserGroup.update()`.
+	 *
+	 * This method is a no-op if the user group is already a teacher group.
 	 */
 	setTeacherGroup(status: boolean | null): Promise<void>;
 }
