@@ -1,2 +1,2 @@
-export * from "https://esm.sh/ajv@8.6.3/dist/standalone";
-export { default } from "https://esm.sh/ajv@8.6.3/dist/standalone";
+export * from "https://esm.sh/ajv@8.8.2/dist/standalone";
+export { default } from "https://esm.sh/ajv@8.8.2/dist/standalone";
