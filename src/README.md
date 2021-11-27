@@ -3,7 +3,7 @@
 
 # Jamf School API for Deno
 
-Write powerful Jamf School automations with little effort.
+Create Jamf School automations, quickly and easily.
 
 An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to be easy for IT professionals with JavaScript experience to learn, and to be safe enough to trust in production.
 
@@ -51,6 +51,8 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.js
 ```
 
 There's also a lower-level API wrapper available. [Here's the documentation](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/api.ts).
+
+For some more complete (public domain!) examples, check out the [examples](./examples) directory.
 
 ## Changelog
 
