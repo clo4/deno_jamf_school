@@ -45,3 +45,5 @@ export type {
 	User,
 	UserGroup,
 } from "./models/mod.ts";
+
+export * as api from "./api.ts";
