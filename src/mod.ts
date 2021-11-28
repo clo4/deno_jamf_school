@@ -1,6 +1,6 @@
 import type { Client, Credentials } from "./models/mod.ts";
 
-import { Client as InternalClient } from "./internal/Client.ts";
+import { Client as InternalClient } from "./internal/client.ts";
 
 // This has to be namespaced for doc.deno.land to link to it, otherwise
 // the generated link in `createClient` will go to models/mod.ts

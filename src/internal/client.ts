@@ -1,13 +1,13 @@
 import type * as models from "../models/mod.ts";
-import { isValidID, isValidUDID } from "./API.ts";
-import { Device, DeviceData } from "./Device.ts";
-import { DeviceGroup, DeviceGroupData } from "./DeviceGroup.ts";
-import { User, UserData } from "./User.ts";
-import { UserGroup, UserGroupData } from "./UserGroup.ts";
-import { App, AppData } from "./App.ts";
-import { Location, LocationData } from "./Location.ts";
-import { Profile, ProfileData } from "./Profile.ts";
-import { suppressAPIError } from "./APIError.ts";
+import { isValidID, isValidUDID } from "./api.ts";
+import { Device, DeviceData } from "./device.ts";
+import { DeviceGroup, DeviceGroupData } from "./device_group.ts";
+import { User, UserData } from "./user.ts";
+import { UserGroup, UserGroupData } from "./user_group.ts";
+import { App, AppData } from "./app.ts";
+import { Location, LocationData } from "./location.ts";
+import { Profile, ProfileData } from "./profile.ts";
+import { suppressAPIError } from "./api_error.ts";
 
 /**
  * An object that instantiates other objects. This is just the 'create'

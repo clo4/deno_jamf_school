@@ -1,11 +1,11 @@
 import ky, { AfterResponseHook } from "../deps/ky.ts";
-import type * as models from "../models/mod.ts";
+import type * as models from "../models/api.ts";
 import type { RouteData } from "../schemas/mod.bundle.js";
 import * as base64 from "../deps/std_encoding_base64.ts";
 import * as schemas from "../schemas/mod.bundle.js";
-import { PermissionError } from "./PermissionError.ts";
-import { APIError } from "./APIError.ts";
-import { AuthError } from "./AuthError.ts";
+import { PermissionError } from "./permission_error.ts";
+import { APIError } from "./api_error.ts";
+import { AuthError } from "./auth_error.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
 
 /**

@@ -1,6 +1,6 @@
-import type { Device } from "./Device.ts";
-import type { UserGroup } from "./UserGroup.ts";
-import type { Location } from "./Location.ts";
+import type { Device } from "./device.ts";
+import type { UserGroup } from "./user_group.ts";
+import type { Location } from "./location.ts";
 
 /**
  * User represents a single user.

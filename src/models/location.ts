@@ -1,9 +1,9 @@
-import type { Device } from "./Device.ts";
-import type { DeviceGroup } from "./DeviceGroup.ts";
-import type { User } from "./User.ts";
-import type { UserGroup } from "./UserGroup.ts";
-import type { App } from "./App.ts";
-import type { Profile } from "./Profile.ts";
+import type { Device } from "./device.ts";
+import type { DeviceGroup } from "./device_group.ts";
+import type { User } from "./user.ts";
+import type { UserGroup } from "./user_group.ts";
+import type { App } from "./app.ts";
+import type { Profile } from "./profile.ts";
 
 /**
  * Location represents a physical site. All data in Jamf School must be

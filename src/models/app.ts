@@ -1,5 +1,5 @@
-import type { Device } from "./Device.ts";
-import type { Location } from "./Location.ts";
+import type { Device } from "./device.ts";
+import type { Location } from "./location.ts";
 
 /**
  * App represents an individual application.

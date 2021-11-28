@@ -1,7 +1,7 @@
-import type { API } from "./models/API.ts";
-import type { Credentials } from "./models/Credentials.ts";
+import type { API } from "./models/api.ts";
+import type { Credentials } from "./models/credentials.ts";
 
-import { API as InternalAPI } from "./internal/API.ts";
+import { API as InternalAPI } from "./internal/api.ts";
 
 /**
  * Create an API HTTP wrapper.
@@ -42,6 +42,6 @@ export type {
 	APIUserData,
 	APIUserGroupData,
 	APIWipeDeviceOptions,
-} from "./models/API.ts";
+} from "./models/api.ts";
 
-export type { Credentials } from "./models/Credentials.ts";
+export type { Credentials } from "./models/credentials.ts";
