@@ -58,6 +58,10 @@ For some more complete (public domain!) examples, check out the [examples](./exa
 
 Each entry explains what changed and links to a pull request that has more details.
 
+<!-- TODO: Remove this note on 1.0.0 -->
+
+**A brief note on API stability:** as this project has not reached 1.0.0 yet, names and imports may change between updates. I want to create a polished library that feels great to use. Doing that requires constantly re-evaluating past decisions and designing other solutions.
+
 <!-- Past tense: describe what /has/ changed, not what /will/ change. -->
 
 ### Version 0.5.0
