@@ -2,6 +2,7 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
 import { suppressAPIError } from "./APIError.ts";
+import { customInspect } from "./customInspect.ts";
 
 const platforms = {
 	iOS: Object.freeze({ iOS: true, macOS: false, tvOS: false } as const),
@@ -32,17 +33,7 @@ export class Profile implements models.Profile {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			id: this.id,
-			locationId: this.locationId,
-			name: this.name,
-			description: this.description,
-			identifier: this.identifier,
-			isUniversal: this.isUniversal,
-			platform: this.platform,
-			isScheduled: this.isScheduled,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {

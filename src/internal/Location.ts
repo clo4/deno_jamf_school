@@ -2,6 +2,7 @@ import { chunk } from "../deps/std_collections_chunk.ts";
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./Client.ts";
 import { suppressAPIError } from "./APIError.ts";
+import { customInspect } from "./customInspect.ts";
 
 export type LocationData = models.APIData["getLocation"];
 
@@ -25,16 +26,7 @@ export class Location implements models.Location {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			id: this.id,
-			name: this.name,
-			streetName: this.streetName,
-			streetNumber: this.streetNumber,
-			city: this.city,
-			postalCode: this.postalCode,
-		}, { colors: !Deno.noColor });
-		const className = this.constructor.name;
-		return `${className} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {
