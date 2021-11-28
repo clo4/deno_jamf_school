@@ -11,13 +11,15 @@ An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to be ea
 - Strict data validation completely removes hard-to-catch bugs
 - Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
 
-Bad documentation is a bug! If you want some help, [open a discussion on GitHub]($REPO/discussions).
+If you want some help or want to make a suggestion, [open an issue on GitHub]($REPO/issues) so we can make this project better for everyone.
 
 ## Get started
 
-[Here's how to get your API credentials]($DOCS/mod.ts#Credentials). You'll have to replace the token, ID, and URL in the examples.
+To interface with the API, you'll need a client. Clients have a lot of methods to get objects from the API.
 
-To interface with the API, you'll need a client. Clients have a lot of methods to get objects from the API. Once you have some objects, you can get their properties
+Objects are a snapshot of their data at the point in time they were created, and always assume that they're up to date. They have properties you can access, and methods you can call to act on themselves or get other objects.
+
+[Here's how to get your API credentials]($DOCS/mod.ts#Credentials) - you'll need those in order to use this library.
 
 <h6>device_names.js</h6>
 
@@ -47,9 +49,9 @@ Now run that script.
 deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.js
 ```
 
-There's also a lower-level API wrapper available. [Here's the documentation]($DOCS/api.ts).
+For some more useful and well documented examples, check out the [examples directory](./examples).
 
-For some more complete (public domain!) examples, check out the [examples](./examples) directory.
+<sub>For über-nerds, there's also a lower-level API wrapper available. [Here's the documentation]($DOCS/api.ts).</sub>
 
 ## Changelog
 
