@@ -123,8 +123,11 @@ export class Device implements models.Device {
 		return this.#data.totalCapacity;
 	}
 
-	// This isn't required by the model yet, exists for testing in a REPL
-	get availableCapacity() {
+	get storageTotal() {
+		return this.#data.totalCapacity;
+	}
+
+	get storageRemaining() {
 		return this.#data.availableCapacity;
 	}
 
