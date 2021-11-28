@@ -62,7 +62,7 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Added support for profiles ($76)** <br>
   Due to limitations with the API, it isn't possible to get profiles assigned to particular devices or device groups.
 
-- **Exposed more properties on objects ($77, $82)** <br>
+- **Exposed more properties on objects ($77, $82, $86)** <br>
   This includes `Device.ownerName`, `DeviceGroup.count`, and the `User.getClasses()` method.
 
 - **Optimized Add/Edit object methods ($81)** <br>
