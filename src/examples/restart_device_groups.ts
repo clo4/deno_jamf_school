@@ -13,12 +13,20 @@ const spinner = wait("Fetching device groups...").start();
 const groups = await client.getDeviceGroups();
 spinner.stop();
 
+// This will create the interactive menu and return the selected groups.
 const selected = await selectDeviceGroups(groups);
 
+// Finally, restart the devices.
 await restartDevices(selected);
 
+/**
+ * This function does 3 things:
+ * 1. Get all the devices in the given device groups
+ * 2. Schedule a device restart for each of them
+ * 3. For each device, log whether that was successful.
+ */
 async function restartDevices(groups: jamf.DeviceGroup[]) {
-	// 📍 Fetch devices in groups
+	// 📍 Fetch devices in groups (no duplicates)
 	const devices = await client.getDevicesInGroups(groups);
 
 	// This could be hundreds of devices, best to restart them in parallel.
@@ -41,6 +49,7 @@ async function restartDevices(groups: jamf.DeviceGroup[]) {
 	}
 }
 
+/** Create an interactive prompt that allows you to select device groups. */
 async function selectDeviceGroups(groups: jamf.DeviceGroup[]) {
 	const ids = await Checkbox.prompt({
 		message: "Enable some groups to restart (space = toggle, enter = continue)",
