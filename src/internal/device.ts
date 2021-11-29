@@ -2,6 +2,7 @@ import { assert } from "../deps/std_testing_asserts.ts";
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./client.ts";
 import { suppressAPIError } from "./api_error.ts";
+import { customInspect } from "./customInspect.ts";
 
 const enrollment = {
 	"ac2": Object.freeze({ type: "ac2", pending: false } as const),
@@ -38,25 +39,7 @@ export class Device implements models.Device {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			udid: this.udid,
-			serialNumber: this.serialNumber,
-			name: this.name,
-			assetTag: this.assetTag,
-			os: this.os,
-			modelName: this.modelName,
-			modelIdentifier: this.modelIdentifier,
-			modelType: this.modelType,
-			isManaged: this.isManaged,
-			isSupervised: this.isSupervised,
-			deviceClass: this.deviceClass,
-			enrollment: this.enrollment,
-			batteryCapacity: this.batteryCapacity,
-			batteryPercentage: this.batteryPercentage,
-			ownerId: this.ownerId,
-			ownerName: this.ownerName,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {
@@ -123,8 +106,11 @@ export class Device implements models.Device {
 		return this.#data.totalCapacity;
 	}
 
-	// This isn't required by the model yet, exists for testing in a REPL
-	get availableCapacity() {
+	get storageTotal() {
+		return this.#data.totalCapacity;
+	}
+
+	get storageRemaining() {
 		return this.#data.availableCapacity;
 	}
 

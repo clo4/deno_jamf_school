@@ -79,8 +79,11 @@ Each entry explains what changed and links to a pull request that has more detai
 - **Added support for profiles ([#76](https://github.com/SeparateRecords/deno_jamf_school/issues/76))** <br>
   Due to limitations with the API, it isn't possible to get only profiles assigned to particular devices or device groups.
 
-- **Exposed more properties on objects ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77), [#82](https://github.com/SeparateRecords/deno_jamf_school/issues/82))** <br>
+- **Exposed more properties on objects ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77), [#82](https://github.com/SeparateRecords/deno_jamf_school/issues/82), [#86](https://github.com/SeparateRecords/deno_jamf_school/issues/86))** <br>
   This includes, but is not limited to, `Device.ownerName`, `DeviceGroup.count`, and `User.getClasses()`.
+
+- **Optimized Add/Edit object methods ([#81](https://github.com/SeparateRecords/deno_jamf_school/issues/81))** <br>
+  API calls are skipped in cases where nothing would change. This behaviour was previously inconsistently applied, now it is defined.
 
 - **Optimized _Add_ & _Edit_ object methods ([#81](https://github.com/SeparateRecords/deno_jamf_school/issues/81))** <br>
   API calls are skipped in cases where nothing would change. This was previously applied inconsistently, now it is a defined behaviour where appropriate.

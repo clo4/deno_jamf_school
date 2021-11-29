@@ -7,6 +7,7 @@ import { PermissionError } from "./permission_error.ts";
 import { APIError } from "./api_error.ts";
 import { AuthError } from "./auth_error.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
+import { customInspect } from "./customInspect.ts";
 
 /**
  * Convert an object to search params, skipping undefined and null entries.
@@ -116,12 +117,7 @@ export class API implements models.API {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			id: "[hidden]",
-			token: "[hidden]",
-			url: this.url,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {

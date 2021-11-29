@@ -42,11 +42,8 @@ export interface DeviceGroup {
 	/** Whether the device group is shared with all locations. */
 	readonly isShared: boolean;
 
-	// /**
-	//  * _If you know what this is, please raise an issue to tell me._
-	//  * https://github.com/SeparateRecords/deno_jamf_school/issues/new
-	//  */
-	// readonly isClass: boolean;
+	/** Whether the device group belongs to a class. */
+	readonly isClass: boolean;
 
 	/** Return the data used to create this object. */
 	toJSON(): unknown;

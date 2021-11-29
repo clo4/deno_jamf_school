@@ -2,6 +2,7 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./client.ts";
 import { suppressAPIError } from "./api_error.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
+import { customInspect } from "./customInspect.ts";
 
 export type AppData = models.APIData["getApps"][number];
 
@@ -25,15 +26,7 @@ export class App implements models.App {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			id: this.id,
-			locationId: this.locationId,
-			name: this.name,
-			version: this.version,
-			appId: this.appId,
-			bundleId: this.bundleId,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {

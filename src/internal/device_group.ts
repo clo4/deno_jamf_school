@@ -1,6 +1,7 @@
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./client.ts";
 import { suppressAPIError } from "./api_error.ts";
+import { customInspect } from "./customInspect.ts";
 
 export type DeviceGroupData = models.APIData["getDeviceGroups"][number];
 
@@ -24,15 +25,7 @@ export class DeviceGroup implements models.DeviceGroup {
 	}
 
 	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			id: this.id,
-			locationId: this.locationId,
-			name: this.name,
-			description: this.description,
-			information: this.information,
-			isSmart: this.isSmart,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
+		return customInspect(this);
 	}
 
 	get type() {
@@ -75,9 +68,9 @@ export class DeviceGroup implements models.DeviceGroup {
 		return this.#data.shared;
 	}
 
-	// get isClass() {
-	// 	return this.data.type === "class";
-	// }
+	get isClass() {
+		return this.#data.type === "class";
+	}
 
 	async update() {
 		this.#data = await this.#api.getDeviceGroup(this.#data.id);

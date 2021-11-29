@@ -64,6 +64,9 @@ export interface Profile {
 	getSchedule(): ProfileSchedule | null;
 }
 
+/**
+ * Represents a profile's installation and removal schedule (time filter).
+ */
 export interface ProfileSchedule {
 	/** Will the profile be installed on Monday? */
 	readonly monday: boolean;
@@ -91,10 +94,10 @@ export interface ProfileSchedule {
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
 	/**
-	 * Time the profile will be installed.
+	 * The wall-clock time at which the profile will be installed.
 	 *
-	 * This will be replaced with a `Temporal.PlainTime` when the Temporal API
-	 * is stabilized.
+	 * This object will be replaced with a `Temporal.PlainTime` once the Temporal
+	 * API is available.
 	 */
 	readonly installTime: {
 		hour: number;
@@ -103,10 +106,10 @@ export interface ProfileSchedule {
 
 	// TODO: Once Temporal is stable, switch to Temporal.PlainTime
 	/**
-	 * Time the profile will be removed.
+	 * The wall-clock time at which the profile will be removed.
 	 *
-	 * This will be replaced with a `Temporal.PlainTime` when the Temporal API
-	 * is stabilized.
+	 * This object will be replaced with a `Temporal.PlainTime` once the Temporal
+	 * API is available.
 	 */
 	readonly removeTime: {
 		hour: number;

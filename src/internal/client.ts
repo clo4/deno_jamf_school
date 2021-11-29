@@ -8,6 +8,7 @@ import { App, AppData } from "./app.ts";
 import { Location, LocationData } from "./location.ts";
 import { Profile, ProfileData } from "./profile.ts";
 import { suppressAPIError } from "./api_error.ts";
+import { customInspect } from "./customInspect.ts";
 
 /**
  * An object that instantiates other objects. This is just the 'create'
@@ -44,13 +45,6 @@ export class Client implements models.Client {
 
 	constructor({ api }: ClientInit) {
 		this.#api = api;
-	}
-
-	[Symbol.for("Deno.customInspect")]() {
-		const props = Deno.inspect({
-			api: this.#api,
-		}, { colors: !Deno.noColor });
-		return `${this.type} ${props}`;
 	}
 
 	get type() {
