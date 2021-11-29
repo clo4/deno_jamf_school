@@ -1,5 +1,5 @@
-import type { User } from "./User.ts";
-import type { Location } from "./Location.ts";
+import type { User } from "./user.ts";
+import type { Location } from "./location.ts";
 
 /**
  * UserGroup represents a named group of users.

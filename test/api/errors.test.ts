@@ -1,8 +1,8 @@
-import * as jamf from "../../src/mod.ts";
+import * as jamf from "../../src/api.ts";
 import ky from "../../src/deps/ky.ts";
-import { PermissionError } from "../../src/internal/PermissionError.ts";
-import { APIError } from "../../src/internal/APIError.ts";
-import { AuthError } from "../../src/internal/AuthError.ts";
+import { PermissionError } from "../../src/internal/permission_error.ts";
+import { APIError } from "../../src/internal/api_error.ts";
+import { AuthError } from "../../src/internal/auth_error.ts";
 import { assert, assertThrowsAsync } from "../deps/std_testing_asserts.ts";
 import { install as installMockFetch, mock, reset } from "../deps/mock_fetch.ts";
 

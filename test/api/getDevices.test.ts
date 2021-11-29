@@ -1,4 +1,4 @@
-import * as jamf from "../../src/mod.ts";
+import * as jamf from "../../src/api.ts";
 import validateGetDevices from "../../src/schemas/GET_devices.ts";
 import {
 	assert,

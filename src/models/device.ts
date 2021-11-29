@@ -1,7 +1,7 @@
-import type { DeviceGroup } from "./DeviceGroup.ts";
-import type { User } from "./User.ts";
-import type { App } from "./App.ts";
-import type { Location } from "./Location.ts";
+import type { DeviceGroup } from "./device_group.ts";
+import type { User } from "./user.ts";
+import type { App } from "./app.ts";
+import type { Location } from "./location.ts";
 
 /**
  * Device represents a single device.

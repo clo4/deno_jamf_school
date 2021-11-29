@@ -3,29 +3,28 @@
 
 # Jamf School API for Deno
 
+Create Jamf School automations, quickly and easily.
+
 An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to be easy for IT professionals with JavaScript experience to learn, and to be safe enough to trust in production.
-
-If something doesn't work as expected or you just want some help, please [raise an issue on GitHub](https://github.com/SeparateRecords/deno_jamf_school/issues). Bad documentation is a bug!
-
-Currently, only a subset of API features are supported.
-
-**[Here's the documentation for the latest release.](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts)**
 
 ## Features
 
-- Designed for modern JavaScript
-- A low-level API wrapper and a higher-level object-oriented interface
-- Data validation means you always get the data you're promised
-- Comprehensive documentation and easy-to-follow example
+- [High level interface](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts) for simple automations
+- [Low-level API wrapper](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/api.ts) for fine-grained control
+- Strict data validation completely removes hard-to-catch bugs
 - Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
 
-## Usage
+If you want some help or want to make a suggestion, [open an issue on GitHub](https://github.com/SeparateRecords/deno_jamf_school/issues) so we can make this project better for everyone.
 
-[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts#Credentials). You'll have to replace the token, ID, and URL in the examples.
+## Get started
 
-This example will print the name of each registered device.
+To interface with the API, you'll need a client. Clients have a lot of methods to get objects from the API.
 
-<h6>device_names.ts</h6>
+Objects are a snapshot of their data at the point in time they were created, and always assume that they're up to date. They have properties you can access, and methods you can call to act on themselves or get other objects.
+
+[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts#Credentials) - you'll need those in order to use this library.
+
+<h6>device_names.js</h6>
 
 <!-- Using JS as the language for the more reliable syntax highlighting -->
 
@@ -39,6 +38,7 @@ const client = jamf.createClient({
 });
 
 // See the docs for everything clients can do.
+// https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts#Client
 const devices = await client.getDevices();
 
 for (const device of devices) {
@@ -49,12 +49,20 @@ for (const device of devices) {
 Now run that script.
 
 ```bash
-deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.ts
+deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.js
 ```
+
+For some more useful and well documented examples, check out the [examples directory](./examples).
+
+<sub>For über-nerds, there's also a lower-level API wrapper available. [Here's the documentation](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/api.ts).</sub>
 
 ## Changelog
 
 Each entry explains what changed and links to a pull request that has more details.
+
+<!-- TODO: Remove this note on 1.0.0 -->
+
+**A brief note on API stability:** as this project has not reached 1.0.0 yet, names and imports may change between updates. I want to create a polished library that feels great to use. Doing that requires constantly re-evaluating past decisions and designing other solutions.
 
 <!-- Past tense: describe what /has/ changed, not what /will/ change. -->
 
@@ -62,17 +70,23 @@ Each entry explains what changed and links to a pull request that has more detai
 
 <!-- deno-fmt-ignore -->
 
+- **Breaking: Reorganized module exports ([#79](https://github.com/SeparateRecords/deno_jamf_school/issues/79))** <br>
+  Import `mod.ts` for the client stuff, and `api.ts` for the low-level API stuff. This keeps the documentation much cleaner.
+
+- **Breaking: Renamed `DeviceGroup.isSmartGroup` ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77))** <br>
+  Removed the stutter from the name (now `DeviceGroup.isSmart`).
+
 - **Added support for profiles ([#76](https://github.com/SeparateRecords/deno_jamf_school/issues/76))** <br>
-  Due to limitations with the API, it isn't possible to get profiles assigned to particular devices or device groups.
+  Due to limitations with the API, it isn't possible to get only profiles assigned to particular devices or device groups.
 
 - **Exposed more properties on objects ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77), [#82](https://github.com/SeparateRecords/deno_jamf_school/issues/82), [#86](https://github.com/SeparateRecords/deno_jamf_school/issues/86))** <br>
-  This includes `Device.ownerName`, `DeviceGroup.count`, and the `User.getClasses()` method.
+  This includes, but is not limited to, `Device.ownerName`, `DeviceGroup.count`, and `User.getClasses()`.
 
 - **Optimized Add/Edit object methods ([#81](https://github.com/SeparateRecords/deno_jamf_school/issues/81))** <br>
   API calls are skipped in cases where nothing would change. This behaviour was previously inconsistently applied, now it is defined.
 
-- **Breaking: Renamed `DeviceGroup.isSmartGroup` ([#77](https://github.com/SeparateRecords/deno_jamf_school/issues/77))** <br>
-  Removed the stutter from the name (now `DeviceGroup.isSmart`).
+- **Optimized _Add_ & _Edit_ object methods ([#81](https://github.com/SeparateRecords/deno_jamf_school/issues/81))** <br>
+  API calls are skipped in cases where nothing would change. This was previously applied inconsistently, now it is a defined behaviour where appropriate.
 
 <details>
 <summary>Older versions</summary>

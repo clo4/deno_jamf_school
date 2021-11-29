@@ -1,4 +1,4 @@
-import type { Location } from "./Location.ts";
+import type { Location } from "./location.ts";
 
 /**
  * Profile represents a single profile.

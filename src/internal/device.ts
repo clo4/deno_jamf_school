@@ -1,8 +1,8 @@
 import { assert } from "../deps/std_testing_asserts.ts";
 import type * as models from "../models/mod.ts";
-import type { BasicObjectInit, Creator } from "./Client.ts";
-import { suppressAPIError } from "./APIError.ts";
-import { customInspect } from "./customInspect.ts";
+import type { BasicObjectInit, Creator } from "./client.ts";
+import { suppressAPIError } from "./api_error.ts";
+import { customInspect } from "./custom_inspect.ts";
 
 const enrollment = {
 	"ac2": Object.freeze({ type: "ac2", pending: false } as const),
