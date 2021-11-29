@@ -1,11 +1,11 @@
-import { associateBy } from "https://deno.land/std@0.106.0/collections/associate_by.ts";
-import { zip } from "https://deno.land/std@0.106.0/collections/zip.ts";
+import { associateBy } from "https://deno.land/std@0.116.0/collections/associate_by.ts";
+import { zip } from "https://deno.land/std@0.116.0/collections/zip.ts";
 import { Checkbox } from "https://deno.land/x/cliffy@v0.20.1/prompt/checkbox.ts";
 import { wait } from "https://deno.land/x/wait@0.1.12/mod.ts";
 
 // The client is created in another file so it can be shared between examples.
 import * as jamf from "../mod.ts";
-import { client } from "./client.ts";
+import { client } from "./auth.ts";
 
 // Show a spinner while fetching device groups
 const spinner = wait("Fetching device groups...").start();

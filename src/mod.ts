@@ -9,7 +9,7 @@ import * as jamfapi from "./api.ts";
 /**
  * Create an API client.
  *
- * Clients are an object-oriented abstraction of the Jamf School API.
+ * Clients are a high level abstraction of the Jamf School API.
  *
  * ```
  * const client = jamf.createClient({
