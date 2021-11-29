@@ -9,8 +9,8 @@ An **unofficial, idiomatic API wrapper for Jamf School**. It's designed to be ea
 
 ## Features
 
-- [High level interface](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts) for simple automations
-- [Low-level API wrapper](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/api.ts) for fine-grained control
+- [High level interface](https://doc.deno.land/https/deno.land/x/jamf_school@0.5.0/mod.ts) for simple automations
+- [Low-level API wrapper](https://doc.deno.land/https/deno.land/x/jamf_school@0.5.0/api.ts) for fine-grained control
 - Strict data validation completely removes hard-to-catch bugs
 - Only requires `--allow-net=YOUR_SCHOOL.jamfcloud.com`
 
@@ -22,14 +22,14 @@ To interface with the API, you'll need a client. Clients have a lot of methods t
 
 Objects are a snapshot of their data at the point in time they were created, and always assume that they're up to date. They have properties you can access, and methods you can call to act on themselves or get other objects.
 
-[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts#Credentials) - you'll need those in order to use this library.
+[Here's how to get your API credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.5.0/mod.ts#Credentials) - you'll need those in order to use this library.
 
 <h6>device_names.js</h6>
 
 <!-- Using JS as the language for the more reliable syntax highlighting -->
 
 ```javascript
-import * as jamf from "https://deno.land/x/jamf_school@0.4.1/mod.ts";
+import * as jamf from "https://deno.land/x/jamf_school@0.5.0/mod.ts";
 
 const client = jamf.createClient({
   id: "YOUR_NETWORK_ID",
@@ -38,7 +38,7 @@ const client = jamf.createClient({
 });
 
 // See the docs for everything clients can do.
-// https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/mod.ts#Client
+// https://doc.deno.land/https/deno.land/x/jamf_school@0.5.0/mod.ts#Client
 const devices = await client.getDevices();
 
 for (const device of devices) {
@@ -54,7 +54,7 @@ deno run --allow-net=YOUR_SCHOOL.jamfcloud.com device_names.js
 
 For some more useful and well documented examples, check out the [examples directory](./examples).
 
-<sub>For über-nerds, there's also a lower-level API wrapper available. [Here's the documentation](https://doc.deno.land/https/deno.land/x/jamf_school@0.4.1/api.ts).</sub>
+<sub>For über-nerds, there's also a lower-level API wrapper available. [Here's the documentation](https://doc.deno.land/https/deno.land/x/jamf_school@0.5.0/api.ts).</sub>
 
 ## Changelog
 
