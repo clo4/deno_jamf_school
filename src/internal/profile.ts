@@ -2,7 +2,7 @@ import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./client.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
 import { suppressAPIError } from "./api_error.ts";
-import { customInspect } from "./customInspect.ts";
+import { customInspect } from "./custom_inspect.ts";
 
 const platforms = {
 	iOS: Object.freeze({ iOS: true, macOS: false, tvOS: false } as const),

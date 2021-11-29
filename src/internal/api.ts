@@ -7,7 +7,7 @@ import { PermissionError } from "./permission_error.ts";
 import { APIError } from "./api_error.ts";
 import { AuthError } from "./auth_error.ts";
 import { assert } from "../deps/std_testing_asserts.ts";
-import { customInspect } from "./customInspect.ts";
+import { customInspect } from "./custom_inspect.ts";
 
 /**
  * Convert an object to search params, skipping undefined and null entries.

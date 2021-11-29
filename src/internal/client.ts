@@ -8,7 +8,6 @@ import { App, AppData } from "./app.ts";
 import { Location, LocationData } from "./location.ts";
 import { Profile, ProfileData } from "./profile.ts";
 import { suppressAPIError } from "./api_error.ts";
-import { customInspect } from "./customInspect.ts";
 
 /**
  * An object that instantiates other objects. This is just the 'create'

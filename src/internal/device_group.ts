@@ -1,7 +1,7 @@
 import type * as models from "../models/mod.ts";
 import type { BasicObjectInit, Creator } from "./client.ts";
 import { suppressAPIError } from "./api_error.ts";
-import { customInspect } from "./customInspect.ts";
+import { customInspect } from "./custom_inspect.ts";
 
 export type DeviceGroupData = models.APIData["getDeviceGroups"][number];
 
