@@ -1,4 +1,4 @@
-import { grantOrThrow } from "https://deno.land/std@0.106.0/permissions/mod.ts";
+import { grantOrThrow } from "https://deno.land/std@0.116.0/permissions/mod.ts";
 import * as jamf from "../mod.ts";
 import * as jamfapi from "../api.ts";
 
