@@ -1,6 +1,6 @@
 import { grantOrThrow } from "https://deno.land/std@0.116.0/permissions/mod.ts";
-import * as jamf from "../mod.ts";
-import * as jamfapi from "../api.ts";
+import { createAPI } from "../api.ts";
+import { createClient } from "../mod.ts";
 
 // Required for JAMF_SCHOOL_{ID,TOKEN,URL}
 await grantOrThrow({ name: "env" });
@@ -22,10 +22,10 @@ function requireEnv(key: string): string {
 
 // If you want to use a `.env` file for your own scripts, try this module:
 // https://deno.land/x/dotenv
-export const api = jamfapi.createAPI({
+export const api = createAPI({
 	id: requireEnv("JAMF_SCHOOL_ID"),
 	token: requireEnv("JAMF_SCHOOL_TOKEN"),
 	url: requireEnv("JAMF_SCHOOL_URL"),
 });
 
-export const client = jamf.createClient({ api });
+export const client = createClient({ api });
