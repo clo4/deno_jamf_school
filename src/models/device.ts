@@ -67,6 +67,9 @@ export interface Device {
 	/**
 	 * The model identifier is a string that identifies the device model
 	 * (eg. `iPad11,6`). This is an internal identifier used by Apple.
+	 *
+	 * An up-to-date list can be found here:
+	 * https://github.com/SeparateRecords/apple_device_identifiers/blob/main/devices.json
 	 */
 	readonly modelIdentifier: string;
 
