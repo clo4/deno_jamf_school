@@ -1,10 +1,6 @@
 import * as jamf from "../../src/api.ts";
 import validatePutDevicesMigrate from "../../src/schemas/PUT_devices_migrate.ts";
-import {
-	assert,
-	assertEquals,
-	assertThrowsAsync,
-} from "../deps/std_testing_asserts.ts";
+import { assert, assertEquals, assertRejects } from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as mockFetch from "../deps/mock_fetch.ts";
 
@@ -38,7 +34,7 @@ Deno.test({
 	name: "api.moveDevices: rejects empty array",
 	async fn() {
 		mockFetch.mock("PUT@/devices/migrate", () => response);
-		await assertThrowsAsync(async () => {
+		await assertRejects(async () => {
 			await api.moveDevices([], 0);
 		});
 		mockFetch.reset();
@@ -49,7 +45,7 @@ Deno.test({
 	name: "api.moveDevices: rejects array with more than 20 items",
 	async fn() {
 		mockFetch.mock("PUT@/devices/migrate", () => response);
-		await assertThrowsAsync(async () => {
+		await assertRejects(async () => {
 			// deno-fmt-ignore
 			await api.moveDevices([
 				"-", "-", "-", "-", "-", "-", "-", "-", "-", "-",

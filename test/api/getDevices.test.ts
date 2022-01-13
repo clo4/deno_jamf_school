@@ -1,10 +1,6 @@
 import * as jamf from "../../src/api.ts";
 import validateGetDevices from "../../src/schemas/GET_devices.ts";
-import {
-	assert,
-	assertEquals,
-	assertThrowsAsync,
-} from "../deps/std_testing_asserts.ts";
+import { assert, assertEquals, assertRejects } from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as mockFetch from "../deps/mock_fetch.ts";
 
@@ -112,7 +108,7 @@ Deno.test({
 			return new Response(`{"code":200,"count":0,"devices":[{"UDID":7}]}`);
 		});
 		// I really don't care what error it is, so long as it doesn't validate
-		await assertThrowsAsync(async () => {
+		await assertRejects(async () => {
 			await api.getDevices();
 		});
 		mockFetch.reset();
