@@ -1,13 +1,12 @@
-import * as jamf from "../../src/api.ts";
+import * as JamfAPI from "../../src/api.ts";
 import validatePutDevicesMigrate from "../../src/schemas/PUT_devices_migrate.ts";
 import { assert, assertEquals, assertRejects } from "../deps/std_testing_asserts.ts";
-import { relativeTextFileReader } from "../deps/read_relative_file.ts";
 import * as mockFetch from "../deps/mock_fetch.ts";
 
 const readRelativeTextFile = relativeTextFileReader(import.meta.url);
 
 // There's nothing special about these numbers
-const api = jamf.createAPI({
+const api = JamfAPI.createAPI({
 	id: "1097109",
 	token: "1097109710971",
 	url: "https://localhost:8181/",
@@ -15,11 +14,12 @@ const api = jamf.createAPI({
 
 mockFetch.install(); // we don't need to uninstall, all fetches should be mocked
 
-const jsonString = await readRelativeTextFile(
+const jsonObject = await import(
 	"../example_data/PUT_devices_migrate__200.json",
+	{ assert: { type: "json" } }
 );
-const jsonObject = JSON.parse(jsonString);
-validatePutDevicesMigrate(jsonObject) ?? (() => {
+const jsonString = JSON.stringify(jsonObject);
+validatePutDevicesMigrate(jsonObject) || (() => {
 	throw Error("Invalid data: ../example_data/PUT_devices_migrate__200.json");
 })();
 

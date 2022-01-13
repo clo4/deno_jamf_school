@@ -1,4 +1,4 @@
-import * as jamf from "../../src/api.ts";
+import * as JamfAPI from "../../src/api.ts";
 import validatePutDevicesGroupsId from "../../src/schemas/PUT_devices_groups_id.ts";
 import { assertEquals } from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";
@@ -7,7 +7,7 @@ import * as mockFetch from "../deps/mock_fetch.ts";
 const readRelativeTextFile = relativeTextFileReader(import.meta.url);
 
 // There's nothing special about these numbers
-const api = jamf.createAPI({
+const api = JamfAPI.createAPI({
 	id: "1097109",
 	token: "1097109710971",
 	url: "https://localhost:8181/",

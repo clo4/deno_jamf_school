@@ -1,4 +1,4 @@
-import * as jamf from "../../src/api.ts";
+import * as Jamf from "../../src/api.ts";
 import validatePutUsersId from "../../src/schemas/PUT_users_id.ts";
 import { assertEquals } from "../deps/std_testing_asserts.ts";
 import { relativeTextFileReader } from "../deps/read_relative_file.ts";

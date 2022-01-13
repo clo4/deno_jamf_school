@@ -1,4 +1,4 @@
-import * as jamf from "../../src/api.ts";
+import * as JamfAPI from "../../src/api.ts";
 import ky from "../../src/deps/ky.ts";
 import { PermissionError } from "../../src/internal/permission_error.ts";
 import { APIError } from "../../src/internal/api_error.ts";
@@ -11,7 +11,7 @@ import { install as installMockFetch, mock, reset } from "../deps/mock_fetch.ts"
 // to be able to test that the correct errors are thrown by the API's
 // underlying HTTP... thing.
 
-const api = jamf.createAPI({
+const api = JamfAPI.createAPI({
 	id: "1097109",
 	token: "1097109710971",
 	url: "https://localhost:8181/",
