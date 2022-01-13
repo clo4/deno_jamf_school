@@ -1,9 +1,9 @@
-import * as jamf from "../../src/api.ts";
+import * as JamfAPI from "../../src/api.ts";
 import ky from "../../src/deps/ky.ts";
 import { PermissionError } from "../../src/internal/permission_error.ts";
 import { APIError } from "../../src/internal/api_error.ts";
 import { AuthError } from "../../src/internal/auth_error.ts";
-import { assert, assertThrowsAsync } from "../deps/std_testing_asserts.ts";
+import { assert, assertRejects } from "../deps/std_testing_asserts.ts";
 import { install as installMockFetch, mock, reset } from "../deps/mock_fetch.ts";
 
 // This is (currently) the only file that knows anything about the
@@ -11,7 +11,7 @@ import { install as installMockFetch, mock, reset } from "../deps/mock_fetch.ts"
 // to be able to test that the correct errors are thrown by the API's
 // underlying HTTP... thing.
 
-const api = jamf.createAPI({
+const api = JamfAPI.createAPI({
 	id: "1097109",
 	token: "1097109710971",
 	url: "https://localhost:8181/",
@@ -31,22 +31,22 @@ Deno.test({
 				status: 405,
 			});
 		});
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.get("405"),
 			PermissionError,
 			"Read",
 		);
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.post("405"),
 			PermissionError,
 			"Add",
 		);
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.put("405"),
 			PermissionError,
 			"Edit",
 		);
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.delete("405"),
 			PermissionError,
 			"Delete",
@@ -63,7 +63,7 @@ Deno.test({
 				status: 401,
 			});
 		});
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.get("401"),
 			AuthError,
 		);
@@ -79,22 +79,22 @@ Deno.test({
 				status: 404,
 			});
 		});
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.get("404"),
 			APIError,
 			"Failed, resource not found",
 		);
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.post("404"),
 			APIError,
 			"Failed, resource not found",
 		);
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.put("404"),
 			APIError,
 			"Failed, resource not found",
 		);
-		await assertThrowsAsync(
+		await assertRejects(
 			async () => await http.delete("404"),
 			APIError,
 			"Failed, resource not found",

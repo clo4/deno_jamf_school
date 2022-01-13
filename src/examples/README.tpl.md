@@ -1,13 +1,10 @@
-<!-- deno-fmt-ignore-file -->
-<!-- DO NOT EDIT: Generated from ./README.tpl.md -->
-
 # Examples
 
 This directory contains examples of using this library. "Points of interest" in the code will be marked with a 📍 red pin.
 
 ## Running the examples
 
-All of these examples assume 3 environment variables exist, and will fail if they don't. These correspond to their respective properties in [Credentials](https://doc.deno.land/https/deno.land/x/jamf_school@0.5.0/mod.ts#Credentials).
+All of these examples assume 3 environment variables exist, and will fail if they don't. These correspond to their respective properties in [Credentials]($DOCS/mod.ts#Credentials).
 
 - `JAMF_SCHOOL_ID`
 - `JAMF_SCHOOL_TOKEN`
@@ -20,7 +17,7 @@ The scripts will prompt for any required permissions.
 An interactive script that prompts you to select some device groups, and once selected, will restart the devices in those groups.
 
 ```bash
-deno run --unstable https://deno.land/x/jamf_school@0.5.0/examples/restart_device_groups.ts
+deno run --unstable $src/examples/restart_device_groups.ts
 ```
 
 ### "Restart every morning" ([source](./restart_every_morning.ts))
@@ -28,7 +25,7 @@ deno run --unstable https://deno.land/x/jamf_school@0.5.0/examples/restart_devic
 An example of using the lower-level "API" module to restart some known devices, and integrating that with the [deno_cron](https://deno.land/x/deno_cron) module to restart them every morning at 7 am.
 
 ```bash
-deno run --unstable https://deno.land/x/jamf_school@0.5.0/examples/restart_every_morning.ts
+deno run --unstable $src/examples/restart_every_morning.ts
 ```
 
 ## License

@@ -26,7 +26,7 @@ Objects are a snapshot of their data at the point in time they were created, and
 <!-- Using JS as the language for the more reliable syntax highlighting -->
 
 ```javascript
-import * as jamf from "$src/mod.ts";
+import * as Jamf from "$src/mod.ts";
 
 const client = jamf.createClient({
 	id: "YOUR_NETWORK_ID",
